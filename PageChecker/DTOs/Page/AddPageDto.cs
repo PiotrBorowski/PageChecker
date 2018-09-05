@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace PageCheckerAPI.DTOs.Page
 {
-    public class PageDto
+    public class AddPageDto
     {
-        [Required]
-        public int PageId { get; set; }
         [Required]
         public int UserId { get; set; }
         [Required]

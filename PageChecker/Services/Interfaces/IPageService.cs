@@ -4,11 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using PageCheckerAPI.DTOs.Page;
 
-namespace PageCheckerAPI.Repositories.Interfaces
+namespace PageCheckerAPI.Services.Interfaces
 {
-    public interface IPageRepository
+    public interface IPageService
     {
-        //TODO: Async
         List<PageDto> GetPages();
         bool AddPage(AddPageDto pageDto);
         void DeletePage(DeletePageDto pageDto);

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using PageCheckerAPI.DTOs.Page;
 using PageCheckerAPI.Models;
+using PageCheckerAPI.ViewModels.Page;
 
 namespace PageCheckerAPI.Helpers
 {
@@ -13,6 +14,9 @@ namespace PageCheckerAPI.Helpers
         public AutoMapperProfiles()
         {
             CreateMap<Page, PageDto>();
+            CreateMap<PageDto, Page>();
+            CreateMap<AddPageDto, Page>();
+            CreateMap<PageDto, PageViewModel>();
         }
     }
 }

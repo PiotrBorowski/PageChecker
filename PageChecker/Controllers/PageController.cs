@@ -7,9 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PageCheckerAPI.Controllers
 {
-    [Produces("application/json")]
-    [Route("api/Page")]
+    [Route("api/[controller]")]
     public class PageController : Controller
     {
+
+
     }
 }

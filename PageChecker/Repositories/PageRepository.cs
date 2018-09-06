@@ -32,6 +32,7 @@ namespace PageCheckerAPI.Repositories
         public void DeletePage(DeletePageDto pageDto)
         {
             var pageToDelete = _context.Pages.Single(p => p.PageId == pageDto.PageId);
+
             _context.Pages.Remove(pageToDelete);
             _context.SaveChanges();
         }

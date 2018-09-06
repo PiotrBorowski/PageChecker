@@ -7,6 +7,8 @@ using PageCheckerAPI.DataAccess;
 using AutoMapper;
 using PageCheckerAPI.Repositories;
 using PageCheckerAPI.Repositories.Interfaces;
+using PageCheckerAPI.Services;
+using PageCheckerAPI.Services.Interfaces;
 
 namespace PageCheckerAPI
 {
@@ -27,6 +29,7 @@ namespace PageCheckerAPI
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddAutoMapper();
             services.AddTransient<IPageRepository, PageRepository>();
+            services.AddTransient<IPageService, PageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

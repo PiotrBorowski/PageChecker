@@ -23,7 +23,7 @@ namespace PageCheckerAPI.Controllers
             _mapper = mapper;
         }
 
-        // GET api/values
+        // GET api/page
         [HttpGet]
         public IActionResult Get()
         {
@@ -31,6 +31,39 @@ namespace PageCheckerAPI.Controllers
             List<PageViewModel> pageViewModels = _mapper.Map<List<PageDto>, List<PageViewModel>>(pageDtos);
 
             return Ok(pageViewModels);
+        }
+
+        // POST api/page
+        [HttpPost]
+        public IActionResult Post([FromBody]AddPageDto addPageDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var addResult = _service.AddPage(addPageDto);
+
+            if (addResult == false)
+                return BadRequest();
+
+            return Ok();
+        }
+
+        //DELETE api/page
+        [HttpDelete]
+        public IActionResult Delete(int pageId)
+        {
+            DeletePageDto deletePageDto = new DeletePageDto {PageId = pageId};
+
+            try
+            {
+                _service.DeletePage(deletePageDto);
+            }
+            catch (InvalidOperationException)
+            {
+                return BadRequest(deletePageDto);
+            }
+
+            return Ok(deletePageDto);
         }
     }
 }

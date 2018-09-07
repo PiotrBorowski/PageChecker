@@ -6,14 +6,6 @@ export default class Header extends Component {
 
 
     render(){
-        
-        const Links = (
-            <React.Fragment>
-                <li className="nav-link">
-                    <Link className="nav-link">Przycisk jako const<span className="sr-only">(current)</span></Link>
-                </li>
-            </React.Fragment>
-        )
 
         return (
     <nav className="navbar navbar-expand-sm navbar-light bg-light fixed-top">
@@ -31,6 +23,9 @@ export default class Header extends Component {
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/ERRRORRRR">jakis przycisk<span className="sr-only">(current)</span></Link>
+              </li>
+              <li className="nav_item">
+                  <Link className="nav-link" to="/AddPage">Dodaj strone</Link>
               </li>
             </ul>
           </div>   

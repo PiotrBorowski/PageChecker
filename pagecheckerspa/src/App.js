@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 import "./Styles/Header.css";
 import NotFound from "./Components/NotFound"
+import AddPageForm from './Components/AddPageForm';
 
 class App extends Component {
   render() {
@@ -17,6 +18,7 @@ class App extends Component {
           <Header />
           <Switch>
             <Route exact path="/" component={Home} />
+            <Route path="/AddPage" component={AddPageForm}/>
             <Route path="*" component={NotFound} />
           </Switch>
         </div>

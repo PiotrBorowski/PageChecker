@@ -7,19 +7,20 @@ export default class AddPageForm extends Component{
     constructor(props){
         super(props);
 
-        this.state=
+        this.state =
         {
-            url:""            
-        }
+            url: ""            
+        };
     }
 
     handleUserInput = e => {
-        this.setState({[e.target.url]: e.target.value});
+        this.setState({ url: e.target.value });
+        console.log(this.state.url);
     }
 
     handleSubmit = e => {
         e.preventDefault();
-        
+        this.sendRequest();
     }
 
     sendRequest = () => {
@@ -34,21 +35,23 @@ export default class AddPageForm extends Component{
     render(){
         return (
         <div className="form-center">
+        <form noValidate>
             <h2 className="form-title">Add Page</h2>
             <div className="form-group col-md-10 offset-md-1">
-            <label id="urlLabel">Url</label>
-            <input
-                className="form-control"
-                type="text"
-                name="url"
-                ref="url"
-                value={this.state.url}
-                onChange={this.handleUserInput}
-                required
-                />
+                <label id="urlLabel">Website Url</label>
+                <input
+                    className="form-control"
+                    type="text"
+                    name="url"
+                    ref="url"
+                    defaultValue={this.state.url}
+                    value={this.state.url}
+                    onChange={this.handleUserInput}
+                    required
+                    />
             </div>
             <div className="row">
-                <div className="col-md-4 offset-md-1">
+                <div className="col-md-4 button-form">
                     <button
                         id="submitButton"
                         className="btn btn-primary"
@@ -58,6 +61,7 @@ export default class AddPageForm extends Component{
                     </button>
                 </div>
             </div>
+            </form>
         </div>
         )
     }

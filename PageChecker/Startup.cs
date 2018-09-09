@@ -41,8 +41,8 @@ namespace PageCheckerAPI
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMvc();
             app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials());
+            app.UseMvc();
         }
     }
 }

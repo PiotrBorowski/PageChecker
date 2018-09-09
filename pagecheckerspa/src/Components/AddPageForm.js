@@ -44,7 +44,6 @@ export default class AddPageForm extends Component{
                     type="text"
                     name="url"
                     ref="url"
-                    defaultValue={this.state.url}
                     value={this.state.url}
                     onChange={this.handleUserInput}
                     required

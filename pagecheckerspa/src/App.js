@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Switch } from 'react-router-dom'
 import Header from "./Components/Header";
 import Home from './Components/Home';
+import Pages from './Components/Pages'
 import {
   BrowserRouter as Router,
   Route
@@ -19,6 +20,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/AddPage" component={AddPageForm}/>
+            <Route path="/Pages" component={Pages}/>
             <Route path="*" component={NotFound} />
           </Switch>
         </div>

@@ -24,8 +24,11 @@ export default class Header extends Component {
               <li className="nav-item">
                 <Link className="nav-link" to="/ERRRORRRR">jakis przycisk<span className="sr-only">(current)</span></Link>
               </li>
+              <li>
+                  <Link className="nav-link" to="/Pages">Your Pages</Link>
+              </li>
               <li className="nav_item">
-                  <Link className="nav-link" to="/AddPage">Dodaj strone</Link>
+                  <Link className="nav-link" to="/AddPage">Add Page</Link>
               </li>
             </ul>
           </div>   

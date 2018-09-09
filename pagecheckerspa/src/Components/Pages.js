@@ -27,7 +27,7 @@ export default class Pages extends Component {
 
     renderPages = () => {
         return this.state.pages.map(page => 
-            <Page url={page.url}/>
+            <Page url={page.url} pageId={page.pageId}/>
         );
     }
 

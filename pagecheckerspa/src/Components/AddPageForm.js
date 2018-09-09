@@ -50,7 +50,7 @@ export default class AddPageForm extends Component{
                     />
             </div>
             <div className="row">
-                <div className="col-md-4 button-form">
+                <div className="col-sm-4 button-form">
                     <button
                         id="submitButton"
                         className="btn btn-primary"

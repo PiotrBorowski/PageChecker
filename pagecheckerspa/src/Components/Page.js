@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios"
-import { BASE_URL } from "../constants";
 import "../Styles/Page.css"
 
 export default class Page extends Component{

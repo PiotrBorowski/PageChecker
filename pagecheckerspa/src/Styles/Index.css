@@ -22,8 +22,8 @@ html {
     text-decoration: none;
 }
 
-li a {
-    padding: 10px 10px;
+nav .navbar-nav li a{
+    color: white !important;
 }
 
 
@@ -60,7 +60,7 @@ li a {
     text-align: center;
 }
 
-.events-group{
+.pages-group{
     margin-top: 90px;
 }
 

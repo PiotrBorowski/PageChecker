@@ -48,7 +48,10 @@ export default class Pages extends Component {
         return (
             <div className="container">
                 <div className="pages-group">
-                     {this.renderPages()}
+                    <h2 className="title">Your Pages</h2>
+                    <div>
+                        {this.renderPages()}
+                    </div>
                 </div>
             </div>        
         )

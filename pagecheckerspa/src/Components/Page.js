@@ -14,10 +14,10 @@ export default class Page extends Component{
         return (
             <div className="page">
                 <div className="row">
-                    <div className="col-md-5">
+                    <div className="col-md-8">
                         <h4>{this.props.url}</h4>
                     </div>
-                    <div className="col-md-5">
+                    <div className="col-md-4">
                         <button className="btn btn-danger" onClick={() => this.props.onDelete(this.props.pageId)}>Delete</button>
                     </div>
                 </div>

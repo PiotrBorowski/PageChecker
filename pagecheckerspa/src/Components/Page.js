@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios"
 import { BASE_URL } from "../constants";
+import "../Styles/Page.css"
 
 export default class Page extends Component{
     constructor(props){
@@ -11,21 +12,16 @@ export default class Page extends Component{
         };
     }
 
-    deletePage = () =>{
-        return axios.delete(BASE_URL + "/page?pageId=" + this.props.pageId)
-        .catch(err => {
-            console.log(err);
-        })
-    }
-
     render(){
         return (
-            <div className="row">
-                <div className="col-md-5">
-                  <h4>{this.props.url}</h4>
-                </div>
-                <div className="col-md-5">
-                    <button className="btn btn-danger" onClick={this.deletePage}>Delete</button>
+            <div className="page">
+                <div className="row">
+                    <div className="col-md-5">
+                        <h4>{this.props.url}</h4>
+                    </div>
+                    <div className="col-md-5">
+                        <button className="btn btn-danger" onClick={() => this.props.onDelete(this.props.pageId)}>Delete</button>
+                    </div>
                 </div>
             </div>
         )

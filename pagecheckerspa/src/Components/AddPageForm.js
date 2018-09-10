@@ -29,7 +29,7 @@ export default class AddPageForm extends Component{
             Url: this.state.url 
         }).then(response => {
             console.log(response);
-        });
+        }).then(() => this.props.history.push('/Pages'));
     }
 
     render(){

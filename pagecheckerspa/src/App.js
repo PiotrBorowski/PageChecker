@@ -4,6 +4,7 @@ import Header from "./Components/Header";
 import Home from './Components/Home';
 import Pages from './Components/Pages'
 import Footer from './Components/Footer'
+import Unauthorized from './Components/Unauthorized'
 import {
   BrowserRouter as Router,
   Route
@@ -27,6 +28,7 @@ class App extends Component {
             <Route exact path="/" component={Home} />
             <Route path="/AddPage" component={AddPageForm}/>
             <Route path="/Pages" component={Pages}/>
+            <Route path="/unauthorized" component={Unauthorized}/>
             <Route path="*" component={NotFound} />
           </Switch>
           <Footer/>

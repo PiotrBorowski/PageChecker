@@ -25,11 +25,16 @@ export default class AddPageForm extends Component{
 
     sendRequest = () => {
         axios.post(BASE_URL + "/page", {
-            UserId: 1,
+            UserId: 3,
             Url: this.state.url 
         }).then(response => {
             console.log(response);
-        }).then(() => this.props.history.push('/Pages'));
+        }).then(() => this.props.history.push('/Pages'))
+        .catch(error => {
+            console.log(error);
+            if(error.response.status === 401)
+            {this.props.history.push("/unauthorized")}
+        });
     }
 
     render(){

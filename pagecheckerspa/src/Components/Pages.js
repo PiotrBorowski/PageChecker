@@ -27,7 +27,7 @@ export default class Pages extends Component {
 
     renderPages = () => {
         return this.state.pages.map(page => 
-            <Page onDelete={this.deletePage} url={page.url} pageId={page.pageId} history={this.props.history}/>
+            <Page onDelete={this.deletePage} url={page.url} pageId={page.pageId} />
         );
     }
 

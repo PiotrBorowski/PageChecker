@@ -25,6 +25,13 @@ html {
     text-decoration: none;
 }
 
+.drop-form{
+    padding: 5px 15px;
+}
+
+.dropdown-menu{
+    width: 200px !important;
+}
 /*
 nav .navbar-nav li a{
     color: white !important;

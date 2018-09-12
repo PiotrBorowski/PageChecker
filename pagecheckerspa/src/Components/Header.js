@@ -1,9 +1,46 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import "../Styles/Index.css";
+import axios from 'axios';
+import {BASE_URL} from "../constants"
 
 export default class Header extends Component {
+    
+    constructor(props)
+    {
+        super(props);
+        this.state = {
+            username: "",
+            password: ""
+        };
+    }
 
+    handleChangeUsername = e => {
+        this.setState({username: e.target.value});
+    }
+
+    handleChangePassword = e => {
+        this.setState({password: e.target.value});
+    }
+
+    handleLoginSubmit = e => {
+        e.preventDefault();
+        this.sendRequest();
+    }
+
+    sendRequest = () => {
+         axios.post(BASE_URL + "/user/login", {
+            Username: this.state.username,
+            Password: this.state.password 
+        }).then(response => {
+            console.log(response);
+        }).then(() => this.props.history.push('/Pages'))
+        .catch(error => {
+            console.log(error);
+            if(error.status === 401)
+            {() => this.props.history.push("/unauthorized")}
+        });
+    }
 
     render(){
 
@@ -37,9 +74,30 @@ export default class Header extends Component {
                      Account
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <NavLink class="dropdown-item" to="/">Action</NavLink>
-                        <div class="dropdown-divider"></div>
-                        <NavLink class="dropdown-item" to="/">Logout</NavLink>
+                        <div className="drop-form">
+                            <div class="form-group">
+                                <label for="exampleDropdownFormUsernamel2">Email address</label>
+                                <input 
+                                class="form-control" 
+                                id="exampleDropdownFormUsernamel2" 
+                                placeholder="username"
+                                value={this.username}
+                                onChange={this.handleChangeUsername}
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleDropdownFormPassword2">Password</label>
+                                <input 
+                                type="password"
+                                class="form-control"
+                                id="exampleDropdownFormPassword2"
+                                placeholder="Password"
+                                value={this.password}
+                                onChange={this.handleChangePassword}
+                                />
+                            </div>
+                            <button type="submit" onClick={this.handleLoginSubmit} class="btn btn-primary">Sign in</button>
+                        </div>
                     </div>
                 </li>
 

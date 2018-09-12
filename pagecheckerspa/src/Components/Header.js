@@ -31,6 +31,18 @@ export default class Header extends Component {
               <li className="nav-item">
                   <NavLink className="nav-link" to="/AddPage">Add Page</NavLink>
               </li>
+
+               <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     Account
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <NavLink class="dropdown-item" to="/">Action</NavLink>
+                        <div class="dropdown-divider"></div>
+                        <NavLink class="dropdown-item" to="/">Logout</NavLink>
+                    </div>
+                </li>
+
             </ul>
           </div>   
         </div>

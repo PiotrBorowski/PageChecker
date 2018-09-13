@@ -4,6 +4,7 @@ import Header from "./Components/Header";
 import Home from './Components/Home';
 import Pages from './Components/Pages'
 import Footer from './Components/Footer'
+import LoginForm from './Components/LoginForm'
 import Unauthorized from './Components/Unauthorized'
 import {
   BrowserRouter as Router,
@@ -13,7 +14,6 @@ import "./Styles/Index.css";
 import NotFound from "./Components/NotFound"
 import AddPageForm from './Components/AddPageForm';
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStroopwafel } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faStroopwafel)
@@ -26,6 +26,7 @@ class App extends Component {
           <Header />
           <Switch>
             <Route exact path="/" component={Home} />
+            <Route path="/Login" component={LoginForm}/>
             <Route path="/AddPage" component={AddPageForm}/>
             <Route path="/Pages" component={Pages}/>
             <Route path="/unauthorized" component={Unauthorized}/>

@@ -2,7 +2,6 @@ import React,{Component} from 'react'
 import "../Styles/Index.css"
 import "../Styles/Footer.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import * as icons from  "@fortawesome/free-solid-svg-icons"
 import * as brands from "@fortawesome/fontawesome-free-brands"
 
 export default class Footer extends Component{

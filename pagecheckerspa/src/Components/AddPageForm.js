@@ -29,11 +29,16 @@ export default class AddPageForm extends Component{
             Url: this.state.url 
         }).then(response => {
             console.log(response);
-        }).then(() => this.props.history.push('/Pages'))
-        .catch(error => {
-            console.log(error);
-            if(error.response.status === 401)
-            {this.props.history.push("/unauthorized")}
+            () => this.props.history.push('/Pages');
+        }, (error) => {
+            if(error)
+            {
+                if(error.response.status === 401)
+                {
+                    console.log("401 error debug");
+                    () => this.props.history.push("/unauthorized")
+                }
+            }
         });
     }
 

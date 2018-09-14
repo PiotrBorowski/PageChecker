@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using PageCheckerAPI.DTOs.Page;
+using PageCheckerAPI.DTOs.User;
 using PageCheckerAPI.Models;
 using PageCheckerAPI.ViewModels.Page;
 
@@ -17,6 +18,7 @@ namespace PageCheckerAPI.Helpers
             CreateMap<PageDto, Page>();
             CreateMap<AddPageDto, Page>();
             CreateMap<PageDto, PageViewModel>();
+            CreateMap<User, UserClaimsDto>();
         }
     }
 }

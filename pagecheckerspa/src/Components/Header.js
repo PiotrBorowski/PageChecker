@@ -27,6 +27,14 @@ export default class Header extends Component {
             </React.Fragment>
         );
 
+        const Register = (
+            <React.Fragment>
+                <li className="nav-item">
+                    <NavLink className="nav-link" to="/register">Register</NavLink>
+                </li>
+            </React.Fragment>
+        )
+
         return (
 
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
@@ -56,6 +64,8 @@ export default class Header extends Component {
               {LoginButton}
 
               {AccountDropdown}
+
+              {Register}
 
             </ul>
           </div>   

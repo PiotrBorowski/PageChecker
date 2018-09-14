@@ -3,7 +3,7 @@ import "../Styles/Form.css"
 import axios from 'axios';
 import {BASE_URL} from "../constants"
 
-export default class LoginForm extends Component {
+export default class RegisterForm extends Component {
     
     constructor(props)
     {
@@ -28,12 +28,12 @@ export default class LoginForm extends Component {
     }
 
     sendRequest = () => {
-         axios.post(BASE_URL + "/user/login", {
+         axios.post(BASE_URL + "/user/register", {
             Username: this.state.username,
             Password: this.state.password 
         }).then(response => {
             console.log(response);
-            this.props.history.push('/Pages');
+            this.props.history.push('/login');
         }, (error) => {
             console.log(error);
             
@@ -44,11 +44,10 @@ export default class LoginForm extends Component {
     }
 
     render(){
-
         return (
  <div className="form-center">
         <form noValidate>
-            <h2 className="form-title">Login</h2>
+            <h2 className="form-title">Register</h2>
             <div className="form-group col-md-10 offset-md-1">
                 <label for="UsernameInput">Username</label>
                                     <input 

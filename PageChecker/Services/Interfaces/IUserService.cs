@@ -11,5 +11,6 @@ namespace PageCheckerAPI.Services.Interfaces
     {
         User Register(UserDto userDto);
         User Login(UserDto userDto);
+        string BuildToken(UserClaimsDto claimsDto);
     }
 }

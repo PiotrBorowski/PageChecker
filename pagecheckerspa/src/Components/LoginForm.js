@@ -8,6 +8,7 @@ export default class LoginForm extends Component {
     constructor(props)
     {
         super(props);
+        console.log(props);
         this.state = {
             username: "",
             password: ""
@@ -33,16 +34,13 @@ export default class LoginForm extends Component {
             Password: this.state.password 
         }).then(response => {
             console.log(response);
-            () => this.props.history.push('/Pages');
+            this.props.history.push('/Pages');
         }, (error) => {
-            if(error)
-            {
-                if(error.response.status === 401)
-                {
-                    console.log("401 error debug");
-                    () => this.props.history.push("/unauthorized")
+            console.log(error);
+            
+            if(error.response.status === 401){
+                    this.props.history.push('/unauthorized');
                 }
-            }
         });
     }
 
@@ -89,3 +87,4 @@ export default class LoginForm extends Component {
         )
     }
 }
+

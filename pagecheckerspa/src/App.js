@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Switch } from 'react-router-dom'
+import { Switch, withRouter } from 'react-router-dom'
 import Header from "./Components/Header";
 import Home from './Components/Home';
 import Pages from './Components/Pages'
@@ -26,10 +26,10 @@ class App extends Component {
           <Header />
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route path="/Login" component={LoginForm}/>
-            <Route path="/AddPage" component={AddPageForm}/>
+            <Route path="/login" component={LoginForm}/>
             <Route path="/Pages" component={Pages}/>
             <Route path="/unauthorized" component={Unauthorized}/>
+            <Route path="/AddPage" component={AddPageForm}/>
             <Route path="*" component={NotFound} />
           </Switch>
           <Footer/>

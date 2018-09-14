@@ -34,7 +34,7 @@ namespace PageCheckerAPI.Controllers
             if (user == null)
                 return BadRequest(ModelState);
 
-            return Ok();
+            return Ok(userDto.Username);
         }
 
         [HttpPost("login")]
@@ -44,7 +44,7 @@ namespace PageCheckerAPI.Controllers
             if (user == null)
                 return Unauthorized();
 
-            return Ok();
+            return Ok(userDto.Username);
         }
 
     }

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PageCheckerAPI.DTOs.Page;
@@ -11,6 +13,7 @@ using PageCheckerAPI.ViewModels.Page;
 
 namespace PageCheckerAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     public class PageController : Controller
     {
@@ -27,7 +30,9 @@ namespace PageCheckerAPI.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            List<PageDto> pageDtos = _service.GetPages();
+            var userIdClaim = User.Claims.SingleOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+
+            List<PageDto> pageDtos = _service.GetPages(Int32.Parse(userIdClaim.Value));
             List<PageViewModel> pageViewModels = _mapper.Map<List<PageDto>, List<PageViewModel>>(pageDtos);
 
             return Ok(pageViewModels);
@@ -39,6 +44,10 @@ namespace PageCheckerAPI.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            var userIdClaim = User.Claims.SingleOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+
+            addPageDto.UserId = Int32.Parse(userIdClaim.Value);
 
             var addResult = _service.AddPage(addPageDto);
 
@@ -54,9 +63,11 @@ namespace PageCheckerAPI.Controllers
         {
             DeletePageDto deletePageDto = new DeletePageDto {PageId = pageId};
 
+            var userIdClaim = User.Claims.SingleOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+
             try
             {
-                _service.DeletePage(deletePageDto);
+                _service.DeletePage(deletePageDto, Int32.Parse(userIdClaim.Value));
             }
             catch (InvalidOperationException)
             {

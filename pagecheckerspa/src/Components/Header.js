@@ -1,8 +1,14 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
 import "../Styles/Index.css";
+import setToken from '../helpers/tokenHelper'
 
-export default class Header extends Component {
+class Header extends Component {
+
+    handleLogout = () => {
+        setToken(false);
+        this.props.history.push('/')
+    }
 
     render(){
 
@@ -13,7 +19,7 @@ export default class Header extends Component {
                  Account
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                   <NavLink className="dropdown-item my-di" to="/">Logout</NavLink>
+                   <button className="dropdown-item my-di" onClick={this.handleLogout}>Logout</button>
                 </div>
             </li>
             </React.Fragment>
@@ -74,3 +80,5 @@ export default class Header extends Component {
         )
     }
 }
+
+export default withRouter(Header)

@@ -22,14 +22,14 @@ namespace PageCheckerAPI.Services
            return _repo.AddPage(pageDto);
         }
 
-        public void DeletePage(DeletePageDto pageDto)
+        public void DeletePage(DeletePageDto pageDto, int userId)
         {
-            _repo.DeletePage(pageDto);
+            _repo.DeletePage(pageDto, userId);
         }
 
-        public List<PageDto> GetPages()
+        public List<PageDto> GetPages(int userId)
         {
-            return _repo.GetPages();
+            return _repo.GetPages(userId);
         }
     }
 }

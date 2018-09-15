@@ -24,22 +24,26 @@ namespace PageCheckerAPI.Repositories
         public bool AddPage(AddPageDto pageDto)
         {
             var page = _mapper.Map<Page>(pageDto);
+            
             _context.Pages.Add(page);
 
             return _context.SaveChanges() > 0;
         }
 
-        public void DeletePage(DeletePageDto pageDto)
+        public void DeletePage(DeletePageDto pageDto, int userId)
         {
             var pageToDelete = _context.Pages.Single(p => p.PageId == pageDto.PageId);
+
+            if(pageToDelete.UserId != userId)
+                return;
 
             _context.Pages.Remove(pageToDelete);
             _context.SaveChanges();
         }
 
-        public List<PageDto> GetPages()
+        public List<PageDto> GetPages(int userId)
         {
-            List<Page> pages = _context.Pages.ToList();
+            List<Page> pages = _context.Pages.Where(x => x.UserId == userId).ToList();
             List<PageDto> pageDtos = _mapper.Map<List<Page>, List<PageDto>> (pages);
 
             return pageDtos;

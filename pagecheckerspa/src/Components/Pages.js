@@ -21,7 +21,13 @@ export default class Pages extends Component {
             console.log(response);
             this.setState({
                 pages: response.data
-            });
+            })
+        }).catch((error) => {
+            console.log(error);
+            
+            if(error.response.status === 401){
+                    this.props.history.push('/unauthorized');
+            }
         });
     }
 

@@ -25,7 +25,6 @@ export default class AddPageForm extends Component{
 
     sendRequest = () => {
         axios.post(BASE_URL + "/page", {
-            UserId: 3,
             Url: this.state.url 
         }).then((response) => { 
             console.log(response);

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {BASE_URL} from "../constants"
 import "../Styles/Form.css"
 import axios from "axios"
+import TokenHelper from '../helpers/tokenHelper'
 
 export default class AddPageForm extends Component{
     constructor(props){
@@ -20,7 +21,12 @@ export default class AddPageForm extends Component{
 
     handleSubmit = e => {
         e.preventDefault();
-        this.sendRequest();
+        if(!TokenHelper.CheckToken()){
+            this.props.history.push("/login");
+        }
+        else{
+            this.sendRequest();
+        }
     }
 
     sendRequest = () => {

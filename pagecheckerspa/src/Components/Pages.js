@@ -3,6 +3,7 @@ import axios from "axios"
 import {BASE_URL} from "../constants"
 import Page from "../Components/Page"
 import "../Styles/Page.css"
+import TokenHelper from '../helpers/tokenHelper'
 
 export default class Pages extends Component {
     constructor(props){
@@ -13,7 +14,12 @@ export default class Pages extends Component {
     }
 
     componentDidMount(){
-        this.getPages(BASE_URL + "/page");
+        if(!TokenHelper.CheckToken()){
+            this.props.history.push("/login");
+        }
+        else{
+            this.getPages(BASE_URL + "/page");
+        }      
     }   
 
     getPages(url){

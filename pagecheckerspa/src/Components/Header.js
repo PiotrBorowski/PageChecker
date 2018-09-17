@@ -1,12 +1,21 @@
 import React, { Component } from "react";
 import { NavLink, withRouter } from "react-router-dom";
 import "../Styles/Index.css";
-import setToken from '../helpers/tokenHelper'
+import TokenHelper from '../helpers/tokenHelper'
 
 class Header extends Component {
 
+    constructor(){
+        super();
+        this.state = {
+            isAuthenticated: TokenHelper.CheckToken()
+        }
+    }
+
     handleLogout = () => {
-        setToken(false);
+        TokenHelper.setTokenInHeader(false);
+        TokenHelper.setTokenInLocalStorage(false);
+        this.setState({isAuthenticated: false})
         this.props.history.push('/')
     }
 
@@ -14,14 +23,14 @@ class Header extends Component {
 
         const AccountDropdown = (
             <React.Fragment>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                 Account
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                   <button className="dropdown-item my-di" onClick={this.handleLogout}>Logout</button>
-                </div>
-            </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Account
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <button className="dropdown-item my-di" onClick={this.handleLogout}>Logout</button>
+                    </div>
+                </li>
             </React.Fragment>
         );
 
@@ -67,7 +76,7 @@ class Header extends Component {
                   <NavLink className="nav-link" to="/AddPage">Add Page</NavLink>
               </li>
 
-              {LoginButton}
+              {!this.state.isAuthenticated && LoginButton }
 
               {AccountDropdown}
 

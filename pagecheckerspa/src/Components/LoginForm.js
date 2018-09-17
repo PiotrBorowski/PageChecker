@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import "../Styles/Form.css"
 import axios from 'axios';
 import {BASE_URL} from "../constants"
-import setToken from '../helpers/tokenHelper'
+import TokenHelper from '../helpers/tokenHelper'
+import Header from '../Components/Header'
 
 export default class LoginForm extends Component {
     
@@ -34,7 +35,8 @@ export default class LoginForm extends Component {
             Password: this.state.password 
         }).then(response => {
             console.log(response);
-            setToken(response.data);
+            TokenHelper.setTokenInHeader(response.data);
+            TokenHelper.setTokenInLocalStorage(response.data);
             this.props.history.push('/Pages');
         }, (error) => {
             console.log(error);

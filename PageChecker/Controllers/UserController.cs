@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using PageCheckerAPI.DTOs.User;
 using PageCheckerAPI.Models;
 using PageCheckerAPI.Services.Interfaces;
+using PageCheckerAPI.ViewModels.User;
 
 namespace PageCheckerAPI.Controllers
 {
@@ -47,19 +48,14 @@ namespace PageCheckerAPI.Controllers
             UserClaimsDto clamDto = _mapper.Map<UserClaimsDto>(user);
             string tokenString = _service.BuildToken(clamDto);
 
-            //it's working but it IS NOT VISIBLE from browser, so that's good :P
-            HttpContext.Response.Cookies.Append("token", tokenString, new CookieOptions
+            var userViewModel = new UserViewModel
             {
-                Expires = DateTime.Now.AddHours(1)
-            });
+                Username = user.UserName,
+                Token = tokenString
+            };
 
-            return Ok(tokenString);
+            return Ok(userViewModel);
         }
 
-        [HttpGet("cookie")]
-        public IActionResult Get()
-        {
-            return Ok(Request.Cookies["token"]);
-        }
     }
 }

@@ -16,7 +16,6 @@ export default class AddPageForm extends Component{
 
     handleUserInput = e => {
         this.setState({ url: e.target.value });
-        console.log(this.state.url);
     }
 
     handleSubmit = e => {

@@ -2,30 +2,34 @@ import React, { Component } from "react";
 import { NavLink, withRouter } from "react-router-dom";
 import "../Styles/Index.css";
 import TokenHelper from '../helpers/tokenHelper'
+import {connect} from 'react-redux'
+import { CheckUserToken } from "../Actions/userActions";
+import { bindActionCreators } from "../../../../../../AppData/Local/Microsoft/TypeScript/3.0/node_modules/@types/react-redux/node_modules/redux";
 
 class Header extends Component {
-
-    constructor(){
-        super();
-        this.state = {
-            isAuthenticated: TokenHelper.CheckToken()
+    constructor(props){
+        super(props);
+        console.log(this.props)
+        window.onload = () => {
+            this.props.dispatch(CheckUserToken())          
         }
     }
 
     handleLogout = () => {
         TokenHelper.setTokenInHeader(false);
         TokenHelper.setTokenInLocalStorage(false);
-        this.setState({isAuthenticated: false})
-        this.props.history.push('/')
-    }
+        localStorage.removeItem('username');
+        this.props.history.push('/');
+        this.props.dispatch(CheckUserToken());
+    };
 
     render(){
-
+        
         const AccountDropdown = (
             <React.Fragment>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Account
+                    {this.props.user.username}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <button className="dropdown-item my-di" onClick={this.handleLogout}>Logout</button>
@@ -76,11 +80,11 @@ class Header extends Component {
                   <NavLink className="nav-link" to="/AddPage">Add Page</NavLink>
               </li>
 
-              {!this.state.isAuthenticated && LoginButton }
+              { this.props.user.isAuthenticated ? null : LoginButton }
 
-              {AccountDropdown}
+              { this.props.user.isAuthenticated ? AccountDropdown : null}
 
-              {Register}
+              { this.props.user.isAuthenticated ? null : Register}
 
             </ul>
           </div>   
@@ -90,4 +94,10 @@ class Header extends Component {
     }
 }
 
-export default withRouter(Header)
+function mapStateToProps(state){
+    return{
+        user: state.user
+    };
+}
+
+export default withRouter(connect(mapStateToProps)(Header));

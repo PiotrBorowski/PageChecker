@@ -3,9 +3,12 @@ import "../Styles/Form.css"
 import axios from 'axios';
 import {BASE_URL} from "../constants"
 import TokenHelper from '../helpers/tokenHelper'
-import Header from '../Components/Header'
+import { CheckUserToken } from "../Actions/userActions";
+import {connect} from 'react-redux'
+import { bindActionCreators } from "../../../../../../AppData/Local/Microsoft/TypeScript/3.0/node_modules/@types/react-redux/node_modules/redux";
+import { faConnectdevelop } from "@fortawesome/fontawesome-free-brands";
 
-export default class LoginForm extends Component {
+class LoginForm extends Component {
     
     constructor(props)
     {
@@ -14,8 +17,9 @@ export default class LoginForm extends Component {
             username: "",
             password: ""
         };
+        console.log(this.props)
     }
-
+    
     handleChangeUsername = e => {
         this.setState({username: e.target.value});
     }
@@ -35,8 +39,10 @@ export default class LoginForm extends Component {
             Password: this.state.password 
         }).then(response => {
             console.log(response);
-            TokenHelper.setTokenInHeader(response.data);
-            TokenHelper.setTokenInLocalStorage(response.data);
+            TokenHelper.setTokenInHeader(response.data.token);
+            TokenHelper.setTokenInLocalStorage(response.data.token);
+            localStorage.setItem('username', response.data.username)
+            this.props.dispatch(CheckUserToken());
             this.props.history.push('/Pages');
         }, (error) => {
             console.log(error);
@@ -91,3 +97,4 @@ export default class LoginForm extends Component {
     }
 }
 
+export default connect()(LoginForm);

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
+using Hangfire;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +27,11 @@ namespace PageCheckerAPI.Controllers
             _mapper = mapper;
         }
 
+        public void RunInBackground()
+        {
+            Console.WriteLine("Dodano strone");
+        }
+
         // GET api/page
         [HttpGet]
         public IActionResult Get()
@@ -45,6 +51,7 @@ namespace PageCheckerAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            //user id from user claims
             var userIdClaim = User.Claims.SingleOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
 
             addPageDto.UserId = Int32.Parse(userIdClaim.Value);
@@ -53,6 +60,8 @@ namespace PageCheckerAPI.Controllers
 
             if (addResult == false)
                 return BadRequest();
+
+            BackgroundJob.Enqueue(() => RunInBackground());
 
             return Ok();
         }

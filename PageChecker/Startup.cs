@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PageCheckerAPI.DataAccess;
 using AutoMapper;
+using Hangfire;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using PageCheckerAPI.Repositories;
@@ -32,6 +33,10 @@ namespace PageCheckerAPI
             services.AddDbContext<ApplicationDbContext>(opt =>
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddAutoMapper();
+            services.AddHangfire(conf =>
+                {
+                    conf.UseSqlServerStorage("Server=(localdb)\\MSSQLLocalDB;Integrated Security=True");
+                });
             services.AddTransient<IPageRepository, PageRepository>();
             services.AddTransient<IPageService, PageService>();
             services.AddTransient<IUserRepository, UserRepository>();
@@ -54,6 +59,9 @@ namespace PageCheckerAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseHangfireServer();
+            app.UseHangfireDashboard();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

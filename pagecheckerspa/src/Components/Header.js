@@ -54,6 +54,22 @@ class Header extends Component {
             </React.Fragment>
         )
 
+        const YourPages = (
+            <React.Fragment>
+              <li className="nav-item">
+                  <NavLink className="nav-link" to="/Pages">Your Pages</NavLink>
+              </li>
+            </React.Fragment>
+        )
+
+        const AddPage = (
+            <React.Fragment>
+              <li className="nav-item">
+                  <NavLink className="nav-link" to="/AddPage">Add Page</NavLink>
+              </li>
+            </React.Fragment>
+        )
+
         return (
 
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
@@ -72,13 +88,9 @@ class Header extends Component {
                 <NavLink className="nav-link active" to="/">Home<span className="sr-only">(current)</span></NavLink>
               </li>
 
-              <li className="nav-item">
-                  <NavLink className="nav-link" to="/Pages">Your Pages</NavLink>
-              </li>
+              { this.props.user.isAuthenticated ? YourPages : null}  
 
-              <li className="nav-item">
-                  <NavLink className="nav-link" to="/AddPage">Add Page</NavLink>
-              </li>
+              { this.props.user.isAuthenticated ? AddPage : null}
 
               { this.props.user.isAuthenticated ? null : LoginButton }
 

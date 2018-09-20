@@ -10,7 +10,8 @@ namespace PageCheckerAPI.Repositories.Interfaces
     {
         //TODO: Async
         List<PageDto> GetPages(int userId);
-        bool AddPage(AddPageDto pageDto);
+        PageDto GetPage(int pageId);
+        PageDto AddPage(AddPageDto pageDto);
         void DeletePage(DeletePageDto pageDto, int userId);
     }
 }

@@ -10,12 +10,13 @@ export default class AddPageForm extends Component{
 
         this.state =
         {
-            url: ""            
+            url: "",
+            refreshSpan: "00:00:00"    
         };
     }
 
     handleUserInput = e => {
-        this.setState({ url: e.target.value });
+        this.setState({ [e.target.name]: e.target.value });
     }
 
     handleSubmit = e => {
@@ -30,8 +31,24 @@ export default class AddPageForm extends Component{
 
     sendRequest = () => {
         axios.post(BASE_URL + "/page", {
-            Url: this.state.url 
+            Url: this.state.url,
+            RefreshSpan: this.state.refreshSpan
         }).then((response) => { 
+            console.log(response);
+            this.sendStartCheckingRequest(response.data.pageId);
+            this.props.history.push('/Pages');
+        }, (error) => {
+            console.log(error);
+            if(error.response.status === 401){
+            this.props.history.push("/unauthorized");
+            }
+        }
+        )
+    }
+
+    sendStartCheckingRequest = (pageId) => {
+        axios.get(BASE_URL + "/page/StartChecking?pageId=" + pageId)
+        .then((response) => { 
             console.log(response);
             this.props.history.push('/Pages');
         }, (error) => {
@@ -59,6 +76,17 @@ export default class AddPageForm extends Component{
                     onChange={this.handleUserInput}
                     required
                     />
+                <label id="refreshSpanLabel">Refresh Span</label>
+                <input
+                    className="form-control"
+                    type="time"
+                    name="refreshSpan"
+                    ref="refreshSpan"
+                    value={this.state.refreshSpan}
+                    onChange={this.handleUserInput}
+                    required
+                    />
+
             </div>
             <div className="row">
                 <div className="col-sm-4 button-form">

@@ -21,13 +21,16 @@ namespace PageCheckerAPI.Repositories
             _mapper = mapper;
         }
 
-        public bool AddPage(AddPageDto pageDto)
+        public PageDto AddPage(AddPageDto pageDto)
         {
             var page = _mapper.Map<Page>(pageDto);
             
             _context.Pages.Add(page);
 
-            return _context.SaveChanges() > 0;
+            if (_context.SaveChanges() > 0)
+                return _mapper.Map<PageDto>(page);
+
+            return null;
         }
 
         public void DeletePage(DeletePageDto pageDto, int userId)
@@ -47,6 +50,14 @@ namespace PageCheckerAPI.Repositories
             List<PageDto> pageDtos = _mapper.Map<List<Page>, List<PageDto>> (pages);
 
             return pageDtos;
+        }
+
+        public PageDto GetPage(int pageId)
+        {
+            Page page = _context.Pages.SingleOrDefault(x => x.PageId == pageId);
+            PageDto pageDto = _mapper.Map<PageDto>(page);
+
+            return pageDto;
         }
     }
 }

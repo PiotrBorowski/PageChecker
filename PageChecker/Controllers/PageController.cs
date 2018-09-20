@@ -18,30 +18,55 @@ namespace PageCheckerAPI.Controllers
     [Route("api/[controller]")]
     public class PageController : Controller
     {
-        private readonly IPageService _service;
+        private readonly IPageService _pageService;
         private readonly IMapper _mapper;
+        private readonly IPageBackgroundService _pageBackService;
 
-        public PageController(IPageService service, IMapper mapper)
+        public PageController(IPageService pageService, IPageBackgroundService pageBackService, IMapper mapper)
         {
-            _service = service;
+            _pageService = pageService;
+            _pageBackService = pageBackService;
             _mapper = mapper;
         }
 
-        public void RunInBackground()
+        private int GetUserId()
         {
-            Console.WriteLine("Dodano strone");
+            var userIdClaim = User.Claims.SingleOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+            return Int32.Parse(userIdClaim.Value);
         }
 
         // GET api/page
         [HttpGet]
         public IActionResult Get()
-        {
-            var userIdClaim = User.Claims.SingleOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
-
-            List<PageDto> pageDtos = _service.GetPages(Int32.Parse(userIdClaim.Value));
+        {           
+            List<PageDto> pageDtos = _pageService.GetPages(GetUserId());
             List<PageViewModel> pageViewModels = _mapper.Map<List<PageDto>, List<PageViewModel>>(pageDtos);
 
             return Ok(pageViewModels);
+        }
+
+        [HttpGet("StartChecking")]
+        public IActionResult StartChecking(int pageId)
+        {
+            var pageDto = _pageService.GetPage(pageId);
+            if (pageDto.UserId != GetUserId())
+                return BadRequest();
+
+            _pageBackService.StartPageChangeChecking(pageDto);
+
+            return Ok(pageDto);
+        }
+
+        [HttpDelete("StopChecking")]
+        public IActionResult StopChecking(int pageId)
+        {
+            var pageDto = _pageService.GetPage(pageId);
+            if (pageDto.UserId != GetUserId())
+                return BadRequest();
+
+            _pageBackService.StopPageChangeChecking(pageDto.PageId.ToString());
+
+            return Ok(pageDto);
         }
 
         // POST api/page
@@ -51,19 +76,14 @@ namespace PageCheckerAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            //user id from user claims
-            var userIdClaim = User.Claims.SingleOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+            addPageDto.UserId = GetUserId();
 
-            addPageDto.UserId = Int32.Parse(userIdClaim.Value);
+            var addResult = _pageService.AddPage(addPageDto);
 
-            var addResult = _service.AddPage(addPageDto);
-
-            if (addResult == false)
+            if (addResult == null)
                 return BadRequest();
 
-            BackgroundJob.Enqueue(() => RunInBackground());
-
-            return Ok();
+            return Ok(addResult);
         }
 
         //DELETE api/page
@@ -72,11 +92,10 @@ namespace PageCheckerAPI.Controllers
         {
             DeletePageDto deletePageDto = new DeletePageDto {PageId = pageId};
 
-            var userIdClaim = User.Claims.SingleOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
-
             try
             {
-                _service.DeletePage(deletePageDto, Int32.Parse(userIdClaim.Value));
+                _pageService.DeletePage(deletePageDto, GetUserId());
+                _pageBackService.StopPageChangeChecking(deletePageDto.PageId.ToString());
             }
             catch (InvalidOperationException)
             {

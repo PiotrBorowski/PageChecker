@@ -9,7 +9,8 @@ namespace PageCheckerAPI.Services.Interfaces
     public interface IPageService
     {
         List<PageDto> GetPages(int userId);
-        bool AddPage(AddPageDto pageDto);
+        PageDto GetPage(int pageId);
+        PageDto AddPage(AddPageDto pageDto);
         void DeletePage(DeletePageDto pageDto, int userId);
     }
 }

@@ -8,6 +8,7 @@ namespace PageCheckerAPI.ViewModels.Page
     public class PageViewModel
     {
         public int PageId { get; set; }
+        public TimeSpan RefreshSpan { get; set; }
         public string Url { get; set; }
     }
 }

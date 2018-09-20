@@ -17,7 +17,7 @@ namespace PageCheckerAPI.Services
             _repo = repo;
         }
 
-        public bool AddPage(AddPageDto pageDto)
+        public PageDto AddPage(AddPageDto pageDto)
         {
            return _repo.AddPage(pageDto);
         }
@@ -30,6 +30,11 @@ namespace PageCheckerAPI.Services
         public List<PageDto> GetPages(int userId)
         {
             return _repo.GetPages(userId);
+        }
+
+        public PageDto GetPage(int pageId)
+        {
+            return _repo.GetPage(pageId);
         }
     }
 }

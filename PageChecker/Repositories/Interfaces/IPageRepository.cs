@@ -13,5 +13,6 @@ namespace PageCheckerAPI.Repositories.Interfaces
         PageDto GetPage(int pageId);
         PageDto AddPage(AddPageDto pageDto);
         void DeletePage(DeletePageDto pageDto, int userId);
+        PageDto EditPage(PageDto pageDto);
     }
 }

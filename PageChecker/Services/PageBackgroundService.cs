@@ -27,7 +27,11 @@ namespace PageCheckerAPI.Services
         public void Action(PageDto pageDto)
         {
             //TODO: websiteservice ograniczenei tylko do body
-           //TODO: _websiteservice poreownanie body
+            var webBody = _websiteService.GetBody(pageDto.Url);
+            if (pageDto.Body != webBody)
+            {
+                //TODO EDIT PAGE HASCHANGED
+            }
         }
 
         public void StopPageChangeChecking(string pageId)

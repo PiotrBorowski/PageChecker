@@ -9,10 +9,16 @@ namespace PageCheckerAPI.Models
 {
     public class Page
     {
+        public Page()
+        {
+            HasChanged = false;
+        }
+
         [Key]
         public int PageId { get; set; }
 
         public TimeSpan RefreshSpan { get; set; }
+        public bool HasChanged { get; set; }
 
         [Column(TypeName = "text")]
         public string Body { get; set; }

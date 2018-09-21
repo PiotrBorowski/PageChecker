@@ -59,5 +59,10 @@ namespace PageCheckerAPI.Repositories
 
             return pageDto;
         }
+
+        public PageDto EditPage(PageDto pageDto)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

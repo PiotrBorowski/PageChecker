@@ -17,7 +17,7 @@ namespace PageCheckerAPI.Models
         [Key]
         public int PageId { get; set; }
 
-        public TimeSpan RefreshSpan { get; set; }
+        public TimeSpan RefreshRate { get; set; }
         public bool HasChanged { get; set; }
 
         [Column(TypeName = "text")]

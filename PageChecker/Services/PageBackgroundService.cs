@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Hangfire;
 using PageCheckerAPI.DTOs.Page;
+using PageCheckerAPI.Repositories.Interfaces;
 using PageCheckerAPI.Services.Interfaces;
 
 namespace PageCheckerAPI.Services
@@ -12,25 +13,28 @@ namespace PageCheckerAPI.Services
     public class PageBackgroundService : IPageBackgroundService
     {
         private readonly IWebsiteService _websiteService;
+        private readonly IPageRepository _repository;
 
-        public PageBackgroundService(IWebsiteService websiteService)
+        public PageBackgroundService(IWebsiteService websiteService, IPageRepository repository)
         {
             _websiteService = websiteService;
+            _repository = repository;
         }
 
         public void StartPageChangeChecking(PageDto pageDto)
         {
-            RecurringJob.AddOrUpdate(pageDto.PageId.ToString() ,() => Action(pageDto)
-           , Cron.MinuteInterval(Convert.ToInt32(pageDto.RefreshSpan.TotalMinutes)));
+            RecurringJob.AddOrUpdate(pageDto.PageId.ToString() ,() => CheckChange(pageDto)
+           , Cron.MinuteInterval(Convert.ToInt32(pageDto.RefreshRate.TotalMinutes)));
         }
 
-        public void Action(PageDto pageDto)
+        public void CheckChange(PageDto pageDto)
         {
             //TODO: websiteservice ograniczenei tylko do body
             var webBody = _websiteService.GetBody(pageDto.Url);
-            if (pageDto.Body != webBody)
+            if (string.Equals(pageDto.Body, webBody))
             {
-                //TODO EDIT PAGE HASCHANGED
+                pageDto.HasChanged = true;
+                _repository.EditPage(pageDto);
             }
         }
 

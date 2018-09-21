@@ -102,7 +102,7 @@ export default class AddPageForm extends Component{
                 <div className="col-sm-4 button-form">
                     <button
                         id="submitButton"
-                        className="btn btn-primary"
+                        className="btn btn-dark"
                         onClick={this.handleSubmit}
                     >
                         Add Page

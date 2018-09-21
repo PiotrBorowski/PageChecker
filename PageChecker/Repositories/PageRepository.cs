@@ -62,7 +62,20 @@ namespace PageCheckerAPI.Repositories
 
         public PageDto EditPage(PageDto pageDto)
         {
-            throw new NotImplementedException();
+            var page = _context.Pages.SingleOrDefault(x => x.PageId == pageDto.PageId);
+
+            page.Body = pageDto.Body;
+            page.HasChanged = pageDto.HasChanged;
+            page.RefreshRate = pageDto.RefreshRate;
+            page.Url = pageDto.Url;
+
+            if (_context.SaveChanges() > 0)
+            {
+                pageDto = _mapper.Map<PageDto>(page);
+                return pageDto;
+            }
+
+            return null;
         }
     }
 }

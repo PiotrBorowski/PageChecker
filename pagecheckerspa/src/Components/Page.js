@@ -26,20 +26,32 @@ export default class Page extends Component{
     }
 
     render(){
+
+        const Changed = (
+            <React.Fragment>
+                <h6 className="changed-text">Changed</h6>
+            </React.Fragment>);
+
+        const NotChanged = (
+            <React.Fragment>
+                <h6>Not Changed</h6>
+            </React.Fragment>)
+
         return (
             <div className="page">
                 <div className="row">
-                    <div className="col-md-6">
-                        <h6>{this.props.url}</h6>
+                    <div className="col-lg-5">
+                        <h6><a href={this.props.url} target="_blank">{this.props.url}</a></h6>
                     </div>
-                    <div className="col-md-3">
-                        <time >{this.props.refreshSpan}</time>
+                    <div className="col-lg-3">
+                        <span>Refresh rate: </span><time>{this.props.refreshRate}</time>
                     </div>
-                    <div className="col-md-1">
-                        <button className="btn btn-danger" onClick={this.handleStopChecking}>Stop</button>
+                    <div className="col-lg-2">
+                        {this.props.hasChanged ? Changed : NotChanged}
                     </div>
-                    <div className="col-md-1">
-                        <button className="btn btn-danger" onClick={() => this.props.onDelete(this.props.pageId)}>Delete</button>
+                    <div className="col-lg-2">
+                        <button className="btn btn-danger float-right" onClick={this.handleStopChecking}>Stop</button>
+                        <button className="btn btn-danger float-right" onClick={() => this.props.onDelete(this.props.pageId)}>Delete</button>
                     </div>
                 </div>
             </div>

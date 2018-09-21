@@ -7,10 +7,25 @@
 }
 
 .page{
+    margin-bottom: 5pt;
     padding: 5px;
+    background: lightgray;
+    border-radius: 5pt;
 }
 
 .title{
     text-align: center;
     padding: 10px;
+}
+
+.btn{
+    margin: 2pt;
+}
+
+.changed-text{
+    color: green;
+}
+
+.column-title{
+    text-align: center;
 }

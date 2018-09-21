@@ -11,7 +11,7 @@ namespace PageCheckerAPI.DTOs.Page
         [Required]
         public int UserId { get; set; }
         [Required]
-        public TimeSpan RefreshSpan { get; set; }
+        public TimeSpan RefreshRate { get; set; }
         [Required]
         public string Url { get; set; }
         public string Body { get; set; }

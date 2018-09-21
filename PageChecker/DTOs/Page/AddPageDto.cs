@@ -14,5 +14,6 @@ namespace PageCheckerAPI.DTOs.Page
         public TimeSpan RefreshSpan { get; set; }
         [Required]
         public string Url { get; set; }
+        public string Body { get; set; }
     }
 }

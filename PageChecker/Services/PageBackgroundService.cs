@@ -11,6 +11,13 @@ namespace PageCheckerAPI.Services
 {
     public class PageBackgroundService : IPageBackgroundService
     {
+        private readonly IWebsiteService _websiteService;
+
+        public PageBackgroundService(IWebsiteService websiteService)
+        {
+            _websiteService = websiteService;
+        }
+
         public void StartPageChangeChecking(PageDto pageDto)
         {
             RecurringJob.AddOrUpdate(pageDto.PageId.ToString() ,() => Action(pageDto)
@@ -19,8 +26,8 @@ namespace PageCheckerAPI.Services
 
         public void Action(PageDto pageDto)
         {
-            Console.WriteLine(pageDto.PageId);
-            Console.WriteLine(pageDto.Url);
+            //TODO: websiteservice ograniczenei tylko do body
+           //TODO: _websiteservice poreownanie body
         }
 
         public void StopPageChangeChecking(string pageId)

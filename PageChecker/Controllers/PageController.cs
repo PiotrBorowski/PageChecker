@@ -21,12 +21,14 @@ namespace PageCheckerAPI.Controllers
         private readonly IPageService _pageService;
         private readonly IMapper _mapper;
         private readonly IPageBackgroundService _pageBackService;
+        private readonly IWebsiteService _websiteService;
 
-        public PageController(IPageService pageService, IPageBackgroundService pageBackService, IMapper mapper)
+        public PageController(IPageService pageService, IPageBackgroundService pageBackService, IWebsiteService websiteService, IMapper mapper)
         {
             _pageService = pageService;
             _pageBackService = pageBackService;
             _mapper = mapper;
+            _websiteService = websiteService;
         }
 
         private int GetUserId()
@@ -77,6 +79,7 @@ namespace PageCheckerAPI.Controllers
                 return BadRequest(ModelState);
 
             addPageDto.UserId = GetUserId();
+            addPageDto.Body = _websiteService.GetBody(addPageDto.Url);
 
             var addResult = _pageService.AddPage(addPageDto);
 

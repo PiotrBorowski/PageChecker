@@ -29,8 +29,8 @@ export default class Page extends Component{
         return (
             <div className="page">
                 <div className="row">
-                    <div className="col-md-4">
-                        <h5>{this.props.url}</h5>
+                    <div className="col-md-6">
+                        <h6>{this.props.url}</h6>
                     </div>
                     <div className="col-md-3">
                         <time >{this.props.refreshSpan}</time>

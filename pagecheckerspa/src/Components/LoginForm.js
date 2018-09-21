@@ -58,28 +58,34 @@ class LoginForm extends Component {
         return (
  <div className="form-center">
         <form noValidate>
-            <h2 className="form-title">Login</h2>
+            <h2 className="title">Login</h2>
             <div className="form-group col-md-10 offset-md-1">
-                <label for="UsernameInput">Username</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Username</span>
+                    </div>
                                     <input 
                                     class="form-control" 
                                     id="UsernameInput" 
-                                    placeholder="username"
                                     value={this.username}
                                     onChange={this.handleChangeUsername}
                                     />
+                                    </div>
             </div>
             <div className="form-group col-md-10 offset-md-1">
-                <label for="PasswordInput">Password</label>
-                                    <input 
-                                    type="password"
-                                    class="form-control"
-                                    id="PasswordInput"
-                                    placeholder="Password"
-                                    value={this.password}
-                                    onChange={this.handleChangePassword}
-                                    />
-            </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Password</span>
+                    </div>
+                                        <input 
+                                        type="password"
+                                        class="form-control"
+                                        id="PasswordInput"
+                                        value={this.password}
+                                        onChange={this.handleChangePassword}
+                                        />
+                                        </div>
+                </div>
             <div className="row">
                 <div className="col-sm-4 button-form">
                     <button

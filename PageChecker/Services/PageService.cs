@@ -36,5 +36,10 @@ namespace PageCheckerAPI.Services
         {
             return _repo.GetPage(pageId);
         }
+
+        public PageDto EditPage(PageDto pageDto)
+        {
+            return _repo.EditPage(pageDto);
+        }
     }
 }

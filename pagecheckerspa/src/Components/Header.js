@@ -4,7 +4,6 @@ import "../Styles/Index.css";
 import TokenHelper from '../helpers/tokenHelper'
 import {connect} from 'react-redux'
 import { CheckUserToken } from "../Actions/userActions";
-import { bindActionCreators } from "../../../../../../AppData/Local/Microsoft/TypeScript/3.0/node_modules/@types/react-redux/node_modules/redux";
 
 class Header extends Component {
     constructor(props){

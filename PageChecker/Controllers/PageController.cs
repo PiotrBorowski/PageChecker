@@ -55,6 +55,8 @@ namespace PageCheckerAPI.Controllers
                 return BadRequest();
 
             _pageBackService.StartPageChangeChecking(pageDto);
+            pageDto.Stopped = false;
+            _pageService.EditPage(pageDto);
 
             return Ok(pageDto);
         }
@@ -67,6 +69,8 @@ namespace PageCheckerAPI.Controllers
                 return BadRequest();
 
             _pageBackService.StopPageChangeChecking(pageDto.PageId.ToString());
+            pageDto.Stopped = true;
+            _pageService.EditPage(pageDto);
 
             return Ok(pageDto);
         }

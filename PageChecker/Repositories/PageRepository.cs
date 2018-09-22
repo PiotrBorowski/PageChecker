@@ -64,10 +64,7 @@ namespace PageCheckerAPI.Repositories
         {
             var page = _context.Pages.SingleOrDefault(x => x.PageId == pageDto.PageId);
 
-            page.Body = pageDto.Body;
-            page.HasChanged = pageDto.HasChanged;
-            page.RefreshRate = pageDto.RefreshRate;
-            page.Url = pageDto.Url;
+            _mapper.Map<PageDto, Page>(pageDto, page);
 
             if (_context.SaveChanges() > 0)
             {

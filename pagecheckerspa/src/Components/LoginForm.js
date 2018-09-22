@@ -5,8 +5,6 @@ import {BASE_URL} from "../constants"
 import TokenHelper from '../helpers/tokenHelper'
 import { CheckUserToken } from "../Actions/userActions";
 import {connect} from 'react-redux'
-import { bindActionCreators } from "../../../../../../AppData/Local/Microsoft/TypeScript/3.0/node_modules/@types/react-redux/node_modules/redux";
-import { faConnectdevelop } from "@fortawesome/fontawesome-free-brands";
 
 class LoginForm extends Component {
     

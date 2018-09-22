@@ -12,6 +12,7 @@ namespace PageCheckerAPI.Models
         public Page()
         {
             HasChanged = false;
+            Stopped = false;
         }
 
         [Key]
@@ -19,6 +20,7 @@ namespace PageCheckerAPI.Models
 
         public TimeSpan RefreshRate { get; set; }
         public bool HasChanged { get; set; }
+        public bool Stopped { get; set; }
 
         [Column(TypeName = "text")]
         public string Body { get; set; }

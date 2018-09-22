@@ -18,5 +18,6 @@ namespace PageCheckerAPI.DTOs.Page
         public string Url { get; set; }
         public string Body { get; set; }
         public bool HasChanged { get; set; }
+        public bool Stopped { get; set; }
     }
 }

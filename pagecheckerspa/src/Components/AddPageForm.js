@@ -12,7 +12,7 @@ export default class AddPageForm extends Component{
         this.state =
         {
             url: "",
-            refreshSpan: "00:15"    
+            refreshRate: "00:15"    
         };
     }
 
@@ -20,8 +20,8 @@ export default class AddPageForm extends Component{
         this.setState({ [e.target.name]: e.target.value });
     }
 
-    handleUserInputRefreshSpan = e => {
-        this.setState({ refreshSpan: e.target.value });
+    handleUserInputRefreshRate = e => {
+        this.setState({ refreshRate: e.target.value });
     }
 
     handleSubmit = e => {
@@ -37,7 +37,7 @@ export default class AddPageForm extends Component{
     sendRequest = () => {
         axios.post(BASE_URL + "/page", {
             Url: this.state.url,
-            RefreshSpan: this.state.refreshSpan
+            RefreshRate: this.state.refreshRate
         }).then((response) => { 
             console.log(response);
             this.sendStartCheckingRequest(response.data.pageId);
@@ -87,9 +87,9 @@ export default class AddPageForm extends Component{
             </div>
             <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <label class="input-group-text" for="inputGroupSelect01">Refresh Span</label>
+                        <label class="input-group-text" for="inputGroupSelect01">Refresh Rate</label>
                     </div>
-                    <Input type="select" class="custom-select" id="inputGroupSelect01" onChange={this.handleUserInputRefreshSpan}>
+                    <Input type="select" class="custom-select" id="inputGroupSelect01" onChange={this.handleUserInputRefreshRate}>
                         <option selected value="00:15">15 min</option>
                         <option value="00:30">30 min</option>
                         <option value="01:00">1 hour</option>

@@ -11,6 +11,7 @@ export default function userReducer (state={username: "unknown", isAuthenticated
             state ={...state,
             username: action.username}
         }
+        break;
     }
 
     return state;

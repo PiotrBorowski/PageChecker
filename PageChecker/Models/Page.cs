@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace PageCheckerAPI.Models
@@ -22,7 +23,7 @@ namespace PageCheckerAPI.Models
         public bool HasChanged { get; set; }
         public bool Stopped { get; set; }
 
-        [Column(TypeName = "text")]
+        [Column(TypeName = "ntext")]
         public string Body { get; set; }
         [Required]
         public string Url { get; set; }

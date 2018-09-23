@@ -30,8 +30,8 @@ namespace PageCheckerAPI.Services
         public void CheckChange(PageDto pageDto)
         {
             //TODO: websiteservice ograniczenei tylko do body
-            var webBody = _websiteService.GetBody(pageDto.Url);
-            if (string.Equals(pageDto.Body, webBody))
+            string webBody = _websiteService.GetBody(pageDto.Url);
+            if (!string.Equals(pageDto.Body.Trim(), webBody.Trim()))
             {
                 pageDto.HasChanged = true;
                 _repository.EditPage(pageDto);

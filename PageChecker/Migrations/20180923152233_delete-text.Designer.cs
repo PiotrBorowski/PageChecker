@@ -11,9 +11,10 @@ using System;
 namespace PageCheckerAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180923152233_delete-text")]
+    partial class deletetext
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,9 +25,6 @@ namespace PageCheckerAPI.Migrations
                 {
                     b.Property<int>("PageId")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Body")
-                        .HasColumnType("ntext");
 
                     b.Property<bool>("HasChanged");
 

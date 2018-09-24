@@ -11,7 +11,7 @@ namespace PageCheckerAPI.Services
 {
     public class WebsiteService : IWebsiteService
     {
-        public string GetBody(string url)
+        public string GetHtml(string url)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();

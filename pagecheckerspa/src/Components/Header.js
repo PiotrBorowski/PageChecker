@@ -52,11 +52,17 @@ class Header extends Component {
                 </li>
             </React.Fragment>
         )
+        
+        const ChangedBadge = (
+            <React.Fragment>
+                <span class="badge badge-light">TODO</span>
+            </React.Fragment>
+        )
 
         const YourPages = (
             <React.Fragment>
               <li className="nav-item">
-                  <NavLink className="nav-link" to="/Pages">Your Pages</NavLink>
+                  <NavLink className="nav-link" to="/Pages">Your Pages {ChangedBadge}</NavLink>
               </li>
             </React.Fragment>
         )

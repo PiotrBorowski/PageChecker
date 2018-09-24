@@ -66,7 +66,7 @@ export default class Page extends Component{
         return (
             <div className="page">
                 <div className="row">
-                    <div className="col-lg-5">
+                    <div className="col-lg-5 wrap">
                         <h6><a href={this.props.url} target="_blank">{this.props.url}</a></h6>
                     </div>
                     <div className="col-lg-3">

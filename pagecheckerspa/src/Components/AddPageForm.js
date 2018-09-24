@@ -71,21 +71,21 @@ export default class AddPageForm extends Component{
         <form noValidate>
             <h2 className="title">Add Page</h2>
             <div className="form-group col-md-10 offset-md-1">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Website URL</span>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Website URL</span>
+                    </div>
+                    <input
+                        className="form-control"
+                        type="text"
+                        name="url"
+                        ref="url"
+                        value={this.state.url}
+                        onChange={this.handleUserInput}
+                        required
+                        />
                 </div>
-                <input
-                    className="form-control"
-                    type="text"
-                    name="url"
-                    ref="url"
-                    value={this.state.url}
-                    onChange={this.handleUserInput}
-                    required
-                    />
-            </div>
-            <div class="input-group mb-3">
+                <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="inputGroupSelect01">Refresh Rate</label>
                     </div>
@@ -96,8 +96,18 @@ export default class AddPageForm extends Component{
                         <option value="03:00">3 hours</option>
                         <option value="12:00">12 hours</option>
                     </Input>
-                    </div>               
+                </div>    
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect02">Type</label>
+                    </div>
+                    <Input type="select" class="custom-select" id="inputGroupSelect02" >
+                        <option selected value="">Full (scripts included)</option>
+                        <option value="">Only text</option>
+                    </Input>
+            </div>              
             </div>
+                    
             <div className="row">
                 <div className="col-sm-4 button-form">
                     <button
@@ -105,7 +115,7 @@ export default class AddPageForm extends Component{
                         className="btn btn-dark"
                         onClick={this.handleSubmit}
                     >
-                        Add Page
+                        Submit
                     </button>
                 </div>
             </div>

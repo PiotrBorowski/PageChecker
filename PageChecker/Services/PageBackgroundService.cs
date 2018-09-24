@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Hangfire;
 using PageCheckerAPI.DTOs.Page;
+using PageCheckerAPI.Helpers;
 using PageCheckerAPI.Repositories.Interfaces;
 using PageCheckerAPI.Services.Interfaces;
 
@@ -30,7 +31,8 @@ namespace PageCheckerAPI.Services
         public void CheckChange(PageDto pageDto)
         {
             //TODO: websiteservice ograniczenei tylko do body
-            string webBody = _websiteService.GetBody(pageDto.Url);
+            string webBody = HtmlHelper.GetBodyText(_websiteService.GetHtml(pageDto.Url));
+
             if (!string.Equals(pageDto.Body.Trim(), webBody.Trim()))
             {
                 pageDto.HasChanged = true;

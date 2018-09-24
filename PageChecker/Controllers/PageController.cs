@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PageCheckerAPI.DTOs.Page;
+using PageCheckerAPI.Helpers;
 using PageCheckerAPI.Services.Interfaces;
 using PageCheckerAPI.ViewModels.Page;
 
@@ -83,7 +84,7 @@ namespace PageCheckerAPI.Controllers
                 return BadRequest(ModelState);
 
             addPageDto.UserId = GetUserId();
-            addPageDto.Body = _websiteService.GetBody(addPageDto.Url);
+            addPageDto.Body = HtmlHelper.GetBodyText(_websiteService.GetHtml(addPageDto.Url));
 
             var addResult = _pageService.AddPage(addPageDto);
 

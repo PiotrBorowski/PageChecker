@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "../Styles/Page.css"
 import axios from "axios"
 import {BASE_URL} from "../constants"
-import { UncontrolledCollapse, Button, CardBody, Card } from 'reactstrap';
+import {ButtonGroup, UncontrolledCollapse, Button, CardBody, Card } from 'reactstrap';
 
 export default class Page extends Component{
     constructor(props){
@@ -59,48 +59,60 @@ export default class Page extends Component{
     
         const Changed = (
             <React.Fragment>
-                <h6 className="changed-text">Changed</h6>
+                <span className="changed-text">Changed</span>
             </React.Fragment>);
 
         const NotChanged = (
             <React.Fragment>
-                <h6>Not Changed</h6>
+                <span>Not Changed</span>
             </React.Fragment>)
 
         const StopButton = (
             <React.Fragment>
-                <button className="btn btn-danger float-right" onClick={this.handleStopChecking}>Stop</button>
+                <button className="btn" onClick={this.handleStopChecking}>
+                    <i class="fa fa-pause" aria-hidden="true"></i>
+                </button>
             </React.Fragment>)
 
         const StartButton = (
             <React.Fragment>
-                <button className="btn btn-success float-right" onClick={this.handleStartChecking}>Start</button>
+                <button className="btn" onClick={this.handleStartChecking}>
+                    <i class="fa fa-play" aria-hidden="true"></i>
+                </button>
             </React.Fragment>)
 
         return (
-            <div className="page" id={"toggler" + this.props.pageId} >
+            <div className="page" >
+                <h5 className="text-center text-truncate">
+                    {this.props.url}
+                </h5>
                 <div className="row">
-                    <div className="col-lg-5 wrap">
+                    <div className="col-lg-5 text-truncate">
                         <h6><a href={this.props.url} target="_blank">{this.props.url}</a></h6>
                     </div>
-                    <div className="col-lg-3">
-                        <span style={{"fontWeight":"normal"}}>Refresh rate: </span><time>{this.props.refreshRate}</time><br/>
-                        <span style={{"fontWeight":"normal"}}>Checking Type: </span>{CheckingType(this.props)}
-                    </div>
-                    <div className="col-lg-2">
+         
+                    <div className="col-lg-2 offset-lg-2">
                         {this.props.hasChanged ? Changed : NotChanged}
                     </div>
-                    <div className="col-lg-2">
+                    <div className="col-lg">
+                    <ButtonGroup className="float-right">
                         {this.state.stopped ? StartButton : StopButton}
-                        <button className="btn btn-danger float-right" onClick={() => this.props.onDelete(this.props.pageId)}>Delete</button>
+                        <button className="btn" onClick={() => this.props.onDelete(this.props.pageId)}>
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
+                    </ButtonGroup>
                     </div>
+                </div>
+                <div className="text-center pointer" id={"toggler" + this.props.pageId} >
+                    More
                 </div>
                 <UncontrolledCollapse toggler={"#toggler"+this.props.pageId}>
                     <Card>
                         <CardBody>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt magni, voluptas debitis
-                        similique porro a molestias consequuntur earum odio officiis natus, amet hic, iste sed
-                        dignissimos esse fuga! Minus, alias.
+                        <div className="col-lg-4">
+                        <span style={{"fontWeight":"normal"}}>Refresh rate: </span><time>{this.props.refreshRate}</time><br/>
+                        <span style={{"fontWeight":"normal"}}>Checking Type: </span>{CheckingType(this.props)}
+                    </div>
                         </CardBody>
                     </Card>
                 </UncontrolledCollapse>

@@ -13,7 +13,7 @@
     border-radius: 5pt;
 }
 
-.page:hover{
+.pointer:hover{
     cursor: pointer;
 }
 
@@ -23,7 +23,7 @@
 }
 
 .btn{
-    margin: 2pt;
+
 }
 
 .changed-text{
@@ -32,8 +32,4 @@
 
 .column-title{
     text-align: center;
-}
-
-.wrap{
-    word-wrap: break-word;
 }

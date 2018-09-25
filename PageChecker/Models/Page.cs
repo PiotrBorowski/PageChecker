@@ -8,6 +8,12 @@ using System.Threading.Tasks;
 
 namespace PageCheckerAPI.Models
 {
+    public enum CheckingTypeEnum
+    {
+        Full,
+        Text
+    }
+
     public class Page
     {
         public Page()
@@ -22,6 +28,7 @@ namespace PageCheckerAPI.Models
         public TimeSpan RefreshRate { get; set; }
         public bool HasChanged { get; set; }
         public bool Stopped { get; set; }
+        public CheckingTypeEnum CheckingType { get; set; } 
 
         [Column(TypeName = "ntext")]
         public string Body { get; set; }

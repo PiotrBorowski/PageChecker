@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PageCheckerAPI.Models;
 
 namespace PageCheckerAPI.ViewModels.Page
 {
@@ -11,6 +12,7 @@ namespace PageCheckerAPI.ViewModels.Page
         public TimeSpan RefreshRate { get; set; }
         public bool HasChanged { get; set; }
         public bool Stopped { get; set; }
+        public CheckingTypeEnum CheckingType { get; set; }
         public string Url { get; set; }
     }
 }

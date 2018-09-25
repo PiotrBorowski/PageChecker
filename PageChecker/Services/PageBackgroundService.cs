@@ -15,25 +15,28 @@ namespace PageCheckerAPI.Services
     {
         private readonly IWebsiteService _websiteService;
         private readonly IPageRepository _repository;
+        private readonly IWebsiteComparer _websiteComparer;
 
-        public PageBackgroundService(IWebsiteService websiteService, IPageRepository repository)
+        public PageBackgroundService(IWebsiteService websiteService, IPageRepository repository, IWebsiteComparer websiteComparer)
         {
             _websiteService = websiteService;
             _repository = repository;
+            _websiteComparer = websiteComparer;
         }
 
         public void StartPageChangeChecking(PageDto pageDto)
         {
-            RecurringJob.AddOrUpdate(pageDto.PageId.ToString() ,() => CheckChange(pageDto)
+            RecurringJob.AddOrUpdate(pageDto.PageId.ToString() ,() => CheckChange(pageDto.PageId)
            , Cron.MinuteInterval(Convert.ToInt32(pageDto.RefreshRate.TotalMinutes)));
         }
 
-        public void CheckChange(PageDto pageDto)
+        public void CheckChange(int pageId)
         {
             //TODO: websiteservice ograniczenei tylko do body
-            string webBody = HtmlHelper.GetBodyText(_websiteService.GetHtml(pageDto.Url));
+            var pageDto = _repository.GetPage(pageId);
+            string webBody = _websiteService.GetHtml(pageDto.Url);
 
-            if (!string.Equals(pageDto.Body.Trim(), webBody.Trim()))
+            if (_websiteComparer.Compare(pageDto.Body, webBody, pageDto.CheckingType) == false)
             {
                 pageDto.HasChanged = true;
                 _repository.EditPage(pageDto);

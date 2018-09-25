@@ -84,7 +84,7 @@ namespace PageCheckerAPI.Controllers
                 return BadRequest(ModelState);
 
             addPageDto.UserId = GetUserId();
-            addPageDto.Body = HtmlHelper.GetBodyText(_websiteService.GetHtml(addPageDto.Url));
+            addPageDto.Body = _websiteService.GetHtml(addPageDto.Url);
 
             var addResult = _pageService.AddPage(addPageDto);
 

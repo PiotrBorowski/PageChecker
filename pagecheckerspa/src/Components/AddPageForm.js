@@ -12,7 +12,8 @@ export default class AddPageForm extends Component{
         this.state =
         {
             url: "",
-            refreshRate: "00:15"    
+            refreshRate: "00:15",
+            checkingType: 0
         };
     }
 
@@ -22,6 +23,10 @@ export default class AddPageForm extends Component{
 
     handleUserInputRefreshRate = e => {
         this.setState({ refreshRate: e.target.value });
+    }
+
+    handleUserInputCheckingType = e => {
+        this.setState({ checkingType: e.target.value });
     }
 
     handleSubmit = e => {
@@ -37,7 +42,8 @@ export default class AddPageForm extends Component{
     sendRequest = () => {
         axios.post(BASE_URL + "/page", {
             Url: this.state.url,
-            RefreshRate: this.state.refreshRate
+            RefreshRate: this.state.refreshRate,
+            CheckingType: this.state.checkingType
         }).then((response) => { 
             console.log(response);
             this.sendStartCheckingRequest(response.data.pageId);
@@ -101,9 +107,9 @@ export default class AddPageForm extends Component{
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="inputGroupSelect02">Type</label>
                     </div>
-                    <Input type="select" class="custom-select" id="inputGroupSelect02" >
-                        <option selected value="">Full (scripts included)</option>
-                        <option value="">Only text</option>
+                    <Input type="select" class="custom-select" id="inputGroupSelect02" onChange={this.handleUserInputCheckingType}>
+                        <option selected value="0">Full (scripts included)</option>
+                        <option value="1">Only text</option>
                     </Input>
             </div>              
             </div>

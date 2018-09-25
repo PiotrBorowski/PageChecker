@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using PageCheckerAPI.Models;
 
 namespace PageCheckerAPI.DTOs.Page
 {
@@ -15,5 +16,6 @@ namespace PageCheckerAPI.DTOs.Page
         [Required]
         public string Url { get; set; }
         public string Body { get; set; }
+        public CheckingTypeEnum CheckingType { get; set; }
     }
 }

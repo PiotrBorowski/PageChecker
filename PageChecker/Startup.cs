@@ -43,6 +43,7 @@ namespace PageCheckerAPI
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IPageBackgroundService, PageBackgroundService>();
             services.AddTransient<IWebsiteService, WebsiteService>();
+            services.AddTransient<IWebsiteComparer, WebsiteComparer>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {
                     options.TokenValidationParameters = new TokenValidationParameters

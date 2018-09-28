@@ -9,13 +9,13 @@ namespace PageCheckerAPI.DTOs.Page
 {
     public class AddPageDto
     {
-        [Required]
         public int UserId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Refresh Rate is required")]
         public TimeSpan RefreshRate { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Url is required")]
         public string Url { get; set; }
-        public string Body { get; set; }
+        [Required(ErrorMessage = "Choose checking type")]
         public CheckingTypeEnum CheckingType { get; set; }
+        public string Body { get; set; }
     }
 }

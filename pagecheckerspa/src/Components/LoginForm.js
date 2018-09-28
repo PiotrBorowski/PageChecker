@@ -55,7 +55,7 @@ class LoginForm extends Component {
 
         return (
  <div className="form-center">
-        <form noValidate>
+        <form onSubmit={this.handleLoginSubmit}t>
             <h2 className="title">Login</h2>
             <div className="form-group col-md-10 offset-md-1">
                 <div class="input-group mb-3">
@@ -67,6 +67,7 @@ class LoginForm extends Component {
                                     id="UsernameInput" 
                                     value={this.username}
                                     onChange={this.handleChangeUsername}
+                                    required
                                     />
                                     </div>
             </div>
@@ -81,15 +82,16 @@ class LoginForm extends Component {
                                         id="PasswordInput"
                                         value={this.password}
                                         onChange={this.handleChangePassword}
+                                        required
                                         />
                                         </div>
                 </div>
             <div className="row">
                 <div className="col-sm-4 button-form">
                     <button
+                        type="submit"
                         id="submitButton"
                         className="btn btn-dark"
-                        onClick={this.handleLoginSubmit}
                     >
                         Login
                     </button>

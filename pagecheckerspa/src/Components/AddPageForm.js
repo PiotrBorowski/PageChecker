@@ -74,7 +74,7 @@ export default class AddPageForm extends Component{
     render(){
         return (
         <div className="form-center">
-        <form noValidate>
+        <form onSubmit={this.handleSubmit}>
             <h2 className="title">Add Page</h2>
             <div className="form-group col-md-10 offset-md-1">
                 <div class="input-group mb-3">
@@ -117,9 +117,10 @@ export default class AddPageForm extends Component{
             <div className="row">
                 <div className="col-sm-4 button-form">
                     <button
+                        type="submit"
                         id="submitButton"
                         className="btn btn-dark"
-                        onClick={this.handleSubmit}
+                        
                     >
                         Submit
                     </button>

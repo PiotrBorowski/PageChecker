@@ -14,10 +14,11 @@ import "./Styles/Index.css";
 import NotFound from "./Components/NotFound"
 import AddPageForm from './Components/AddPageForm';
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faStroopwafel } from '@fortawesome/free-solid-svg-icons'
+import { faStroopwafel, faTrash } from '@fortawesome/free-solid-svg-icons'
 import RegisterForm from './Components/RegisterForm';
 
 library.add(faStroopwafel)
+library.add(faTrash)
 
 class App extends Component {
   render() {

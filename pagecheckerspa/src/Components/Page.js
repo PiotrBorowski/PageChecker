@@ -3,6 +3,7 @@ import "../Styles/Page.css"
 import axios from "axios"
 import {BASE_URL} from "../constants"
 import {ButtonGroup, UncontrolledCollapse, Button, CardBody, Card } from 'reactstrap';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default class Page extends Component{
     constructor(props){
@@ -97,8 +98,8 @@ export default class Page extends Component{
                     <div className="col-lg">
                     <ButtonGroup className="float-right">
                         {this.state.stopped ? StartButton : StopButton}
-                        <button className="btn" onClick={() => this.props.onDelete(this.props.pageId)}>
-                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        <button className="btn" onClick={() => this.props.onDelete(this.props.pageId)}>      
+                            <FontAwesomeIcon icon="trash" color="black" aria-hidden="true"/>
                         </button>
                     </ButtonGroup>
                     </div>

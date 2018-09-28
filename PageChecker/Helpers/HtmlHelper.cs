@@ -14,7 +14,7 @@ namespace PageCheckerAPI.Helpers
             var htmlDoc = new HtmlDocument();
             htmlDoc.LoadHtml(html);
 
-            var htmlNodes = htmlDoc.DocumentNode.SelectNodes("//body");
+            var htmlNodes = htmlDoc.DocumentNode.SelectNodes("//*[not(self::script)]/text()");
 
             StringBuilder result = new StringBuilder();
 

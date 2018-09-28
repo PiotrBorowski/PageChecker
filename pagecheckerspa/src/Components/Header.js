@@ -31,7 +31,8 @@ class Header extends Component {
                     {this.props.user.username}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <button className="dropdown-item my-di" onClick={this.handleLogout}>Logout</button>
+                        <button className="dropdown-item my-di" >Test</button>
+                        <button className="dropdown-item my-di" onClick={this.handleLogout}>Logout</button>
                     </div>
                 </li>
             </React.Fragment>

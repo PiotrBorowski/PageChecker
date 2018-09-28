@@ -46,7 +46,7 @@ export default class RegisterForm extends Component {
     render(){
         return (
  <div className="form-center">
-        <form noValidate>
+        <form onSubmit={this.handleLoginSubmit}>
             <h2 className="title">Register</h2>
             <div className="form-group col-md-10 offset-md-1">
                 <div class="input-group mb-3">
@@ -58,6 +58,7 @@ export default class RegisterForm extends Component {
                                     id="UsernameInput" 
                                     value={this.username}
                                     onChange={this.handleChangeUsername}
+                                    required
                                     />
                                     </div>
             </div>
@@ -72,6 +73,7 @@ export default class RegisterForm extends Component {
                                         id="PasswordInput"
                                         value={this.password}
                                         onChange={this.handleChangePassword}
+                                        required
                                         />
                                         </div>
                 </div>
@@ -80,9 +82,8 @@ export default class RegisterForm extends Component {
                     <button
                         id="submitButton"
                         className="btn btn-dark"
-                        onClick={this.handleLoginSubmit}
                     >
-                        Login
+                        Register
                     </button>
                 </div>
             </div>

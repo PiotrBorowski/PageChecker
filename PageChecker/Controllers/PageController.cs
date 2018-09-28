@@ -40,7 +40,7 @@ namespace PageCheckerAPI.Controllers
 
         // GET api/page
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult GetPages()
         {           
             List<PageDto> pageDtos = _pageService.GetPages(GetUserId());
             List<PageViewModel> pageViewModels = _mapper.Map<List<PageDto>, List<PageViewModel>>(pageDtos);
@@ -78,7 +78,7 @@ namespace PageCheckerAPI.Controllers
 
         // POST api/page
         [HttpPost]
-        public IActionResult Post([FromBody]AddPageDto addPageDto)
+        public IActionResult AddPage([FromBody]AddPageDto addPageDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

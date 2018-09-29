@@ -57,7 +57,7 @@ namespace PageCheckerAPI.Services
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(_configuration["Jwt:Issuer"], _configuration["Jwt:Issuer"], claims,
-                expires: DateTime.Now.AddMinutes(30), signingCredentials: creds);
+                expires: DateTime.Now.AddDays(1), signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }

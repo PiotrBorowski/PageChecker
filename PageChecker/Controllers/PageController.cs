@@ -83,8 +83,15 @@ namespace PageCheckerAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            addPageDto.UserId = GetUserId();
-            addPageDto.Body = _websiteService.GetHtml(addPageDto.Url);
+            try
+            {
+                addPageDto.UserId = GetUserId();
+                addPageDto.Body = _websiteService.GetHtml(addPageDto.Url);
+            }
+            catch (UriFormatException)
+            {
+                return BadRequest();
+            }
 
             var addResult = _pageService.AddPage(addPageDto);
 

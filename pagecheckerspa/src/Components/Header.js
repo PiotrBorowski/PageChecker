@@ -69,7 +69,7 @@ class Header extends Component {
         )
 
         const AddPage = (
-            <React.Fragment>
+            <React.Fragment> 
               <li className="nav-item">
                   <NavLink className="nav-link" to="/AddPage">Add Page</NavLink>
               </li>

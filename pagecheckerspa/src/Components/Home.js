@@ -9,6 +9,9 @@ export default class Home extends Component {
           <div className="container-fluid">
             <div className="hero-text">
               <h1>PageChecker</h1>
+              <p>
+               Check if change has occurred on the website
+              </p>
             </div>
           </div>
         </div>

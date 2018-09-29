@@ -78,7 +78,7 @@ export default class Page extends Component{
         const StartButton = (
             <React.Fragment>
                 <button className="btn" onClick={this.handleStartChecking}>
-                    <i class="fa fa-play" aria-hidden="true"></i>
+                    <FontAwesomeIcon icon="play" color="red" aria-hidden="true"/>
                 </button>
             </React.Fragment>)
 

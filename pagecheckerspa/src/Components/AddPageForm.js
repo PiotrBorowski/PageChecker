@@ -17,8 +17,12 @@ export default class AddPageForm extends Component{
         };
     }
 
-    handleUserInput = e => {
-        this.setState({ [e.target.name]: e.target.value });
+    handleUserInputUrl = e => {
+        var str = e.target.value.replace("https://", "");
+        if(str === e.target.value){
+            str = e.target.value.replace("http://", "");
+        }
+        this.setState({ [e.target.name]: str});
     }
 
     handleUserInputRefreshRate = e => {
@@ -41,7 +45,7 @@ export default class AddPageForm extends Component{
 
     sendRequest = () => {
         axios.post(BASE_URL + "/page", {
-            Url: this.state.url,
+            Url: "http://" + this.state.url,
             RefreshRate: this.state.refreshRate,
             CheckingType: this.state.checkingType
         }).then((response) => { 
@@ -51,7 +55,11 @@ export default class AddPageForm extends Component{
         }, (error) => {
             console.log(error);
             if(error.response.status === 401){
-            this.props.history.push("/unauthorized");
+                this.props.history.push("/login");
+            }
+
+            if(error.response.status === 400){
+                
             }
         }
         )
@@ -79,7 +87,7 @@ export default class AddPageForm extends Component{
             <div className="form-group col-md-10 offset-md-1">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroup-sizing-default">Website URL</span>
+                        <span class="input-group-text" id="inputGroup-sizing-default">http://</span>
                     </div>
                     <input
                         className="form-control"
@@ -87,7 +95,7 @@ export default class AddPageForm extends Component{
                         name="url"
                         ref="url"
                         value={this.state.url}
-                        onChange={this.handleUserInput}
+                        onChange={this.handleUserInputUrl}
                         required
                         />
                 </div>
@@ -119,8 +127,7 @@ export default class AddPageForm extends Component{
                     <button
                         type="submit"
                         id="submitButton"
-                        className="btn btn-dark"
-                        
+                        className="btn btn-dark"                        
                     >
                         Submit
                     </button>

@@ -32,7 +32,6 @@ namespace PageCheckerAPI.Services
 
         public void CheckChange(int pageId)
         {
-            //TODO: websiteservice ograniczenei tylko do body
             var pageDto = _repository.GetPage(pageId);
             string webBody = _websiteService.GetHtml(pageDto.Url);
 

@@ -45,6 +45,7 @@ namespace PageCheckerAPI
             services.AddTransient<IPageBackgroundService, PageBackgroundService>();
             services.AddTransient<IWebsiteService, WebsiteService>();
             services.AddTransient<IWebsiteComparer, WebsiteComparer>();
+            services.AddTransient<IEmailNotificationService, EmailNotificationService>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {

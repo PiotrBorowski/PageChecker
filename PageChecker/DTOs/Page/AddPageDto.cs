@@ -9,6 +9,7 @@ namespace PageCheckerAPI.DTOs.Page
 {
     public class AddPageDto
     {
+        public string Name { get; set; }
         public int UserId { get; set; }
         [Required(ErrorMessage = "Refresh Rate is required")]
         public TimeSpan RefreshRate { get; set; }

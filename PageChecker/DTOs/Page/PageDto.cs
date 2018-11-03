@@ -17,6 +17,7 @@ namespace PageCheckerAPI.DTOs.Page
         public TimeSpan RefreshRate { get; set; }
         [Required]
         public string Url { get; set; }
+        public string Name { get; set; }
         public string Body { get; set; }
         public bool HasChanged { get; set; }
         public bool Stopped { get; set; }

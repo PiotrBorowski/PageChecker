@@ -11,6 +11,7 @@ export default class AddPageForm extends Component{
 
         this.state =
         {
+            name: "",
             url: "",
             refreshRate: "00:15",
             checkingType: 0
@@ -33,6 +34,10 @@ export default class AddPageForm extends Component{
         this.setState({ checkingType: e.target.value });
     }
 
+    handleUserInputName = e =>{
+        this.setState({name: e.target.value});
+    }
+
     handleSubmit = e => {
         e.preventDefault();
         if(!TokenHelper.CheckToken()){
@@ -45,6 +50,7 @@ export default class AddPageForm extends Component{
 
     sendRequest = () => {
         axios.post(BASE_URL + "/page", {
+            Name: this.state.name,
             Url: "http://" + this.state.url,
             RefreshRate: this.state.refreshRate,
             CheckingType: this.state.checkingType
@@ -85,6 +91,20 @@ export default class AddPageForm extends Component{
         <form onSubmit={this.handleSubmit}>
             <h2 className="title">Add Page</h2>
             <div className="form-group col-md-10 offset-md-1">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
+                    </div>
+                    <input
+                        className="form-control"
+                        type="text"
+                        name="name"
+                        ref="name"
+                        value={this.state.name}
+                        onChange={this.handleUserInputName}
+                        required
+                        />
+                </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="inputGroup-sizing-default">http://</span>

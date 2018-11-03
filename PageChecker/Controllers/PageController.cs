@@ -23,13 +23,15 @@ namespace PageCheckerAPI.Controllers
         private readonly IMapper _mapper;
         private readonly IPageBackgroundService _pageBackService;
         private readonly IWebsiteService _websiteService;
+        private readonly IEmailNotificationService _emailNotification;
 
-        public PageController(IPageService pageService, IPageBackgroundService pageBackService, IWebsiteService websiteService, IMapper mapper)
+        public PageController(IPageService pageService, IPageBackgroundService pageBackService, IWebsiteService websiteService, IMapper mapper, IEmailNotificationService emailNotification)
         {
             _pageService = pageService;
             _pageBackService = pageBackService;
             _mapper = mapper;
             _websiteService = websiteService;
+            _emailNotification = emailNotification;
         }
 
         private int GetUserId()
@@ -119,5 +121,6 @@ namespace PageCheckerAPI.Controllers
 
             return Ok(deletePageDto);
         }
+
     }
 }

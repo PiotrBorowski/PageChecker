@@ -85,7 +85,7 @@ export default class Page extends Component{
         return (
             <div className="page" >
                 <h5 className="text-center text-truncate">
-                    {this.props.url}
+                    {this.props.name}
                 </h5>
                 <div className="row">
                     <div className="col-lg-5 text-truncate">

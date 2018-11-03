@@ -9,6 +9,7 @@ namespace PageCheckerAPI.ViewModels.Page
     public class PageViewModel
     {
         public int PageId { get; set; }
+        public string Name { get; set; }
         public TimeSpan RefreshRate { get; set; }
         public bool HasChanged { get; set; }
         public bool Stopped { get; set; }

@@ -24,11 +24,11 @@ namespace PageCheckerAPI.Models
 
         [Key]
         public int PageId { get; set; }
-
+        public string Name { get; set; }
         public TimeSpan RefreshRate { get; set; }
         public bool HasChanged { get; set; }
         public bool Stopped { get; set; }
-        public CheckingTypeEnum CheckingType { get; set; } 
+        public CheckingTypeEnum CheckingType { get; set; }
 
         [Column(TypeName = "ntext")]
         public string Body { get; set; }

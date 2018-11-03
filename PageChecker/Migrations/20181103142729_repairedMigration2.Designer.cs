@@ -6,13 +6,14 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using PageCheckerAPI.DataAccess;
+using PageCheckerAPI.Models;
 using System;
 
 namespace PageCheckerAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180923152318_Add-ntext")]
-    partial class Addntext
+    [Migration("20181103142729_repairedMigration2")]
+    partial class repairedMigration2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,7 +30,11 @@ namespace PageCheckerAPI.Migrations
                     b.Property<string>("Body")
                         .HasColumnType("ntext");
 
+                    b.Property<int>("CheckingType");
+
                     b.Property<bool>("HasChanged");
+
+                    b.Property<string>("Name");
 
                     b.Property<TimeSpan>("RefreshRate");
 

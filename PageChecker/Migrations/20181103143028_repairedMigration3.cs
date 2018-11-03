@@ -4,22 +4,24 @@ using System.Collections.Generic;
 
 namespace PageCheckerAPI.Migrations
 {
-    public partial class Addntext : Migration
+    public partial class repairedMigration3 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "Body",
+            migrationBuilder.AddColumn<int>(
+                name: "CheckingType",
                 table: "Pages",
-                type: "ntext",
-                nullable: true);
+                nullable: false,
+                defaultValue: 0);
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Body",
+                name: "CheckingType",
                 table: "Pages");
+
         }
     }
 }

@@ -12,8 +12,8 @@ using System;
 namespace PageCheckerAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180925144546_CheckingTypeEnum")]
-    partial class CheckingTypeEnum
+    [Migration("20181103144611_BodyNTextRepairDelete")]
+    partial class BodyNTextRepairDelete
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,12 +27,11 @@ namespace PageCheckerAPI.Migrations
                     b.Property<int>("PageId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Body")
-                        .HasColumnType("ntext");
-
                     b.Property<int>("CheckingType");
 
                     b.Property<bool>("HasChanged");
+
+                    b.Property<string>("Name");
 
                     b.Property<TimeSpan>("RefreshRate");
 

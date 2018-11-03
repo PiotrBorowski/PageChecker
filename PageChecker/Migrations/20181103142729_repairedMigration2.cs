@@ -4,21 +4,20 @@ using System.Collections.Generic;
 
 namespace PageCheckerAPI.Migrations
 {
-    public partial class CheckingTypeEnum : Migration
+    public partial class repairedMigration2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "CheckingType",
+            migrationBuilder.AddColumn<string>(
+                name: "Name",
                 table: "Pages",
-                nullable: false,
-                defaultValue: 0);
+                nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "CheckingType",
+                name: "Name",
                 table: "Pages");
         }
     }

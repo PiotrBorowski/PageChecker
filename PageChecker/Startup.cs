@@ -31,12 +31,13 @@ namespace PageCheckerAPI
             services.AddMvc();
             services.AddCors();
             services.AddDbContext<ApplicationDbContext>(opt =>
-                opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                opt.UseSqlServer(Configuration.GetConnectionString("AzurePageChecker")));
             services.AddAutoMapper();
             services.AddHangfire(conf =>
-                {
-                    conf.UseSqlServerStorage("Server=(localdb)\\MSSQLLocalDB;Integrated Security=True");
-                });
+            {
+                conf.UseSqlServerStorage(Configuration.GetConnectionString("AzurePageChecker"));
+                // conf.UseSqlServerStorage("Server=(localdb)\\MSSQLLocalDB;Integrated Security=True");
+            });
             services.AddTransient<IPageRepository, PageRepository>();
             services.AddTransient<IPageService, PageService>();
             services.AddTransient<IUserRepository, UserRepository>();
@@ -44,6 +45,7 @@ namespace PageCheckerAPI
             services.AddTransient<IPageBackgroundService, PageBackgroundService>();
             services.AddTransient<IWebsiteService, WebsiteService>();
             services.AddTransient<IWebsiteComparer, WebsiteComparer>();
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {
                     options.TokenValidationParameters = new TokenValidationParameters

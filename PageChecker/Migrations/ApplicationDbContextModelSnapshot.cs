@@ -33,6 +33,8 @@ namespace PageCheckerAPI.Migrations
 
                     b.Property<bool>("HasChanged");
 
+                    b.Property<string>("Name");
+
                     b.Property<TimeSpan>("RefreshRate");
 
                     b.Property<bool>("Stopped");

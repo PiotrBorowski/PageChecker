@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -91,6 +92,10 @@ namespace PageCheckerAPI.Controllers
                 addPageDto.Body = _websiteService.GetHtml(addPageDto.Url);
             }
             catch (UriFormatException)
+            {
+                return BadRequest();
+            }
+            catch (WebException)
             {
                 return BadRequest();
             }

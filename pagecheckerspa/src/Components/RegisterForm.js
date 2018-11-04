@@ -40,6 +40,10 @@ export default class RegisterForm extends Component {
             if(error.response.status === 401){
                     this.props.history.push('/unauthorized');
             }
+
+            if(error.response.status === 400){
+                this.refs.UsernameInput.style.borderColor = "red";
+            }
         });
     }
 
@@ -56,6 +60,7 @@ export default class RegisterForm extends Component {
                                     <input 
                                     class="form-control" 
                                     id="UsernameInput" 
+                                    ref="UsernameInput"
                                     value={this.username}
                                     onChange={this.handleChangeUsername}
                                     required

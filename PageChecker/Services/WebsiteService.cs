@@ -13,6 +13,7 @@ namespace PageCheckerAPI.Services
     {
         public string GetHtml(string url)
         {
+
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 

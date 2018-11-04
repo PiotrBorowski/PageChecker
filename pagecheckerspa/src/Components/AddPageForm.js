@@ -65,7 +65,7 @@ export default class AddPageForm extends Component{
             }
 
             if(error.response.status === 400){
-                
+                this.refs.url.style.borderColor = "red";
             }
         }
         )

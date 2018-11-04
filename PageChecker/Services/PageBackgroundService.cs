@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net;
 using System.Threading.Tasks;
 using Hangfire;
 using PageCheckerAPI.DTOs.Page;
@@ -14,13 +15,13 @@ namespace PageCheckerAPI.Services
     public class PageBackgroundService : IPageBackgroundService
     {
         private readonly IWebsiteService _websiteService;
-        private readonly IPageRepository _repository;
+        private readonly IPageService _pageService;
         private readonly IWebsiteComparer _websiteComparer;
 
-        public PageBackgroundService(IWebsiteService websiteService, IPageRepository repository, IWebsiteComparer websiteComparer)
+        public PageBackgroundService(IWebsiteService websiteService, IPageService pageService, IWebsiteComparer websiteComparer)
         {
             _websiteService = websiteService;
-            _repository = repository;
+            _pageService = pageService;
             _websiteComparer = websiteComparer;
         }
 
@@ -32,14 +33,23 @@ namespace PageCheckerAPI.Services
 
         public void CheckChange(int pageId)
         {
-            var pageDto = _repository.GetPage(pageId);
-            string webBody = _websiteService.GetHtml(pageDto.Url);
+            var pageDto = _pageService.GetPage(pageId);
 
-            if (_websiteComparer.Compare(pageDto.Body, webBody, pageDto.CheckingType) == false)
+            try
             {
-                pageDto.HasChanged = true;
-                _repository.EditPage(pageDto);
+                string webBody = _websiteService.GetHtml(pageDto.Url);
+
+                if (_websiteComparer.Compare(pageDto.Body, webBody, pageDto.CheckingType) == false)
+                {
+                    pageDto.HasChanged = true;
+                    _pageService.EditPage(pageDto);
+                }
             }
+            catch (WebException)
+            {
+                
+            }
+
         }
 
         public void StopPageChangeChecking(string pageId)

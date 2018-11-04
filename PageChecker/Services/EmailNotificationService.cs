@@ -25,12 +25,19 @@ namespace PageCheckerAPI.Services
 
         public void SendEmailNotification(string emailTo, string content)
         {
-            message = new MailMessage(Email, emailTo);
+            try
+            {
+                message = new MailMessage(Email, emailTo);
 
-            message.Body = content;
-            message.Subject = "PageChecker Notification";
+                message.Body = content;
+                message.Subject = "PageChecker Notification";
 
-            client.Send(message);
+                client.Send(message);
+            }
+            catch (FormatException)
+            {
+                //TODO: LOGS
+            }
         }
     }
 }

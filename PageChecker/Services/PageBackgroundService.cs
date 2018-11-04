@@ -17,12 +17,21 @@ namespace PageCheckerAPI.Services
         private readonly IWebsiteService _websiteService;
         private readonly IPageService _pageService;
         private readonly IWebsiteComparer _websiteComparer;
+        private readonly IEmailNotificationService _emailNotification;
+        private readonly IUserService _userService;
 
-        public PageBackgroundService(IWebsiteService websiteService, IPageService pageService, IWebsiteComparer websiteComparer)
+        public PageBackgroundService(
+            IWebsiteService websiteService, 
+            IPageService pageService, 
+            IWebsiteComparer websiteComparer, 
+            IEmailNotificationService emailNotification,
+            IUserService userService)
         {
             _websiteService = websiteService;
             _pageService = pageService;
             _websiteComparer = websiteComparer;
+            _emailNotification = emailNotification;
+            _userService = userService;
         }
 
         public void StartPageChangeChecking(PageDto pageDto)
@@ -43,11 +52,13 @@ namespace PageCheckerAPI.Services
                 {
                     pageDto.HasChanged = true;
                     _pageService.EditPage(pageDto);
+                    var user = _userService.GetUser(pageDto.UserId);
+                    _emailNotification.SendEmailNotification(user.UserName, $"Page named:{pageDto.Name}, URL: {pageDto.Url} has changed.");
                 }
             }
             catch (WebException)
             {
-                
+                //TODO: LOGS
             }
 
         }

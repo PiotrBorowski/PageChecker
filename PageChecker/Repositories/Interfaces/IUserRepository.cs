@@ -11,5 +11,6 @@ namespace PageCheckerAPI.Repositories.Interfaces
     {
         User Add(UserDto user);
         User GetUser(string username);
+        User GetUser(int userId);
     }
 }

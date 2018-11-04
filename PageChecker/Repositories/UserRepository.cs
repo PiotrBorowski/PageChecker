@@ -40,5 +40,10 @@ namespace PageCheckerAPI.Repositories
         {
             return _context.Users.SingleOrDefault(x => x.UserName == username);
         }
+
+        public User GetUser(int userId)
+        {
+            return _context.Users.SingleOrDefault(x => x.UserId == userId);
+        }
     }
 }

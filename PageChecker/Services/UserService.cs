@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using PageCheckerAPI.DTOs.User;
@@ -19,14 +20,16 @@ namespace PageCheckerAPI.Services
     {
         private readonly IUserRepository _repository;
         private readonly IConfiguration _configuration;
+        private readonly IMapper _mapper;
 
-        public UserService(IUserRepository repository, IConfiguration configuration)
+        public UserService(IUserRepository repository, IConfiguration configuration, IMapper mapper)
         {
             _repository = repository;
             _configuration = configuration;
+            _mapper = mapper;
         }
 
-        public User Login(UserDto userDto)
+        public UserClaimsDto Login(UserDto userDto)
         {
             User user = _repository.GetUser(userDto.Username);
 
@@ -36,15 +39,22 @@ namespace PageCheckerAPI.Services
             if (!HashSaltHelper.VerifyPasswordHash(userDto.Password, user.PasswordHash, user.PasswordSalt))
                 return null;
 
-            return user;
+            return _mapper.Map<UserClaimsDto>(user);
         }
 
-        public User Register(UserDto userDto)
+        public UserClaimsDto Register(UserDto userDto)
         {
             if (_repository.GetUser(userDto.Username) != null)
                 return null;
 
-            return _repository.Add(userDto);
+            var user = _repository.Add(userDto);
+            return _mapper.Map<UserClaimsDto>(userDto);
+        }
+
+        public UserClaimsDto GetUser(int userId)
+        {
+           var user = _repository.GetUser(userId);
+            return _mapper.Map<UserClaimsDto>(user);
         }
 
         public string BuildToken(UserClaimsDto userClaimsDto)

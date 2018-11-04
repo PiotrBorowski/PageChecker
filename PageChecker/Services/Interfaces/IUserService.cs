@@ -9,8 +9,9 @@ namespace PageCheckerAPI.Services.Interfaces
 {
     public interface IUserService
     {
-        User Register(UserDto userDto);
-        User Login(UserDto userDto);
+        UserClaimsDto Register(UserDto userDto);
+        UserClaimsDto Login(UserDto userDto);
+        UserClaimsDto GetUser(int userId);
         string BuildToken(UserClaimsDto claimsDto);
     }
 }

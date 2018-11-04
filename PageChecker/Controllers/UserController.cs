@@ -30,7 +30,7 @@ namespace PageCheckerAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            User user = _service.Register(userDto);
+            UserClaimsDto user = _service.Register(userDto);
 
             if (user == null)
                 return BadRequest(ModelState);
@@ -41,12 +41,11 @@ namespace PageCheckerAPI.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] UserDto userDto)
         {
-            User user = _service.Login(userDto);
+            UserClaimsDto user = _service.Login(userDto);
             if (user == null)
                 return Unauthorized();
 
-            UserClaimsDto clamDto = _mapper.Map<UserClaimsDto>(user);
-            string tokenString = _service.BuildToken(clamDto);
+            string tokenString = _service.BuildToken(user);
 
             var userViewModel = new UserViewModel
             {

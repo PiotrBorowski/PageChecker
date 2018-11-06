@@ -60,7 +60,7 @@ class LoginForm extends Component {
             <div className="form-group col-md-10 offset-md-1">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroup-sizing-default">Username</span>
+                        <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
                     </div>
                                     <input 
                                     class="form-control" 

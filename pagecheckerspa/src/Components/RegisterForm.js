@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import "../Styles/Form.css"
 import axios from 'axios';
 import {BASE_URL} from "../constants"
+import emailHelper from "../helpers/emailHelper"
+import EmailHelper from "../helpers/emailHelper";
 
 export default class RegisterForm extends Component {
     
@@ -16,6 +18,17 @@ export default class RegisterForm extends Component {
 
     handleChangeUsername = e => {
         this.setState({username: e.target.value});
+        if(!EmailHelper.Validate(e.target.value))
+        {
+            this.refs.UsernameInput.style.borderColor = "red";
+        }
+        else{
+            this.refs.UsernameInput.style.borderColor = "green";
+        }
+    }
+
+    checkUsernameValidity() {
+        return EmailHelper.Validate(this.state.username);
     }
 
     handleChangePassword = e => {
@@ -55,7 +68,7 @@ export default class RegisterForm extends Component {
             <div className="form-group col-md-10 offset-md-1">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroup-sizing-default">Username</span>
+                        <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
                     </div>
                                     <input 
                                     class="form-control" 
@@ -87,6 +100,8 @@ export default class RegisterForm extends Component {
                     <button
                         id="submitButton"
                         className="btn btn-dark"
+                        ref="submitButton"
+                        disabled={!this.checkUsernameValidity()}
                     >
                         Register
                     </button>

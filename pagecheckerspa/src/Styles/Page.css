@@ -17,6 +17,10 @@
     cursor: pointer;
 }
 
+.btn-block{
+    margin-top: 5px;
+}
+
 .title{
     text-align: center;
     padding: 10px;

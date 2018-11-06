@@ -29,7 +29,7 @@ input.active:valid {
     margin-right: auto;
     min-width: 90px;
     max-width: 600px;
-    margin-top: 200px;
+    margin-top: 100px;
     border:thin black solid;
     border-radius: 5px;
     background-color: #f2f2f2;

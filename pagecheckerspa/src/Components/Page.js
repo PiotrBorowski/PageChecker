@@ -4,6 +4,7 @@ import axios from "axios"
 import {BASE_URL} from "../constants"
 import {ButtonGroup, UncontrolledCollapse, Button, CardBody, Card } from 'reactstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import DeleteModal from "./DeleteModal";
 
 export default class Page extends Component{
     constructor(props){
@@ -11,7 +12,8 @@ export default class Page extends Component{
         this.state = {
             pageId: this.props.pageId,
             url: this.props.url,
-            stopped: this.props.stopped
+            stopped: this.props.stopped,
+            modal: false
         };
     }
 
@@ -84,6 +86,7 @@ export default class Page extends Component{
 
         return (
             <div className="page" >
+            {this.state.modal ? <DeleteModal onDelete = {this.props.onDelete} pageId = {this.props.pageId} modal = {this.state.modal}/> : null} 
                 <h5 className="text-center text-truncate">
                     {this.props.name}
                 </h5>
@@ -98,14 +101,14 @@ export default class Page extends Component{
                     <div className="col-lg">
                     <ButtonGroup className="float-right">
                         {this.state.stopped ? StartButton : StopButton}
-                        <button className="btn" onClick={() => this.props.onDelete(this.props.pageId)}>      
+                        <button className="btn" onClick={() => ( this.setState({modal: true}))}>                                 
                             <FontAwesomeIcon icon="trash" color="black" aria-hidden="true"/>
                         </button>
                     </ButtonGroup>
                     </div>
                 </div>
-                <div className="text-center pointer" id={"toggler" + this.props.pageId} >
-                    More
+                <div className="btn btn-dark btn-block" id={"toggler" + this.props.pageId} >
+                    More Info
                 </div>
                 <UncontrolledCollapse toggler={"#toggler"+this.props.pageId}>
                     <Card>

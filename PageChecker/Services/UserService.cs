@@ -48,7 +48,7 @@ namespace PageCheckerAPI.Services
                 return null;
 
             var user = _repository.Add(userDto);
-            return _mapper.Map<UserClaimsDto>(userDto);
+            return _mapper.Map<UserClaimsDto>(user);
         }
 
         public UserClaimsDto GetUser(int userId)

@@ -53,7 +53,11 @@ namespace PageCheckerAPI.Services
                     pageDto.HasChanged = true;
                     _pageService.EditPage(pageDto);
                     var user = _userService.GetUser(pageDto.UserId);
-                    _emailNotification.SendEmailNotification(user.UserName, $"Page named:{pageDto.Name}, URL: {pageDto.Url} has changed.");
+                    if (user.Email == string.Empty)
+                    {
+                        _emailNotification.SendEmailNotification(user.UserName,
+                            $"Page named:{pageDto.Name}, URL: {pageDto.Url} has changed.");
+                    }
                 }
             }
             catch (WebException)

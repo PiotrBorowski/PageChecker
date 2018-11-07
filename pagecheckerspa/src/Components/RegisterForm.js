@@ -11,13 +11,13 @@ export default class RegisterForm extends Component {
     {
         super(props);
         this.state = {
-            username: "",
+            email: "",
             password: ""
         };
     }
 
     handleChangeUsername = e => {
-        this.setState({username: e.target.value});
+        this.setState({email: e.target.value});
         if(!EmailHelper.Validate(e.target.value))
         {
             this.refs.UsernameInput.style.borderColor = "red";
@@ -28,7 +28,7 @@ export default class RegisterForm extends Component {
     }
 
     checkUsernameValidity() {
-        return EmailHelper.Validate(this.state.username);
+        return EmailHelper.Validate(this.state.email);
     }
 
     handleChangePassword = e => {
@@ -42,7 +42,8 @@ export default class RegisterForm extends Component {
 
     sendRequest = () => {
          axios.post(BASE_URL + "/user/register", {
-            Username: this.state.username,
+            Username: this.state.email,
+            Email: this.state.email,
             Password: this.state.password 
         }).then(response => {
             console.log(response);

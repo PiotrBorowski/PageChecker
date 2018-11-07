@@ -12,6 +12,7 @@ namespace PageCheckerAPI.Models
         public int UserId { get; set; }
         [Required]
         public string UserName { get; set; }
+        public string Email { get; set; }
         [Required]
         public byte[] PasswordHash { get; set; }
         [Required]

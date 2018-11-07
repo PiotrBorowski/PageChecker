@@ -4,7 +4,7 @@ import axios from "axios"
 import {BASE_URL} from "../constants"
 import {ButtonGroup, UncontrolledCollapse, Button, CardBody, Card } from 'reactstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import DeleteModal from "./DeleteModal";
+import {  Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 export default class Page extends Component{
     constructor(props){
@@ -44,6 +44,12 @@ export default class Page extends Component{
         }
         )
     }
+
+    toggleModal = () =>{
+        this.setState({
+          modal: !this.state.modal
+        });
+      }
 
     render(){
 
@@ -86,7 +92,17 @@ export default class Page extends Component{
 
         return (
             <div className="page" >
-            {this.state.modal ? <DeleteModal onDelete = {this.props.onDelete} pageId = {this.props.pageId} modal = {this.state.modal}/> : null} 
+                <Modal isOpen={this.state.modal} toggle={this.toggle}>
+                <ModalHeader toggle={this.toggleModal}>Confirm</ModalHeader>
+                <ModalBody>
+                    Do you really want to delete this page?
+                </ModalBody>
+                <ModalFooter>
+                    <Button color="danger" onClick={() => this.props.onDelete(this.props.pageId)}>Delete</Button>
+                    <Button color="secondary" onClick={this.toggleModal}>Cancel</Button>
+                </ModalFooter>
+                </Modal>
+           
                 <h5 className="text-center text-truncate">
                     {this.props.name}
                 </h5>
@@ -101,7 +117,7 @@ export default class Page extends Component{
                     <div className="col-lg">
                     <ButtonGroup className="float-right">
                         {this.state.stopped ? StartButton : StopButton}
-                        <button className="btn" onClick={() => ( this.setState({modal: true}))}>                                 
+                        <button className="btn" onClick={() => this.toggleModal()}>                                 
                             <FontAwesomeIcon icon="trash" color="black" aria-hidden="true"/>
                         </button>
                     </ButtonGroup>

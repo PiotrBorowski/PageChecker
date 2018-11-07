@@ -5,6 +5,7 @@ import {BASE_URL} from "../constants"
 import {ButtonGroup, UncontrolledCollapse, Button, CardBody, Card } from 'reactstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {  Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import HtmlDifference from './HtmlDifference';
 
 export default class Page extends Component{
     constructor(props){
@@ -129,10 +130,14 @@ export default class Page extends Component{
                 <UncontrolledCollapse toggler={"#toggler"+this.props.pageId}>
                     <Card>
                         <CardBody>
-                        <div className="col-lg-4">
-                        <span style={{"fontWeight":"normal"}}>Refresh rate: </span><time>{this.props.refreshRate}</time><br/>
-                        <span style={{"fontWeight":"normal"}}>Checking Type: </span>{CheckingType(this.props)}
-                    </div>
+                         <div className="col-lg-4">
+                            <span style={{"fontWeight":"normal"}}>Refresh rate: </span><time>{this.props.refreshRate}</time><br/>
+                            <span style={{"fontWeight":"normal"}}>Checking Type: </span>{CheckingType(this.props)}<br/><br/>
+                            <h5 style={{"fontWeight":"normal"}}>Difference:</h5>
+                        </div>
+                        <div className="col-lg-12">         
+                            <HtmlDifference html = "<h1>Hhehasdasdasdasdsad<h5>XDDD</h5>asdehe</h1>" />
+                        </div>
                         </CardBody>
                     </Card>
                 </UncontrolledCollapse>

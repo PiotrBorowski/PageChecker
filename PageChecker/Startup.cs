@@ -13,6 +13,7 @@ using PageCheckerAPI.Repositories;
 using PageCheckerAPI.Repositories.Interfaces;
 using PageCheckerAPI.Services;
 using PageCheckerAPI.Services.Interfaces;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace PageCheckerAPI
 {
@@ -28,6 +29,7 @@ namespace PageCheckerAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSwaggerGen(c => c.SwaggerDoc("v1", new Info {Title = "PageChecker", Version = "v1"}));
             services.AddMvc();
             services.AddCors();
             services.AddDbContext<ApplicationDbContext>(opt =>
@@ -65,8 +67,12 @@ namespace PageCheckerAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1"));
+
             app.UseHangfireServer();
             app.UseHangfireDashboard();
+            
 
             if (env.IsDevelopment())
             {

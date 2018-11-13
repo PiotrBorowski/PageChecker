@@ -94,7 +94,7 @@ export default class Page extends Component{
         const Difference = (
             <div className="col-lg-12"> 
                 <h5 style={{"fontWeight":"normal"}}>Difference:</h5>        
-                <HtmlDifference html = "<h1>Hhehasdasdasdasdsad<h5>XDDD</h5>asdehe</h1>" />
+                <HtmlDifference html = {this.props.bodyDifference} />
             </div>
         )
 

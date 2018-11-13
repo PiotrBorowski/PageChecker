@@ -25,5 +25,10 @@ namespace PageCheckerAPI.Helpers
 
             return result.ToString();
         }
+
+        public static string GetBodyTextDifference(string html1, string html2)
+        {
+            return string.Join(" ", GetBodyText(html2).Split(' ').Where(item => !GetBodyText(html1).Contains(item)));
+        }
     }
 }

@@ -19,6 +19,7 @@ namespace PageCheckerAPI.DTOs.Page
         public string Url { get; set; }
         public string Name { get; set; }
         public string Body { get; set; }
+        public string BodyDifference { get; set; }
         public bool HasChanged { get; set; }
         public bool Stopped { get; set; }
         public CheckingTypeEnum CheckingType { get; set; }

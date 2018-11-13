@@ -51,7 +51,9 @@ namespace PageCheckerAPI.Services
                 if (_websiteComparer.Compare(pageDto.Body, webBody, pageDto.CheckingType) == false)
                 {
                     pageDto.HasChanged = true;
+                    pageDto.BodyDifference = HtmlHelper.GetBodyTextDifference(pageDto.Body, webBody);
                     _pageService.EditPage(pageDto);
+                  
                     var user = _userService.GetUser(pageDto.UserId);
                     if (user.Email == string.Empty)
                     {

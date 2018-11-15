@@ -30,10 +30,13 @@ namespace PageCheckerAPI.Helpers
         {
             StringBuilder result = new StringBuilder();
 
-            var words1 = html1.Split(" ");
             var words2 = html2.Split(" ");
 
-            //TODO: DIFFERENCE ALGORITHM
+            foreach (var word in words2)
+            {
+                if (!html1.Contains(word))
+                    result.Append(word+" ");
+            }
 
             return result.ToString();
             //return string.Join(" ", GetBodyText(html2).Split(' ').Where(item => !GetBodyText(html1).Contains(item)));

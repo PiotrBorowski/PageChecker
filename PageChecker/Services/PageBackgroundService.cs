@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Hangfire;
 using PageCheckerAPI.DTOs.Page;
 using PageCheckerAPI.Helpers;
+using PageCheckerAPI.Models;
 using PageCheckerAPI.Repositories.Interfaces;
 using PageCheckerAPI.Services.Interfaces;
 
@@ -51,7 +52,14 @@ namespace PageCheckerAPI.Services
                 if (_websiteComparer.Compare(pageDto.Body, webBody, pageDto.CheckingType) == false)
                 {
                     pageDto.HasChanged = true;
-                    pageDto.BodyDifference = HtmlHelper.GetBodyTextDifference(pageDto.Body, webBody);
+                    if (pageDto.CheckingType == CheckingTypeEnum.Text)
+                    {
+                        pageDto.BodyDifference = HtmlHelper.GetBodyTextDifference(HtmlHelper.GetBodyText(pageDto.Body), HtmlHelper.GetBodyText(webBody));
+                    }
+                    else
+                    {
+                     pageDto.BodyDifference = HtmlHelper.GetBodyTextDifference(pageDto.Body, webBody);
+                    }
                     _pageService.EditPage(pageDto);
                   
                     var user = _userService.GetUser(pageDto.UserId);

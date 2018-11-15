@@ -116,8 +116,8 @@ namespace PageCheckerAPI.Controllers
 
             try
             {
-                _pageService.DeletePage(deletePageDto, GetUserId());
                 _pageBackService.StopPageChangeChecking(deletePageDto.PageId.ToString());
+                _pageService.DeletePage(deletePageDto, GetUserId());
             }
             catch (InvalidOperationException)
             {

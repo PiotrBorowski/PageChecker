@@ -28,7 +28,15 @@ namespace PageCheckerAPI.Helpers
 
         public static string GetBodyTextDifference(string html1, string html2)
         {
-            return string.Join(" ", GetBodyText(html2).Split(' ').Where(item => !GetBodyText(html1).Contains(item)));
+            StringBuilder result = new StringBuilder();
+
+            var words1 = html1.Split(" ");
+            var words2 = html2.Split(" ");
+
+            //TODO: DIFFERENCE ALGORITHM
+
+            return result.ToString();
+            //return string.Join(" ", GetBodyText(html2).Split(' ').Where(item => !GetBodyText(html1).Contains(item)));
         }
     }
 }

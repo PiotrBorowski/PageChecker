@@ -32,6 +32,8 @@ namespace PageCheckerAPI.Models
 
         [Column(TypeName = "ntext")]
         public string Body { get; set; }
+        [Column(TypeName = "ntext")]
+        public string BodyDifference { get; set; }
         [Required]
         public string Url { get; set; }
         [Required]

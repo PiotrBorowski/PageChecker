@@ -26,9 +26,13 @@ namespace PageCheckerAPI.Services
                 {
                     readStream = new StreamReader(receiveStream);
                 }
-                else
+            else
                 {
-                    readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
+                    var encoding = response.CharacterSet.ToLower().Contains("utf-8") ? 
+                        Encoding.UTF8 : 
+                        Encoding.GetEncoding(response.CharacterSet);
+
+                    readStream = new StreamReader(receiveStream, encoding);
                 }
 
                 string body = readStream.ReadToEnd();

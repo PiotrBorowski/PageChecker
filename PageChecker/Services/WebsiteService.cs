@@ -26,7 +26,7 @@ namespace PageCheckerAPI.Services
                 {
                     readStream = new StreamReader(receiveStream);
                 }
-            else
+                else
                 {
                     var encoding = response.CharacterSet.ToLower().Contains("utf-8") ? 
                         Encoding.UTF8 : 

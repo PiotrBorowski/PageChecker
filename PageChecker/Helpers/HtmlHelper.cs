@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
+using PageCheckerAPI.Models;
 
 namespace PageCheckerAPI.Helpers
 {
@@ -26,7 +27,7 @@ namespace PageCheckerAPI.Helpers
             return result.ToString();
         }
 
-        public static string GetBodyTextDifference(string html1, string html2)
+        public static string GetTextDifference(string html1, string html2)
         {
             StringBuilder result = new StringBuilder();
 
@@ -41,5 +42,34 @@ namespace PageCheckerAPI.Helpers
             return result.ToString();
             //return string.Join(" ", GetBodyText(html2).Split(' ').Where(item => !GetBodyText(html1).Contains(item)));
         }
+
+        public static bool Compare(string html1, string html2, CheckingTypeEnum type)
+        {
+            switch (type)
+            {
+                case CheckingTypeEnum.Full:
+                    return FullCompare(html1, html2);
+
+                case CheckingTypeEnum.Text:
+                    return TextCompare(html1, html2);
+
+                default:
+                    return FullCompare(html1, html2);
+            }
+        }
+
+        private static bool FullCompare(string html1, string html2)
+        {
+            return string.Equals(html1.Trim(), html2.Trim());
+        }
+
+        private static bool TextCompare(string html1, string html2)
+        {
+            var body1 = GetBodyText(html1);
+            var body2 = GetBodyText(html2);
+
+            return string.Equals(body1, body2);
+        }
     }
 }
+

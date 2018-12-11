@@ -40,14 +40,13 @@ namespace PageCheckerAPI
                 conf.UseSqlServerStorage(Configuration.GetConnectionString("DefaultConnection"));
                 // conf.UseSqlServerStorage("Server=(localdb)\\MSSQLLocalDB;Integrated Security=True");
             });
-            services.AddTransient<IPageRepository, PageRepository>();
-            services.AddTransient<IPageService, PageService>();
-            services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IPageBackgroundService, PageBackgroundService>();
-            services.AddTransient<IWebsiteService, WebsiteService>();
-            services.AddTransient<IWebsiteComparer, WebsiteComparer>();
-            services.AddTransient<IEmailNotificationService, EmailNotificationService>();
+            services.AddScoped<IPageRepository, PageRepository>();
+            services.AddScoped<IPageService, PageService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IPageBackgroundService, PageBackgroundService>();
+            services.AddScoped<IWebsiteService, WebsiteService>();
+            services.AddScoped<IEmailNotificationService, EmailNotificationService>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {

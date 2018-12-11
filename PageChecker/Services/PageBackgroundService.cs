@@ -17,20 +17,17 @@ namespace PageCheckerAPI.Services
     {
         private readonly IWebsiteService _websiteService;
         private readonly IPageService _pageService;
-        private readonly IWebsiteComparer _websiteComparer;
         private readonly IEmailNotificationService _emailNotification;
         private readonly IUserService _userService;
 
         public PageBackgroundService(
             IWebsiteService websiteService, 
-            IPageService pageService, 
-            IWebsiteComparer websiteComparer, 
+            IPageService pageService,  
             IEmailNotificationService emailNotification,
             IUserService userService)
         {
             _websiteService = websiteService;
             _pageService = pageService;
-            _websiteComparer = websiteComparer;
             _emailNotification = emailNotification;
             _userService = userService;
         }
@@ -49,16 +46,18 @@ namespace PageCheckerAPI.Services
             {
                 string webBody = _websiteService.GetHtml(pageDto.Url);
 
-                if (_websiteComparer.Compare(pageDto.Body, webBody, pageDto.CheckingType) == false)
+                if (HtmlHelper.Compare(pageDto.Body, webBody, pageDto.CheckingType) == false)
                 {
                     pageDto.HasChanged = true;
                     if (pageDto.CheckingType == CheckingTypeEnum.Text)
                     {
-                        pageDto.BodyDifference = HtmlHelper.GetBodyTextDifference(HtmlHelper.GetBodyText(pageDto.Body), HtmlHelper.GetBodyText(webBody));
+                        var pageBodyText = HtmlHelper.GetBodyText(pageDto.Body);
+                        var webBodyText = HtmlHelper.GetBodyText(webBody);
+                        pageDto.BodyDifference = HtmlHelper.GetTextDifference(pageBodyText, webBodyText);
                     }
                     else
                     {
-                     pageDto.BodyDifference = HtmlHelper.GetBodyTextDifference(pageDto.Body, webBody);
+                        pageDto.BodyDifference = HtmlHelper.GetTextDifference(pageDto.Body, webBody);
                     }
                     _pageService.EditPage(pageDto);
                   

@@ -31,12 +31,26 @@ namespace PageCheckerAPI.Helpers
         {
             StringBuilder result = new StringBuilder();
 
+            var words1 = html1.Split(" ");
             var words2 = html2.Split(" ");
+            bool first = true;
 
             foreach (var word in words2)
             {
-                if (!html1.Contains(word))
-                    result.Append(word+" ");
+                if (!words1.Contains(word))
+                {
+                    if (first == true)
+                    {
+                        result.Append(word);
+                        first = false;
+                    }
+                    else
+                    {
+                        result.Append(" " + word);
+                    }
+                   
+                }
+
             }
 
             return result.ToString();

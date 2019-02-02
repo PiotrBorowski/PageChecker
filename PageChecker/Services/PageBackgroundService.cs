@@ -19,7 +19,7 @@ namespace PageCheckerAPI.Services
         private readonly IPageService _pageService;
         private readonly IEmailNotificationService _emailNotification;
         private readonly IUserService _userService;
-
+        private readonly diff_match_patch _differ; 
         public PageBackgroundService(
             IWebsiteService websiteService, 
             IPageService pageService,  
@@ -30,6 +30,7 @@ namespace PageCheckerAPI.Services
             _pageService = pageService;
             _emailNotification = emailNotification;
             _userService = userService;
+            _differ = new diff_match_patch();
         }
 
         public void StartPageChangeChecking(PageDto pageDto)
@@ -49,18 +50,22 @@ namespace PageCheckerAPI.Services
                 if (HtmlHelper.Compare(pageDto.Body, webBody, pageDto.CheckingType) == false)
                 {
                     pageDto.HasChanged = true;
+                    List<Diff> listOfDiffs;
                     if (pageDto.CheckingType == CheckingTypeEnum.Text)
                     {
                         var pageBodyText = HtmlHelper.GetBodyText(pageDto.Body);
                         var webBodyText = HtmlHelper.GetBodyText(webBody);
-                        pageDto.BodyDifference = HtmlHelper.GetTextDifference(pageBodyText, webBodyText);
+                        listOfDiffs = _differ.diff_main(pageBodyText, webBodyText);
                     }
                     else
-                    {
-                        pageDto.BodyDifference = HtmlHelper.GetTextDifference(pageDto.Body, webBody);
+                    {     
+                        listOfDiffs = _differ.diff_main(pageDto.Body, webBody);
                     }
+
+                    pageDto.BodyDifference = _differ.diff_prettyHtml(listOfDiffs);
                     _pageService.EditPage(pageDto);
                   
+                    //notification
                     var user = _userService.GetUser(pageDto.UserId);
                     if (user.Email == string.Empty)
                     {

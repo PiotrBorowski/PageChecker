@@ -24,6 +24,7 @@ namespace PageCheckerAPI.Models
 
         [Key]
         public int PageId { get; set; }
+
         public string Name { get; set; }
         public TimeSpan RefreshRate { get; set; }
         public bool HasChanged { get; set; }

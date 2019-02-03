@@ -47,6 +47,7 @@ namespace PageCheckerAPI
             services.AddScoped<IPageBackgroundService, PageBackgroundService>();
             services.AddScoped<IWebsiteService, WebsiteService>();
             services.AddScoped<IEmailNotificationService, EmailNotificationService>();
+            services.AddScoped<IHtmlDifferenceService, HtmlDifferenceService>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {

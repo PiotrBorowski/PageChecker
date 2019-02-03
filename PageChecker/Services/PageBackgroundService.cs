@@ -19,18 +19,19 @@ namespace PageCheckerAPI.Services
         private readonly IPageService _pageService;
         private readonly IEmailNotificationService _emailNotification;
         private readonly IUserService _userService;
-        private readonly diff_match_patch _differ; 
+        private readonly IHtmlDifferenceService _differenceService; 
         public PageBackgroundService(
             IWebsiteService websiteService, 
             IPageService pageService,  
             IEmailNotificationService emailNotification,
-            IUserService userService)
+            IUserService userService,
+            IHtmlDifferenceService differenceService)
         {
             _websiteService = websiteService;
             _pageService = pageService;
             _emailNotification = emailNotification;
             _userService = userService;
-            _differ = new diff_match_patch();
+            _differenceService = differenceService;
         }
 
         public void StartPageChangeChecking(PageDto pageDto)
@@ -50,19 +51,10 @@ namespace PageCheckerAPI.Services
                 if (HtmlHelper.Compare(pageDto.Body, webBody, pageDto.CheckingType) == false)
                 {
                     pageDto.HasChanged = true;
-                    List<Diff> listOfDiffs;
-                    if (pageDto.CheckingType == CheckingTypeEnum.Text)
-                    {
-                        var pageBodyText = HtmlHelper.GetBodyText(pageDto.Body);
-                        var webBodyText = HtmlHelper.GetBodyText(webBody);
-                        listOfDiffs = _differ.diff_main(pageBodyText, webBodyText);
-                    }
-                    else
-                    {     
-                        listOfDiffs = _differ.diff_main(pageDto.Body, webBody);
-                    }
 
-                    pageDto.BodyDifference = _differ.diff_prettyHtml(listOfDiffs);
+                    pageDto.BodyDifference =
+                        _differenceService.GetDifference(pageDto.Body, webBody, pageDto.CheckingType);
+
                     _pageService.EditPage(pageDto);
                   
                     //notification

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using PageCheckerAPI.DTOs.Page;
 
-namespace PageCheckerAPI.Services.Interfaces
+namespace PageCheckerAPI.Repositories.Interfaces
 {
-    public interface IPageService
+    public interface IPageRepositoryAsync
     {
         Task<List<PageDto>> GetPages(int userId);
         Task<PageDto> GetPage(int pageId);

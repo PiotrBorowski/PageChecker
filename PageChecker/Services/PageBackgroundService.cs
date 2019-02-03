@@ -40,14 +40,15 @@ namespace PageCheckerAPI.Services
            , Cron.MinuteInterval(Convert.ToInt32(pageDto.RefreshRate.TotalMinutes)));
         }
 
-        public void CheckChange(int pageId)
+        public async Task CheckChange(int pageId)
         {
-            var pageDto = _pageService.GetPage(pageId);
+            var pageDto = await _pageService.GetPage(pageId);
 
             try
             {
                 string webBody = _websiteService.GetHtml(pageDto.Url);
 
+                //if page changed
                 if (HtmlHelper.Compare(pageDto.Body, webBody, pageDto.CheckingType) == false)
                 {
                     pageDto.HasChanged = true;
@@ -55,15 +56,13 @@ namespace PageCheckerAPI.Services
                     pageDto.BodyDifference =
                         _differenceService.GetDifference(pageDto.Body, webBody, pageDto.CheckingType);
 
-                    _pageService.EditPage(pageDto);
+                    await _pageService.EditPage(pageDto);
                   
                     //notification
                     var user = _userService.GetUser(pageDto.UserId);
-                    if (user.Email == string.Empty)
-                    {
-                        _emailNotification.SendEmailNotification(user.UserName,
-                            $"Page named:{pageDto.Name}, URL: {pageDto.Url} has changed.");
-                    }
+
+                    _emailNotification.SendEmailNotification(user.Email,
+                        $"Page named:{pageDto.Name}, URL: {pageDto.Url} has changed.");
                 }
             }
             catch (WebException)

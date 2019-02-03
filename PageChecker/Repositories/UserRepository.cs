@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Azure.KeyVault.Models;
+using Microsoft.EntityFrameworkCore;
 using PageCheckerAPI.DataAccess;
 using PageCheckerAPI.DTOs.User;
 using PageCheckerAPI.Helpers;
@@ -20,7 +21,7 @@ namespace PageCheckerAPI.Repositories
             _context = context;
         }
 
-        public User Add(UserDto userDto)
+        public async Task<User> Add(UserDto userDto)
         {
             User user = new User {UserName = userDto.Username};
 
@@ -30,20 +31,20 @@ namespace PageCheckerAPI.Repositories
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
 
-            _context.Users.Add(user);
-            _context.SaveChanges();
+            await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
 
             return user;
         }
 
-        public User GetUser(string username)
+        public async Task<User> GetUser(string username)
         {
-            return _context.Users.SingleOrDefault(x => x.UserName == username);
+            return await _context.Users.SingleOrDefaultAsync(x => x.UserName == username);
         }
 
-        public User GetUser(int userId)
+        public async Task<User> GetUser(int userId)
         {
-            return _context.Users.SingleOrDefault(x => x.UserId == userId);
+            return await _context.Users.SingleOrDefaultAsync(x => x.UserId == userId);
         }
     }
 }

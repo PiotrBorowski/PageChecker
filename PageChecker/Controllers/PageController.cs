@@ -43,18 +43,18 @@ namespace PageCheckerAPI.Controllers
 
         // GET api/page
         [HttpGet]
-        public IActionResult GetPages()
+        public async Task<IActionResult> GetPages()
         {           
-            List<PageDto> pageDtos = _pageService.GetPages(GetUserId());
+            List<PageDto> pageDtos = await _pageService.GetPages(GetUserId());
             List<PageViewModel> pageViewModels = _mapper.Map<List<PageDto>, List<PageViewModel>>(pageDtos);
 
             return Ok(pageViewModels);
         }
 
         [HttpGet("StartChecking")]
-        public IActionResult StartChecking(int pageId)
+        public async Task<IActionResult> StartChecking(int pageId)
         {
-            var pageDto = _pageService.GetPage(pageId);
+            var pageDto = await _pageService.GetPage(pageId);
             if (pageDto.UserId != GetUserId())
                 return BadRequest();
 
@@ -66,9 +66,9 @@ namespace PageCheckerAPI.Controllers
         }
 
         [HttpDelete("StopChecking")]
-        public IActionResult StopChecking(int pageId)
+        public async Task<IActionResult> StopChecking(int pageId)
         {
-            var pageDto = _pageService.GetPage(pageId);
+            var pageDto = await _pageService.GetPage(pageId);
             if (pageDto.UserId != GetUserId())
                 return BadRequest();
 
@@ -81,7 +81,7 @@ namespace PageCheckerAPI.Controllers
 
         // POST api/page
         [HttpPost]
-        public IActionResult AddPage([FromBody]AddPageDto addPageDto)
+        public async Task<IActionResult> AddPage([FromBody]AddPageDto addPageDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -100,7 +100,7 @@ namespace PageCheckerAPI.Controllers
                 return BadRequest();
             }
 
-            var addResult = _pageService.AddPage(addPageDto);
+            var addResult = await _pageService.AddPage(addPageDto);
 
             if (addResult == null)
                 return BadRequest();
@@ -110,14 +110,14 @@ namespace PageCheckerAPI.Controllers
 
         //DELETE api/page
         [HttpDelete]
-        public IActionResult Delete(int pageId)
+        public async Task<IActionResult> Delete(int pageId)
         {
             DeletePageDto deletePageDto = new DeletePageDto {PageId = pageId};
 
             try
             {
                 _pageBackService.StopPageChangeChecking(deletePageDto.PageId.ToString());
-                _pageService.DeletePage(deletePageDto, GetUserId());
+                await _pageService.DeletePage(deletePageDto, GetUserId());
             }
             catch (InvalidOperationException)
             {

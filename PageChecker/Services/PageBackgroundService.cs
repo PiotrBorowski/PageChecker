@@ -46,7 +46,7 @@ namespace PageCheckerAPI.Services
 
             try
             {
-                string webBody = _websiteService.GetHtml(pageDto.Url);
+                string webBody = await _websiteService.GetHtml(pageDto.Url);
 
                 //if page changed now
                 if (HtmlHelper.Compare(pageDto.Body, webBody, pageDto.CheckingType) == false && pageDto.HasChanged == false)

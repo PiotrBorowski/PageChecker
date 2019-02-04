@@ -60,7 +60,7 @@ namespace PageCheckerAPI.Controllers
 
             _pageBackService.StartPageChangeChecking(pageDto);
             pageDto.Stopped = false;
-            _pageService.EditPage(pageDto);
+            await _pageService.EditPage(pageDto);
 
             return Ok(pageDto);
         }
@@ -74,7 +74,7 @@ namespace PageCheckerAPI.Controllers
 
             _pageBackService.StopPageChangeChecking(pageDto.PageId.ToString());
             pageDto.Stopped = true;
-            _pageService.EditPage(pageDto);
+            await _pageService.EditPage(pageDto);
 
             return Ok(pageDto);
         }
@@ -89,7 +89,7 @@ namespace PageCheckerAPI.Controllers
             try
             {
                 addPageDto.UserId = GetUserId();
-                addPageDto.Body = _websiteService.GetHtml(addPageDto.Url);
+                addPageDto.Body = await _websiteService.GetHtml(addPageDto.Url);
             }
             catch (UriFormatException)
             {

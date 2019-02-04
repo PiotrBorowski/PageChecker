@@ -8,6 +8,6 @@ namespace PageCheckerAPI.Services.Interfaces
 {
     public interface IWebsiteService
     {
-        string GetHtml(string url);
+        Task<string> GetHtml(string url);
     }
 }

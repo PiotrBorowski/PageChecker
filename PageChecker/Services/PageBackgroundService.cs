@@ -48,8 +48,8 @@ namespace PageCheckerAPI.Services
             {
                 string webBody = _websiteService.GetHtml(pageDto.Url);
 
-                //if page changed
-                if (HtmlHelper.Compare(pageDto.Body, webBody, pageDto.CheckingType) == false)
+                //if page changed now
+                if (HtmlHelper.Compare(pageDto.Body, webBody, pageDto.CheckingType) == false && pageDto.HasChanged == false)
                 {
                     pageDto.HasChanged = true;
 

@@ -35,6 +35,7 @@ namespace PageCheckerAPI.Controllers
             if (user == null)
                 return BadRequest(ModelState);
 
+            await _service.SendVerificationLink(user.UserId);
             return Ok(userDto.Username);
         }
 
@@ -45,7 +46,7 @@ namespace PageCheckerAPI.Controllers
             if (user == null)
                 return Unauthorized();
 
-            string tokenString = _service.BuildToken(user);
+            string tokenString = _service.BuildToken(user, DateTime.Now.AddDays(1));
 
             var userViewModel = new UserViewModel
             {

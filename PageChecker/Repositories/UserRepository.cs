@@ -23,7 +23,7 @@ namespace PageCheckerAPI.Repositories
 
         public async Task<User> Add(UserDto userDto)
         {
-            User user = new User {UserName = userDto.Username};
+            User user = new User {UserName = userDto.Username, Email = userDto.Email};
 
             byte[] passwordHash, passwordSalt;
             HashSaltHelper.GeneratePasswordHashAndSalt(userDto.Password, out passwordHash, out passwordSalt);

@@ -61,7 +61,7 @@ namespace PageCheckerAPI.Services
                     //notification
                     var user = await _userService.GetUser(pageDto.UserId);
 
-                    _emailNotification.SendEmailNotification(user.Email,
+                    _emailNotification.SendEmailNotification(user.Email, "PageChecker Notification",
                         $"Page named:{pageDto.Name}, URL: {pageDto.Url} has changed.");
                 }
             }

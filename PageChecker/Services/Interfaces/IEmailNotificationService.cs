@@ -7,6 +7,6 @@ namespace PageCheckerAPI.Services.Interfaces
 {
     public interface IEmailNotificationService
     {
-        void SendEmailNotification(string to, string content);
+        void SendEmailNotification(string to, string subject, string content, bool isHtml = false);
     }
 }

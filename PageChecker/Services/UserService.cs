@@ -21,12 +21,14 @@ namespace PageCheckerAPI.Services
         private readonly IUserRepository _repository;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
+        private readonly IEmailNotificationService _emailService;
 
-        public UserService(IUserRepository repository, IConfiguration configuration, IMapper mapper)
+        public UserService(IUserRepository repository, IConfiguration configuration, IMapper mapper, IEmailNotificationService emailService)
         {
             _repository = repository;
             _configuration = configuration;
             _mapper = mapper;
+            _emailService = emailService;
         }
 
         public async Task<UserClaimsDto> Login(UserDto userDto)
@@ -57,7 +59,14 @@ namespace PageCheckerAPI.Services
             return _mapper.Map<UserClaimsDto>(user);
         }
 
-        public string BuildToken(UserClaimsDto userClaimsDto)
+        public async Task SendVerificationLink(int userId)
+        {
+            var user = await _repository.GetUser(userId);
+            string content = BuildVerificationEmailContent(user);
+            _emailService.SendEmailNotification(user.Email, "PageChecker Verification", content, true);
+        }
+
+        public string BuildToken(UserClaimsDto userClaimsDto, DateTime expires)
         {
             Claim[] claims = new Claim[]
             {
@@ -67,9 +76,18 @@ namespace PageCheckerAPI.Services
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(_configuration["Jwt:Issuer"], _configuration["Jwt:Issuer"], claims,
-                expires: DateTime.Now.AddDays(1), signingCredentials: creds);
+                expires: expires, signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        private string BuildVerificationEmailContent(User user)
+        {
+            var userClaims = _mapper.Map<UserClaimsDto>(user);
+
+            var token = BuildToken(userClaims, DateTime.Now.AddDays(30));
+
+            return $"<a href=\"htt" + $"p://localhost:3000/verify/{token}\" > <H2>VERIFY</H2> </a> ";
         }
     }
 }

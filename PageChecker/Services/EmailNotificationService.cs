@@ -27,14 +27,15 @@ namespace PageCheckerAPI.Services
             client.Credentials = new NetworkCredential(Email, _config["Gmail:password"]);
         }
 
-        public void SendEmailNotification(string emailTo, string content)
+        public void SendEmailNotification(string emailTo, string subject,string content, bool isHtml = false)
         {
             try
             {
                 message = new MailMessage(Email, emailTo);
 
                 message.Body = content;
-                message.Subject = "PageChecker Notification";
+                message.Subject = subject;
+                message.IsBodyHtml = isHtml;
 
                 client.SendAsync(message, emailTo);
             }

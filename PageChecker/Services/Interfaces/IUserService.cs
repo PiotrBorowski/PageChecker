@@ -12,6 +12,7 @@ namespace PageCheckerAPI.Services.Interfaces
         Task<UserClaimsDto> Register(UserDto userDto);
         Task<UserClaimsDto> Login(UserDto userDto);
         Task<UserClaimsDto> GetUser(int userId);
-        string BuildToken(UserClaimsDto claimsDto);
+        Task SendVerificationLink(int userId);
+        string BuildToken(UserClaimsDto claimsDto, DateTime expires);
     }
 }

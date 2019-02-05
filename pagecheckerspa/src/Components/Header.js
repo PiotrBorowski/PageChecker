@@ -90,10 +90,6 @@ class Header extends Component {
           <div className="collapse navbar-collapse" id="navbarResponsive">
             <ul className="navbar-nav ml-auto">
 
-              <li className="nav-item">
-                <NavLink className="nav-link active" to="/">Home<span className="sr-only">(current)</span></NavLink>
-              </li>
-
               { this.props.user.isAuthenticated ? YourPages : null}  
 
               { this.props.user.isAuthenticated ? AddPage : null}

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using PageCheckerAPI.Services.Interfaces;
 
 namespace PageCheckerAPI.Services
@@ -12,15 +13,18 @@ namespace PageCheckerAPI.Services
     {
         private SmtpClient client;
         private MailMessage message;
+        private IConfiguration _config;
 
         private const string Email = "pagecheckersite@gmail.com";
 
-        public EmailNotificationService()
+        public EmailNotificationService(IConfiguration config)
         {
+            _config = config;
+
             client = new SmtpClient("smtp.gmail.com", 587);
             client.EnableSsl = true;
             client.UseDefaultCredentials = false;
-            client.Credentials = new NetworkCredential(Email, "pageadmin123!");
+            client.Credentials = new NetworkCredential(Email, _config["Gmail:password"]);
         }
 
         public void SendEmailNotification(string emailTo, string content)

@@ -15,13 +15,28 @@ namespace PageCheckerAPI.Helpers
             var htmlDoc = new HtmlDocument();
             htmlDoc.LoadHtml(html);
 
-            var htmlNodes = htmlDoc.DocumentNode.SelectNodes("//*[not(self::script)]/text()");
+            var htmlNodes = htmlDoc.DocumentNode.SelectNodes("//*[not(self::script) and not(self::style)]/text()");
 
             StringBuilder result = new StringBuilder();
+            bool first = true;
 
             foreach (var node in htmlNodes)
             {
-                result.Append(node.InnerText);
+                if (node.InnerText.Trim() != string.Empty)
+                {
+                    string toAppend;
+                    if (first == true)
+                    {
+                        toAppend = node.InnerText;
+                        first = false;
+                    }
+                    else
+                    {
+                        toAppend = " " + node.InnerText;
+                    }
+
+                    result.Append(toAppend);
+                }
             }
 
             return result.ToString();
@@ -31,12 +46,28 @@ namespace PageCheckerAPI.Helpers
         {
             StringBuilder result = new StringBuilder();
 
+            var words1 = html1.Split(" ");
             var words2 = html2.Split(" ");
+            bool first = true;
 
             foreach (var word in words2)
             {
-                if (!html1.Contains(word))
-                    result.Append(word+" ");
+                if (!words1.Contains(word))
+                {
+                    string toAppend;
+                    if (first == true)
+                    {
+                        toAppend = word;
+                        first = false;
+                    }
+                    else
+                    {
+                        toAppend = " " + word;
+                    }
+
+                    result.Append(toAppend);
+                }
+
             }
 
             return result.ToString();

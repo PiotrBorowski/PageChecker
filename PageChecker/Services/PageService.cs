@@ -10,36 +10,36 @@ namespace PageCheckerAPI.Services
 {
     public class PageService : IPageService
     {
-        private readonly IPageRepository _repo;
+        private readonly IPageRepositoryAsync _repo;
 
-        public PageService(IPageRepository repo)
+        public PageService(IPageRepositoryAsync repo)
         {
             _repo = repo;
         }
 
-        public PageDto AddPage(AddPageDto pageDto)
+        public async Task<PageDto> AddPage(AddPageDto pageDto)
         {
-           return _repo.AddPage(pageDto);
+           return await _repo.AddPage(pageDto);
         }
 
-        public void DeletePage(DeletePageDto pageDto, int userId)
+        public async Task DeletePage(DeletePageDto pageDto, int userId)
         {
-            _repo.DeletePage(pageDto, userId);
+            await _repo.DeletePage(pageDto, userId);
         }
 
-        public List<PageDto> GetPages(int userId)
+        public async Task<List<PageDto>> GetPages(int userId)
         {
-            return _repo.GetPages(userId);
+            return await _repo.GetPages(userId);
         }
 
-        public PageDto GetPage(int pageId)
+        public async Task<PageDto> GetPage(int pageId)
         {
-            return _repo.GetPage(pageId);
+            return await _repo.GetPage(pageId);
         }
 
-        public PageDto EditPage(PageDto pageDto)
+        public async Task<PageDto> EditPage(PageDto pageDto)
         {
-            return _repo.EditPage(pageDto);
+            return await _repo.EditPage(pageDto);
         }
     }
 }

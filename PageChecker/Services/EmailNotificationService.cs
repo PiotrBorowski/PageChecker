@@ -32,7 +32,7 @@ namespace PageCheckerAPI.Services
                 message.Body = content;
                 message.Subject = "PageChecker Notification";
 
-                client.Send(message);
+                client.SendAsync(message, emailTo);
             }
             catch (FormatException)
             {

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "../Styles/Form.css"
 import axios from 'axios';
 import {BASE_URL} from "../constants"
-import emailHelper from "../helpers/emailHelper"
 import EmailHelper from "../helpers/emailHelper";
 
 export default class RegisterForm extends Component {
@@ -12,7 +11,8 @@ export default class RegisterForm extends Component {
         super(props);
         this.state = {
             email: "",
-            password: ""
+            password: "",
+            confirmPassword: ""
         };
     }
 
@@ -35,8 +35,21 @@ export default class RegisterForm extends Component {
         this.setState({password: e.target.value});
     }
 
+    handleChangeConfirmPassword = e => {
+        this.setState({confirmPassword: e.target.value});
+    }
+
+    passwordConfirmed(){
+        return this.state.password == this.state.confirmPassword && this.state.confirmPassword != ""
+    }
+
     handleLoginSubmit = e => {
         e.preventDefault();
+        if(!this.passwordConfirmed()){
+            this.refs.ConfirmPasswordInput.style.borderColor = "red";
+            return;
+        }
+
         this.sendRequest();
     }
 
@@ -96,6 +109,23 @@ export default class RegisterForm extends Component {
                                         />
                                         </div>
                 </div>
+                <div className="form-group col-md-10 offset-md-1">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Confirm password</span>
+                    </div>
+                                        <input 
+                                        type="password"
+                                        class="form-control"
+                                        id="ConfirmPasswordInput"
+                                        ref="ConfirmPasswordInput"
+                                        value={this.confirmPassword}
+                                        onChange={this.handleChangeConfirmPassword}
+                                        required
+                                        />
+                                        </div>
+                </div>
+
             <div className="row">
                 <div className="col-sm-4 button-form">
                     <button

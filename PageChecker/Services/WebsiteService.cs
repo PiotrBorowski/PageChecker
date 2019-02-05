@@ -11,11 +11,11 @@ namespace PageCheckerAPI.Services
 {
     public class WebsiteService : IWebsiteService
     {
-        public string GetHtml(string url)
+        public async Task<string> GetHtml(string url)
         {
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            HttpWebResponse response = (HttpWebResponse)await request.GetResponseAsync();
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -26,7 +26,7 @@ namespace PageCheckerAPI.Services
                 {
                     readStream = new StreamReader(receiveStream);
                 }
-            else
+                else
                 {
                     var encoding = response.CharacterSet.ToLower().Contains("utf-8") ? 
                         Encoding.UTF8 : 
@@ -35,7 +35,7 @@ namespace PageCheckerAPI.Services
                     readStream = new StreamReader(receiveStream, encoding);
                 }
 
-                string body = readStream.ReadToEnd();
+                string body = await readStream.ReadToEndAsync();
 
                 response.Close();
                 readStream.Close();

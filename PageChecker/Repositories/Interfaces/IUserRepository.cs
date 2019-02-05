@@ -9,8 +9,8 @@ namespace PageCheckerAPI.Repositories.Interfaces
 {
     public interface IUserRepository
     {
-        User Add(UserDto user);
-        User GetUser(string username);
-        User GetUser(int userId);
+        Task<User> Add(UserDto user);
+        Task<User> GetUser(string username);
+        Task<User> GetUser(int userId);
     }
 }

@@ -8,7 +8,6 @@ namespace PageCheckerAPI.Repositories.Interfaces
 {
     public interface IPageRepository
     {
-        //TODO: Async
         List<PageDto> GetPages(int userId);
         PageDto GetPage(int pageId);
         PageDto AddPage(AddPageDto pageDto);

@@ -29,9 +29,9 @@ namespace PageCheckerAPI.Services
             _mapper = mapper;
         }
 
-        public UserClaimsDto Login(UserDto userDto)
+        public async Task<UserClaimsDto> Login(UserDto userDto)
         {
-            User user = _repository.GetUser(userDto.Username);
+            User user = await _repository.GetUser(userDto.Username);
 
             if (user == null)
                 return null;
@@ -42,18 +42,18 @@ namespace PageCheckerAPI.Services
             return _mapper.Map<UserClaimsDto>(user);
         }
 
-        public UserClaimsDto Register(UserDto userDto)
+        public async Task<UserClaimsDto> Register(UserDto userDto)
         {
-            if (_repository.GetUser(userDto.Username) != null)
+            if (await _repository.GetUser(userDto.Username) != null)
                 return null;
 
-            var user = _repository.Add(userDto);
+            var user = await _repository.Add(userDto);
             return _mapper.Map<UserClaimsDto>(user);
         }
 
-        public UserClaimsDto GetUser(int userId)
+        public async Task<UserClaimsDto> GetUser(int userId)
         {
-           var user = _repository.GetUser(userId);
+           var user = await _repository.GetUser(userId);
             return _mapper.Map<UserClaimsDto>(user);
         }
 

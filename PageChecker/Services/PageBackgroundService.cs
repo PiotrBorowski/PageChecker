@@ -19,17 +19,19 @@ namespace PageCheckerAPI.Services
         private readonly IPageService _pageService;
         private readonly IEmailNotificationService _emailNotification;
         private readonly IUserService _userService;
-
+        private readonly IHtmlDifferenceService _differenceService; 
         public PageBackgroundService(
             IWebsiteService websiteService, 
             IPageService pageService,  
             IEmailNotificationService emailNotification,
-            IUserService userService)
+            IUserService userService,
+            IHtmlDifferenceService differenceService)
         {
             _websiteService = websiteService;
             _pageService = pageService;
             _emailNotification = emailNotification;
             _userService = userService;
+            _differenceService = differenceService;
         }
 
         public void StartPageChangeChecking(PageDto pageDto)
@@ -38,35 +40,29 @@ namespace PageCheckerAPI.Services
            , Cron.MinuteInterval(Convert.ToInt32(pageDto.RefreshRate.TotalMinutes)));
         }
 
-        public void CheckChange(int pageId)
+        public async Task CheckChange(int pageId)
         {
-            var pageDto = _pageService.GetPage(pageId);
+            var pageDto = await _pageService.GetPage(pageId);
 
             try
             {
-                string webBody = _websiteService.GetHtml(pageDto.Url);
+                string webBody = await _websiteService.GetHtml(pageDto.Url);
 
-                if (HtmlHelper.Compare(pageDto.Body, webBody, pageDto.CheckingType) == false)
+                //if page changed now
+                if (HtmlHelper.Compare(pageDto.Body, webBody, pageDto.CheckingType) == false && pageDto.HasChanged == false)
                 {
                     pageDto.HasChanged = true;
-                    if (pageDto.CheckingType == CheckingTypeEnum.Text)
-                    {
-                        var pageBodyText = HtmlHelper.GetBodyText(pageDto.Body);
-                        var webBodyText = HtmlHelper.GetBodyText(webBody);
-                        pageDto.BodyDifference = HtmlHelper.GetTextDifference(pageBodyText, webBodyText);
-                    }
-                    else
-                    {
-                        pageDto.BodyDifference = HtmlHelper.GetTextDifference(pageDto.Body, webBody);
-                    }
-                    _pageService.EditPage(pageDto);
+
+                    pageDto.BodyDifference =
+                        _differenceService.GetDifference(pageDto.Body, webBody, pageDto.CheckingType);
+
+                    await _pageService.EditPage(pageDto);
                   
-                    var user = _userService.GetUser(pageDto.UserId);
-                    if (user.Email == string.Empty)
-                    {
-                        _emailNotification.SendEmailNotification(user.UserName,
-                            $"Page named:{pageDto.Name}, URL: {pageDto.Url} has changed.");
-                    }
+                    //notification
+                    var user = await _userService.GetUser(pageDto.UserId);
+
+                    _emailNotification.SendEmailNotification(user.Email,
+                        $"Page named:{pageDto.Name}, URL: {pageDto.Url} has changed.");
                 }
             }
             catch (WebException)

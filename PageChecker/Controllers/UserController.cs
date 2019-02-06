@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -24,6 +25,22 @@ namespace PageCheckerAPI.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("verify")]
+        public async Task<IActionResult> Verify()
+        {
+            var userIdClaim = User.Claims.SingleOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+
+            if (userIdClaim == null)
+                return BadRequest();
+
+            int userId = Int32.Parse(userIdClaim.Value);
+
+            if (!await _service.Verify(userId))
+                return BadRequest();
+
+            return Ok();
+        }
+
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserDto userDto)
         {
@@ -43,8 +60,12 @@ namespace PageCheckerAPI.Controllers
         public async Task<IActionResult> Login([FromBody] UserDto userDto)
         {
             UserClaimsDto user = await _service.Login(userDto);
+
             if (user == null)
                 return Unauthorized();
+
+            if (!user.Verified)
+                return Forbid();
 
             string tokenString = _service.BuildToken(user, DateTime.Now.AddDays(1));
 

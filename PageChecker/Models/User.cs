@@ -8,8 +8,15 @@ namespace PageCheckerAPI.Models
 {
     public class User
     {
+        public User()
+        {
+            Verified = false;
+        }
+
         [Key]
         public int UserId { get; set; }
+        [Required]
+        public bool Verified { get; set; }
         [Required]
         public string UserName { get; set; }
         public string Email { get; set; }

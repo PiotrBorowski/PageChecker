@@ -66,6 +66,19 @@ namespace PageCheckerAPI.Services
             _emailService.SendEmailNotification(user.Email, "PageChecker Verification", content, true);
         }
 
+        public async Task<bool> Verify(int userId)
+        {
+            var user = await _repository.GetUser(userId);
+            user.Verified = true;
+
+            EditUserDto userDto = new EditUserDto();
+            _mapper.Map(user, userDto);
+
+            user = await _repository.EditUser(userDto);
+
+            return user.Verified;
+        }
+
         public string BuildToken(UserClaimsDto userClaimsDto, DateTime expires)
         {
             Claim[] claims = new Claim[]

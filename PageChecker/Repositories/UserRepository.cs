@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.Azure.KeyVault.Models;
 using Microsoft.EntityFrameworkCore;
 using PageCheckerAPI.DataAccess;
@@ -15,10 +16,12 @@ namespace PageCheckerAPI.Repositories
     public class UserRepository : IUserRepository
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public UserRepository(ApplicationDbContext context)
+        public UserRepository(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<User> Add(UserDto userDto)
@@ -45,6 +48,20 @@ namespace PageCheckerAPI.Repositories
         public async Task<User> GetUser(int userId)
         {
             return await _context.Users.SingleOrDefaultAsync(x => x.UserId == userId);
+        }
+
+        public async Task<User> EditUser(EditUserDto user)
+        {
+            var userToEdit = await _context.Users.SingleOrDefaultAsync(x => x.UserId == user.UserId);
+
+            _mapper.Map(user, userToEdit);
+
+            if (await _context.SaveChangesAsync() > 0)
+            {
+                return userToEdit;
+            }
+
+            return null;
         }
     }
 }

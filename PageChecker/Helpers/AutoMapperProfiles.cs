@@ -19,6 +19,8 @@ namespace PageCheckerAPI.Helpers
             CreateMap<AddPageDto, Page>();
             CreateMap<PageDto, PageViewModel>();
             CreateMap<User, UserClaimsDto>();
+            CreateMap<EditUserDto, User>();
+            CreateMap<User, EditUserDto>();
         }
     }
 }

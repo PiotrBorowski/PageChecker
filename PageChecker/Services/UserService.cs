@@ -69,6 +69,10 @@ namespace PageCheckerAPI.Services
         public async Task<bool> Verify(int userId)
         {
             var user = await _repository.GetUser(userId);
+
+            if (user.Verified)
+                return true;
+
             user.Verified = true;
 
             EditUserDto userDto = new EditUserDto();

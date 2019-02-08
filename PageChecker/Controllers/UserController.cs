@@ -42,7 +42,7 @@ namespace PageCheckerAPI.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] UserDto userDto)
+        public async Task<IActionResult> Register([FromBody] AddUserDto userDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -57,7 +57,7 @@ namespace PageCheckerAPI.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] UserDto userDto)
+        public async Task<IActionResult> Login([FromBody] AddUserDto userDto)
         {
             UserClaimsDto user = await _service.Login(userDto);
 

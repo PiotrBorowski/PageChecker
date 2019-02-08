@@ -52,18 +52,14 @@ class Header extends Component {
                     <NavLink className="nav-link" to="/register">Register</NavLink>
                 </li>
             </React.Fragment>
-        )
-        
-        const ChangedBadge = (
-            <React.Fragment>
-                <span class="badge badge-light">TODO</span>
-            </React.Fragment>
-        )
+        )        
 
         const YourPages = (
             <React.Fragment>
               <li className="nav-item">
-                  <NavLink className="nav-link" to="/Pages">Your Pages {ChangedBadge}</NavLink>
+                  <NavLink className="nav-link" to="/Pages">
+                  <i class="fa fa-list" aria-hidden="true"></i> Your Pages
+                  </NavLink>
               </li>
             </React.Fragment>
         )
@@ -71,7 +67,9 @@ class Header extends Component {
         const AddPage = (
             <React.Fragment> 
               <li className="nav-item">
-                  <NavLink className="nav-link" to="/AddPage">Add Page</NavLink>
+                  <NavLink className="nav-link" to="/AddPage">
+                  <i class="fas fa-plus"></i> Add Page
+                  </NavLink>
               </li>
             </React.Fragment>
         )

@@ -24,7 +24,7 @@ namespace PageCheckerAPI.Repositories
             _mapper = mapper;
         }
 
-        public async Task<User> Add(UserDto userDto)
+        public async Task<User> Add(AddUserDto userDto)
         {
             User user = new User {UserName = userDto.Username, Email = userDto.Email};
 

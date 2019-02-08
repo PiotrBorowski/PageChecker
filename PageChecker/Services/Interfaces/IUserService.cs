@@ -9,8 +9,8 @@ namespace PageCheckerAPI.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<UserClaimsDto> Register(UserDto userDto);
-        Task<UserClaimsDto> Login(UserDto userDto);
+        Task<UserClaimsDto> Register(AddUserDto userDto);
+        Task<UserClaimsDto> Login(AddUserDto userDto);
         Task<UserClaimsDto> GetUser(int userId);
         Task SendVerificationLink(int userId);
         Task<bool> Verify(int userId);

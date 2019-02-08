@@ -116,11 +116,11 @@ export default class Page extends Component{
                 </h5>
                 <div className="row">
                     <div className="col-lg-5 text-truncate">
-                        <h6><a href={this.props.url} target="_blank">{this.props.url}</a></h6>
+                        <h6>Link: <a href={this.props.url} target="_blank">{this.props.url}</a></h6>
                     </div>
          
                     <div className="col-lg-2 offset-lg-2">
-                        {this.props.hasChanged ? Changed : NotChanged}
+                        Status: {this.props.hasChanged ? Changed : NotChanged}
                     </div>
                     <div className="col-lg">
                     <ButtonGroup className="float-right">
@@ -132,7 +132,7 @@ export default class Page extends Component{
                     </div>
                 </div>
                 <div className="btn btn-dark btn-block" id={"toggler" + this.props.pageId} >
-                    More Info
+                    <i class="fas fa-angle-down"></i>
                 </div>
                 <UncontrolledCollapse toggler={"#toggler"+this.props.pageId}>
                     <Card>

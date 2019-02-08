@@ -31,7 +31,7 @@ namespace PageCheckerAPI.Services
             _emailService = emailService;
         }
 
-        public async Task<UserClaimsDto> Login(UserDto userDto)
+        public async Task<UserClaimsDto> Login(AddUserDto userDto)
         {
             User user = await _repository.GetUser(userDto.Username);
 
@@ -44,7 +44,7 @@ namespace PageCheckerAPI.Services
             return _mapper.Map<UserClaimsDto>(user);
         }
 
-        public async Task<UserClaimsDto> Register(UserDto userDto)
+        public async Task<UserClaimsDto> Register(AddUserDto userDto)
         {
             if (await _repository.GetUser(userDto.Username) != null)
                 return null;

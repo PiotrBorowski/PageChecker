@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PageCheckerAPI.DTOs.User
 {
-    public class UserDto
+    public class AddUserDto
     {
         [Required]
         [StringLength(254, MinimumLength = 4, ErrorMessage = "Username must contain between 4 and 254 characters")]

@@ -42,3 +42,7 @@ input.active:valid {
     margin-right: auto;
     text-align: center
   }
+
+  .alert{
+    margin-top: 50px;
+  }

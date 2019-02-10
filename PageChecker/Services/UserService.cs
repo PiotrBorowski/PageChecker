@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -63,7 +64,10 @@ namespace PageCheckerAPI.Services
         {
             var user = await _repository.GetUser(userId);
             string content = BuildVerificationEmailContent(user);
-            _emailService.SendEmailNotification(user.Email, "PageChecker Verification", content, true);
+            var message = new MailMessage(_configuration["Gmail:email"], user.Email, "PageChecker Verification", content);
+            message.IsBodyHtml = true;
+
+            _emailService.SendEmailNotification(message);
         }
 
         public async Task<bool> Verify(int userId)

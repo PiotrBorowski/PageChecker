@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using Hangfire;
+using Microsoft.Extensions.Configuration;
 using PageCheckerAPI.DTOs.Page;
 using PageCheckerAPI.Helpers;
 using PageCheckerAPI.Models;
@@ -19,19 +21,23 @@ namespace PageCheckerAPI.Services
         private readonly IPageService _pageService;
         private readonly IEmailNotificationService _emailNotification;
         private readonly IUserService _userService;
-        private readonly IHtmlDifferenceService _differenceService; 
+        private readonly IHtmlDifferenceService _differenceService;
+        private readonly IConfiguration _config;
+
         public PageBackgroundService(
             IWebsiteService websiteService, 
             IPageService pageService,  
             IEmailNotificationService emailNotification,
             IUserService userService,
-            IHtmlDifferenceService differenceService)
+            IHtmlDifferenceService differenceService,
+            IConfiguration config)
         {
             _websiteService = websiteService;
             _pageService = pageService;
             _emailNotification = emailNotification;
             _userService = userService;
             _differenceService = differenceService;
+            _config = config;
         }
 
         public void StartPageChangeChecking(PageDto pageDto)
@@ -60,9 +66,10 @@ namespace PageCheckerAPI.Services
                   
                     //notification
                     var user = await _userService.GetUser(pageDto.UserId);
-
-                    _emailNotification.SendEmailNotification(user.Email, "PageChecker Notification",
+                    var message = new MailMessage(_config["Gmail:email"], user.Email, "PageChecker Notification",
                         $"Page named:{pageDto.Name}, URL: {pageDto.Url} has changed.");
+
+                    _emailNotification.SendEmailNotification(message);
                 }
             }
             catch (WebException)

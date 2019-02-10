@@ -12,32 +12,25 @@ namespace PageCheckerAPI.Services
     public class EmailNotificationService : IEmailNotificationService
     {
         private SmtpClient client;
-        private MailMessage message;
-        private IConfiguration _config;
-
-        private const string Email = "pagecheckersite@gmail.com";
+        private readonly IConfiguration _config;
 
         public EmailNotificationService(IConfiguration config)
         {
             _config = config;
 
-            client = new SmtpClient("smtp.gmail.com", 587);
-            client.EnableSsl = true;
-            client.UseDefaultCredentials = false;
-            client.Credentials = new NetworkCredential(Email, _config["Gmail:password"]);
+            client = new SmtpClient("smtp.gmail.com", 587)
+            {
+                EnableSsl = true,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(_config["Gmail:email"], _config["Gmail:password"])
+            };
         }
 
-        public void SendEmailNotification(string emailTo, string subject,string content, bool isHtml = false)
+        public void SendEmailNotification(MailMessage message)
         {
             try
             {
-                message = new MailMessage(Email, emailTo);
-
-                message.Body = content;
-                message.Subject = subject;
-                message.IsBodyHtml = isHtml;
-
-                client.SendAsync(message, emailTo);
+                client.SendAsync(message, message.To);
             }
             catch (FormatException)
             {

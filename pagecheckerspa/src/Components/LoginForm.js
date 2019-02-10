@@ -13,7 +13,9 @@ class LoginForm extends Component {
         super(props);
         this.state = {
             username: "",
-            password: ""
+            password: "",
+            notVerified: false,
+            incorrectCredentials: false
         };
         console.log(this.props)
     }
@@ -31,6 +33,11 @@ class LoginForm extends Component {
         this.sendRequest();
     }
 
+    resetErrorState = () => {
+        this.setState({incorrectCredentials: false});
+        this.setState({notVerified: false});
+    }
+
     sendRequest = () => {
          axios.post(BASE_URL + "/user/login", {
             Username: this.state.username,
@@ -45,14 +52,34 @@ class LoginForm extends Component {
         }, (error) => {
             console.log(error);
             
-            if(error.response.status === 401){
-                    this.props.history.push('/unauthorized');
+            this.resetErrorState();
+
+            switch(error.response.status){
+                case 401:
+                    this.setState({incorrectCredentials: true});
+                break;
+
+                case 403:
+                    this.setState({notVerified: true});
+                break;
             }
         });
     }
 
     render(){
 
+        const AccountNotVerifiedAlert = (
+            <div class="alert alert-warning">
+                <strong>Warning!</strong> Your account is not verified, please check your mailbox.
+            </div>      
+        )
+
+        const IncorrectCredentialsAlert = (
+            <div class="alert alert-danger">
+                <strong>Warning!</strong> Password or Email is incorrect.
+            </div>      
+        )
+        
         return (
  <div className="form-center">
         <form onSubmit={this.handleLoginSubmit}t>
@@ -97,6 +124,8 @@ class LoginForm extends Component {
                     </button>
                 </div>
             </div>
+            {this.state.notVerified ? AccountNotVerifiedAlert : null}
+            {this.state.incorrectCredentials ? IncorrectCredentialsAlert : null}
             </form>
         </div>   
         )

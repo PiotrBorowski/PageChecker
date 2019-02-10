@@ -119,7 +119,7 @@ export default class Page extends Component{
                         <h6>Link: <a href={this.props.url} target="_blank">{this.props.url}</a></h6>
                     </div>
          
-                    <div className="col-lg-2 offset-lg-2">
+                    <div className="col-lg-3 offset-lg-2">
                         Status: {this.props.hasChanged ? Changed : NotChanged}
                     </div>
                     <div className="col-lg">

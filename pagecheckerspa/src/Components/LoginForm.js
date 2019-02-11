@@ -5,6 +5,7 @@ import {BASE_URL} from "../constants"
 import TokenHelper from '../helpers/tokenHelper'
 import { CheckUserToken } from "../Actions/userActions";
 import {connect} from 'react-redux'
+import FacebookLogin from 'react-facebook-login'
 
 class LoginForm extends Component {
     
@@ -38,16 +39,20 @@ class LoginForm extends Component {
         this.setState({notVerified: false});
     }
 
+    handleLoginResponse = (response) => {
+        TokenHelper.setTokenInHeader(response.data.token);
+        TokenHelper.setTokenInLocalStorage(response.data.token);
+        localStorage.setItem('username', response.data.username)
+        this.props.dispatch(CheckUserToken());
+    }
+
     sendRequest = () => {
          axios.post(BASE_URL + "/user/login", {
             Username: this.state.username,
             Password: this.state.password 
         }).then(response => {
             console.log(response);
-            TokenHelper.setTokenInHeader(response.data.token);
-            TokenHelper.setTokenInLocalStorage(response.data.token);
-            localStorage.setItem('username', response.data.username)
-            this.props.dispatch(CheckUserToken());
+            this.handleLoginResponse(response);
             this.props.history.push('/Pages');
         }, (error) => {
             console.log(error);
@@ -66,6 +71,16 @@ class LoginForm extends Component {
         });
     }
 
+    sendFacebookAccessToken = (token) =>{
+        axios.post(BASE_URL + "/user/facebookLogin", {
+            AccessToken: token
+        }).then(response => {
+            console.log(response);
+            this.handleLoginResponse(response);
+            this.props.history.push('/Pages');
+        })
+    }
+
     render(){
 
         const AccountNotVerifiedAlert = (
@@ -80,6 +95,12 @@ class LoginForm extends Component {
             </div>      
         )
         
+        const responseFacebook = (response) => {
+            console.log(response);
+            var token = response.authResponse.accessToken;
+            this.sendFacebookAccessToken(token);
+          }
+
         return (
  <div className="form-center">
         <form onSubmit={this.handleLoginSubmit}t>
@@ -124,9 +145,31 @@ class LoginForm extends Component {
                     </button>
                 </div>
             </div>
+
             {this.state.notVerified ? AccountNotVerifiedAlert : null}
             {this.state.incorrectCredentials ? IncorrectCredentialsAlert : null}
             </form>
+        <br/>
+        <div className="container">
+            <div className="row justify-content-center">
+                <div className="col-sm-4">
+                    <FacebookLogin
+                    appId="255549251999650"
+                    fields="name,email,picture"
+                    callback={responseFacebook}
+                    icon="fa-facebook"   
+                    cssClass="btn btn-primary"             
+                    />
+                </div>       
+            </div>
+
+                  
+            <div className="row">
+            <a href="#" onClick={(e)=>{e.preventDefault(); window.FB.logout()}}>logout</a>
+            </div>
+        </div>
+
+            
         </div>   
         )
     }

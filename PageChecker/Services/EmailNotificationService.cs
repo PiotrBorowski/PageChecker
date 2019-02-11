@@ -11,7 +11,7 @@ namespace PageCheckerAPI.Services
 {
     public class EmailNotificationService : IEmailNotificationService
     {
-        private SmtpClient client;
+        private readonly SmtpClient client;
         private readonly IConfiguration _config;
 
         public EmailNotificationService(IConfiguration config)

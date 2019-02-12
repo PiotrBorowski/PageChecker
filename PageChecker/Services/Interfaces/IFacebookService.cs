@@ -10,7 +10,7 @@ namespace PageCheckerAPI.Services.Interfaces
     public interface IFacebookService
     {
         Task<FacebookUserDto> GetUserDataAsync(string token);
-        Task<bool> CheckTokenValidity(string userToken, string appToken);
+        Task<bool> CheckTokenValidityAsync(string userToken, string appToken);
         Task<string> CreateAppAccessTokenAsync(string appId, string appSecret);
     }
 }

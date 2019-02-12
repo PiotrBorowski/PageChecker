@@ -9,7 +9,7 @@ namespace PageCheckerAPI.DTOs.Facebook
 {
     public class AccessTokenDto
     {
-        [JsonProperty]
+        [JsonProperty(PropertyName = "access_token")]
         public string AccessToken { get; set; }
     }
 }

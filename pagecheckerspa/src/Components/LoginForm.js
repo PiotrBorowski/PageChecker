@@ -97,7 +97,7 @@ class LoginForm extends Component {
         
         const responseFacebook = (response) => {
             console.log(response);
-            var token = response.authResponse.accessToken;
+            var token = response.accessToken;
             this.sendFacebookAccessToken(token);
           }
 
@@ -150,9 +150,18 @@ class LoginForm extends Component {
             {this.state.incorrectCredentials ? IncorrectCredentialsAlert : null}
             </form>
         <br/>
+
         <div className="container">
             <div className="row justify-content-center">
-                <div className="col-sm-4">
+                <div className="col-sm-">
+                    <h2 className="center">Login with Facebook</h2>                
+                </div>
+            </div>       
+        </div>
+        
+        <div className="container">
+            <div className="row justify-content-center">
+                <div className="col-sm-">
                     <FacebookLogin
                     appId="255549251999650"
                     fields="name,email,picture"
@@ -161,11 +170,6 @@ class LoginForm extends Component {
                     cssClass="btn btn-primary"             
                     />
                 </div>       
-            </div>
-
-                  
-            <div className="row">
-            <a href="#" onClick={(e)=>{e.preventDefault(); window.FB.logout()}}>logout</a>
             </div>
         </div>
 

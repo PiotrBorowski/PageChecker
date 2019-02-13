@@ -49,7 +49,7 @@ class LoginForm extends Component {
 
     sendRequest = () => {
          axios.post(BASE_URL + "/user/login", {
-            Username: this.state.username,
+            Email: this.state.username,
             Password: this.state.password 
         }).then(response => {
             console.log(response);

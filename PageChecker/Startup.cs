@@ -50,6 +50,7 @@ namespace PageCheckerAPI
             services.AddScoped<IEmailNotificationService, EmailNotificationService>();
             services.AddScoped<IHtmlDifferenceService, HtmlDifferenceService>();
             services.AddScoped<IFacebookService, FacebookService>();
+            services.AddScoped<ITokenService, TokenService>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {

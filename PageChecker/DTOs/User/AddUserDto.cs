@@ -13,7 +13,6 @@ namespace PageCheckerAPI.DTOs.User
         public string Username { get; set; }
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
-        [Required]
         [StringLength(14, MinimumLength = 6, ErrorMessage = "Password must contain between 6 and 14 characters")]
         public string Password { get; set; }
     }

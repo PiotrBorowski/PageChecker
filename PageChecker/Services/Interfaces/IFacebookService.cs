@@ -12,5 +12,6 @@ namespace PageCheckerAPI.Services.Interfaces
         Task<FacebookUserDto> GetUserDataAsync(string token);
         Task<bool> CheckTokenValidityAsync(string userToken, string appToken);
         Task<string> CreateAppAccessTokenAsync(string appId, string appSecret);
+        Task<UserClaimsDto> Login(FacebookUserDto userDto);
     }
 }

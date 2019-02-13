@@ -17,12 +17,12 @@ namespace PageCheckerAPI.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _service;
-        private readonly IMapper _mapper;
+        private readonly ITokenService _tokenService;
 
-        public UserController(IUserService service, IMapper mapper)
+        public UserController(IUserService service, ITokenService tokenService)
         {
             _service = service;
-            _mapper = mapper;
+            _tokenService = tokenService;
         }
 
         [HttpGet("verify")]
@@ -67,7 +67,7 @@ namespace PageCheckerAPI.Controllers
             if (!user.Verified)
                 return Forbid();
 
-            string tokenString = _service.BuildToken(user, DateTime.Now.AddDays(1));
+            string tokenString = _tokenService.BuildToken(user, DateTime.Now.AddDays(1));
 
             var userViewModel = new UserViewModel
             {

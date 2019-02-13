@@ -23,18 +23,21 @@ namespace PageCheckerAPI.Services
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
         private readonly IEmailNotificationService _emailService;
+        private readonly ITokenService _tokenService;
 
-        public UserService(IUserRepository repository, IConfiguration configuration, IMapper mapper, IEmailNotificationService emailService)
+        public UserService(IUserRepository repository, IConfiguration configuration, IMapper mapper,
+            IEmailNotificationService emailService, ITokenService tokenService)
         {
             _repository = repository;
             _configuration = configuration;
             _mapper = mapper;
             _emailService = emailService;
+            _tokenService = tokenService;
         }
 
         public async Task<UserClaimsDto> Login(AddUserDto userDto)
         {
-            User user = await _repository.GetUser(userDto.Username);
+            User user = await _repository.GetUser(userDto.Email);
 
             if (user == null)
                 return null;
@@ -47,7 +50,7 @@ namespace PageCheckerAPI.Services
 
         public async Task<UserClaimsDto> Register(AddUserDto userDto)
         {
-            if (await _repository.GetUser(userDto.Username) != null)
+            if (await _repository.GetUser(userDto.Email) != null)
                 return null;
 
             var user = await _repository.Add(userDto);
@@ -85,28 +88,13 @@ namespace PageCheckerAPI.Services
             user = await _repository.EditUser(userDto);
 
             return user.Verified;
-        }
-
-        public string BuildToken(UserClaimsDto userClaimsDto, DateTime expires)
-        {
-            Claim[] claims = new Claim[]
-            {
-                new Claim(ClaimTypes.NameIdentifier, userClaimsDto.UserId.ToString()),
-                new Claim(ClaimTypes.Name, userClaimsDto.UserName), 
-            };
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var token = new JwtSecurityToken(_configuration["Jwt:Issuer"], _configuration["Jwt:Issuer"], claims,
-                expires: expires, signingCredentials: creds);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
+        }      
 
         private string BuildVerificationEmailContent(User user)
         {
             var userClaims = _mapper.Map<UserClaimsDto>(user);
 
-            var token = BuildToken(userClaims, DateTime.Now.AddDays(30));
+            var token = _tokenService.BuildToken(userClaims, DateTime.Now.AddDays(30));
 
             return $"<a href=\"htt" + $"p://localhost:3000/verify/{token}\" > <H2>VERIFY</H2> </a> ";
         }

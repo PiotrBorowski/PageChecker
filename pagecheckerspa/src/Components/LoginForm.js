@@ -40,6 +40,7 @@ class LoginForm extends Component {
     }
 
     handleLoginResponse = (response) => {
+        console.log(response);
         TokenHelper.setTokenInHeader(response.data.token);
         TokenHelper.setTokenInLocalStorage(response.data.token);
         localStorage.setItem('username', response.data.username)
@@ -72,8 +73,8 @@ class LoginForm extends Component {
     }
 
     sendFacebookAccessToken = (token) =>{
-        axios.post(BASE_URL + "/user/facebookLogin", {
-            AccessToken: token
+        axios.post(BASE_URL + "/facebook/login?userAccessToken="+token, {
+            userAccessToken: token
         }).then(response => {
             console.log(response);
             this.handleLoginResponse(response);

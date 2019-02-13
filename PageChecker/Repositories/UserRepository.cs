@@ -28,11 +28,14 @@ namespace PageCheckerAPI.Repositories
         {
             User user = new User {UserName = userDto.Username, Email = userDto.Email};
 
-            byte[] passwordHash, passwordSalt;
-            HashSaltHelper.GeneratePasswordHashAndSalt(userDto.Password, out passwordHash, out passwordSalt);
+            if (!string.IsNullOrEmpty(userDto.Password))
+            {
+                byte[] passwordHash, passwordSalt;
+                HashSaltHelper.GeneratePasswordHashAndSalt(userDto.Password, out passwordHash, out passwordSalt);
 
-            user.PasswordHash = passwordHash;
-            user.PasswordSalt = passwordSalt;
+                user.PasswordHash = passwordHash;
+                user.PasswordSalt = passwordSalt;
+            }
 
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
@@ -40,9 +43,9 @@ namespace PageCheckerAPI.Repositories
             return user;
         }
 
-        public async Task<User> GetUser(string username)
+        public async Task<User> GetUser(string email)
         {
-            return await _context.Users.SingleOrDefaultAsync(x => x.UserName == username);
+            return await _context.Users.SingleOrDefaultAsync(x => x.Email == email);
         }
 
         public async Task<User> GetUser(int userId)

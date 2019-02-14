@@ -55,9 +55,10 @@ namespace PageCheckerAPI.Services
                 string webBody = await _websiteService.GetHtml(pageDto.Url);
 
                 //if page changed now
-                if (HtmlHelper.Compare(pageDto.Body, webBody, pageDto.CheckingType) == false && pageDto.HasChanged == false)
+                if (HtmlHelper.Compare(pageDto.Body, webBody, pageDto.CheckingType) == false)
                 {
                     pageDto.HasChanged = true;
+                    pageDto.Stopped = true;
 
                     pageDto.BodyDifference =
                         _differenceService.GetDifference(pageDto.Body, webBody, pageDto.CheckingType);
@@ -70,6 +71,7 @@ namespace PageCheckerAPI.Services
                         $"Page named:{pageDto.Name}, URL: {pageDto.Url} has changed.");
 
                     _emailNotification.SendEmailNotification(message);
+                    StopPageChangeChecking(pageId.ToString());
                 }
             }
             catch (WebException)

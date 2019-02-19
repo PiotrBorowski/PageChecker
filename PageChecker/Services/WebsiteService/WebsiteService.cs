@@ -1,13 +1,13 @@
-﻿using System;
+﻿using PageCheckerAPI.Services.WebsiteService;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using PageCheckerAPI.Services.Interfaces;
 
-namespace PageCheckerAPI.Services
+namespace PageCheckerAPI.Services.WebsiteService
 {
     public class WebsiteService : IWebsiteService
     {

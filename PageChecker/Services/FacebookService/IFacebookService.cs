@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using PageCheckerAPI.DTOs.Facebook;
 using PageCheckerAPI.DTOs.User;
 
-namespace PageCheckerAPI.Services.Interfaces
+namespace PageCheckerAPI.Services.FacebookService
 {
     public interface IFacebookService
     {

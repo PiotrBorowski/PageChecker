@@ -5,9 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using PageCheckerAPI.Helpers;
 using PageCheckerAPI.Models;
-using PageCheckerAPI.Services.Interfaces;
 
-namespace PageCheckerAPI.Services
+namespace PageCheckerAPI.Services.HtmlDifferenceService
 {
     public class HtmlDifferenceService : IHtmlDifferenceService
     {

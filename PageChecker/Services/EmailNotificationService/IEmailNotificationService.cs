@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Net.Mail;
 
 
-namespace PageCheckerAPI.Services.Interfaces
+namespace PageCheckerAPI.Services.EmailNotificationService
 {
     public interface IEmailNotificationService
     {

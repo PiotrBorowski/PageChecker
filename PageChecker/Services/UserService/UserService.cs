@@ -1,21 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Net.Mail;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 using PageCheckerAPI.DTOs.User;
 using PageCheckerAPI.Helpers;
 using PageCheckerAPI.Models;
 using PageCheckerAPI.Repositories.Interfaces;
-using PageCheckerAPI.Services.Interfaces;
+using PageCheckerAPI.Services.EmailNotificationService;
+using PageCheckerAPI.Services.TokenService;
 
-namespace PageCheckerAPI.Services
+namespace PageCheckerAPI.Services.UserService
 {
     public class UserService : IUserService
     {

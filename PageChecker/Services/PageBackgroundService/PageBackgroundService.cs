@@ -9,11 +9,13 @@ using Hangfire;
 using Microsoft.Extensions.Configuration;
 using PageCheckerAPI.DTOs.Page;
 using PageCheckerAPI.Helpers;
-using PageCheckerAPI.Models;
-using PageCheckerAPI.Repositories.Interfaces;
-using PageCheckerAPI.Services.Interfaces;
+using PageCheckerAPI.Services.EmailNotificationService;
+using PageCheckerAPI.Services.HtmlDifferenceService;
+using PageCheckerAPI.Services.PageService;
+using PageCheckerAPI.Services.UserService;
+using PageCheckerAPI.Services.WebsiteService;
 
-namespace PageCheckerAPI.Services
+namespace PageCheckerAPI.Services.PageBackgroundService
 {
     public class PageBackgroundService : IPageBackgroundService
     {

@@ -12,7 +12,14 @@ using Microsoft.IdentityModel.Tokens;
 using PageCheckerAPI.Repositories;
 using PageCheckerAPI.Repositories.Interfaces;
 using PageCheckerAPI.Services;
-using PageCheckerAPI.Services.Interfaces;
+using PageCheckerAPI.Services.EmailNotificationService;
+using PageCheckerAPI.Services.FacebookService;
+using PageCheckerAPI.Services.HtmlDifferenceService;
+using PageCheckerAPI.Services.PageBackgroundService;
+using PageCheckerAPI.Services.PageService;
+using PageCheckerAPI.Services.TokenService;
+using PageCheckerAPI.Services.UserService;
+using PageCheckerAPI.Services.WebsiteService;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace PageCheckerAPI

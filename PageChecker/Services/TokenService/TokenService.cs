@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using PageCheckerAPI.DTOs.User;
-using PageCheckerAPI.Services.Interfaces;
 
-namespace PageCheckerAPI.Services
+namespace PageCheckerAPI.Services.TokenService
 {
     public class TokenService : ITokenService
     {

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using PageCheckerAPI.DTOs.Page;
 
-namespace PageCheckerAPI.Services.Interfaces
+namespace PageCheckerAPI.Services.PageService
 {
     public interface IPageService
     {

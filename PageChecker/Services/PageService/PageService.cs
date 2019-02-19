@@ -4,9 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using PageCheckerAPI.DTOs.Page;
 using PageCheckerAPI.Repositories.Interfaces;
-using PageCheckerAPI.Services.Interfaces;
 
-namespace PageCheckerAPI.Services
+namespace PageCheckerAPI.Services.PageService
 {
     public class PageService : IPageService
     {

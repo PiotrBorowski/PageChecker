@@ -11,7 +11,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PageCheckerAPI.DTOs.Page;
 using PageCheckerAPI.Helpers;
-using PageCheckerAPI.Services.Interfaces;
+using PageCheckerAPI.Services.EmailNotificationService;
+using PageCheckerAPI.Services.PageBackgroundService;
+using PageCheckerAPI.Services.PageService;
+using PageCheckerAPI.Services.WebsiteService;
 using PageCheckerAPI.ViewModels.Page;
 
 namespace PageCheckerAPI.Controllers

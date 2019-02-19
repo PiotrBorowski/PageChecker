@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using PageCheckerAPI.Services.Interfaces;
+using PageCheckerAPI.Services.FacebookService;
+using PageCheckerAPI.Services.TokenService;
 using PageCheckerAPI.ViewModels.User;
 
 namespace PageCheckerAPI.Controllers

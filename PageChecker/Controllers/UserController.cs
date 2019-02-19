@@ -8,7 +8,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PageCheckerAPI.DTOs.User;
 using PageCheckerAPI.Models;
-using PageCheckerAPI.Services.Interfaces;
+using PageCheckerAPI.Services.TokenService;
+using PageCheckerAPI.Services.UserService;
 using PageCheckerAPI.ViewModels.User;
 
 namespace PageCheckerAPI.Controllers

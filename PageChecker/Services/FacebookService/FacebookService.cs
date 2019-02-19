@@ -8,9 +8,8 @@ using Newtonsoft.Json;
 using PageCheckerAPI.DTOs.Facebook;
 using PageCheckerAPI.DTOs.User;
 using PageCheckerAPI.Repositories.Interfaces;
-using PageCheckerAPI.Services.Interfaces;
 
-namespace PageCheckerAPI.Services
+namespace PageCheckerAPI.Services.FacebookService
 {
     public class FacebookService : IFacebookService
     {

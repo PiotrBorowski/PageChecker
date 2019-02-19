@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using PageCheckerAPI.DTOs.User;
 using PageCheckerAPI.Models;
 
-namespace PageCheckerAPI.Services.Interfaces
+namespace PageCheckerAPI.Services.UserService
 {
     public interface IUserService
     {

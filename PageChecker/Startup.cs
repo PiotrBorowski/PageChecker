@@ -15,6 +15,7 @@ using PageCheckerAPI.Services;
 using PageCheckerAPI.Services.EmailNotificationService;
 using PageCheckerAPI.Services.FacebookService;
 using PageCheckerAPI.Services.HtmlDifferenceService;
+using PageCheckerAPI.Services.HtmlDifferenceService.DifferenceServicesFactory;
 using PageCheckerAPI.Services.PageBackgroundService;
 using PageCheckerAPI.Services.PageService;
 using PageCheckerAPI.Services.TokenService;
@@ -58,6 +59,7 @@ namespace PageCheckerAPI
             services.AddScoped<IHtmlDifferenceService, HtmlDifferenceService>();
             services.AddScoped<IFacebookService, FacebookService>();
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IDifferenceServicesFactory, DifferenceServicesFactory>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {

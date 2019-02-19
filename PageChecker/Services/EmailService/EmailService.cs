@@ -6,14 +6,14 @@ using System.Net.Mail;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 
-namespace PageCheckerAPI.Services.EmailNotificationService
+namespace PageCheckerAPI.Services.EmailService
 {
-    public class EmailNotificationService : IEmailNotificationService
+    public class EmailService : IEmailService
     {
         private readonly SmtpClient client;
         private readonly IConfiguration _config;
 
-        public EmailNotificationService(IConfiguration config)
+        public EmailService(IConfiguration config)
         {
             _config = config;
 
@@ -25,7 +25,7 @@ namespace PageCheckerAPI.Services.EmailNotificationService
             };
         }
 
-        public void SendEmailNotification(MailMessage message)
+        public void SendEmail(MailMessage message)
         {
             try
             {

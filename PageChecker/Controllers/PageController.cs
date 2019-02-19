@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PageCheckerAPI.DTOs.Page;
 using PageCheckerAPI.Helpers;
-using PageCheckerAPI.Services.EmailNotificationService;
+using PageCheckerAPI.Services.EmailService;
 using PageCheckerAPI.Services.PageBackgroundService;
 using PageCheckerAPI.Services.PageService;
 using PageCheckerAPI.Services.WebsiteService;
@@ -27,15 +27,15 @@ namespace PageCheckerAPI.Controllers
         private readonly IMapper _mapper;
         private readonly IPageBackgroundService _pageBackService;
         private readonly IWebsiteService _websiteService;
-        private readonly IEmailNotificationService _emailNotification;
+        private readonly IEmailService _emailService;
 
-        public PageController(IPageService pageService, IPageBackgroundService pageBackService, IWebsiteService websiteService, IMapper mapper, IEmailNotificationService emailNotification)
+        public PageController(IPageService pageService, IPageBackgroundService pageBackService, IWebsiteService websiteService, IMapper mapper, IEmailService emailService)
         {
             _pageService = pageService;
             _pageBackService = pageBackService;
             _mapper = mapper;
             _websiteService = websiteService;
-            _emailNotification = emailNotification;
+            _emailService = emailService;
         }
 
         private int GetUserId()

@@ -12,7 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using PageCheckerAPI.Repositories;
 using PageCheckerAPI.Repositories.Interfaces;
 using PageCheckerAPI.Services;
-using PageCheckerAPI.Services.EmailNotificationService;
+using PageCheckerAPI.Services.EmailService;
 using PageCheckerAPI.Services.FacebookService;
 using PageCheckerAPI.Services.HtmlDifferenceService;
 using PageCheckerAPI.Services.HtmlDifferenceService.DifferenceServicesFactory;
@@ -55,7 +55,7 @@ namespace PageCheckerAPI
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPageBackgroundService, PageBackgroundService>();
             services.AddScoped<IWebsiteService, WebsiteService>();
-            services.AddScoped<IEmailNotificationService, EmailNotificationService>();
+            services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IHtmlDifferenceService, HtmlDifferenceService>();
             services.AddScoped<IFacebookService, FacebookService>();
             services.AddScoped<ITokenService, TokenService>();

@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 using Hangfire;
 using Microsoft.Extensions.Configuration;
 using PageCheckerAPI.DTOs.Page;
+using PageCheckerAPI.DTOs.User;
 using PageCheckerAPI.Helpers;
-using PageCheckerAPI.Services.EmailNotificationService;
+using PageCheckerAPI.Services.EmailService;
 using PageCheckerAPI.Services.HtmlDifferenceService;
 using PageCheckerAPI.Services.PageService;
 using PageCheckerAPI.Services.UserService;
@@ -21,7 +22,7 @@ namespace PageCheckerAPI.Services.PageBackgroundService
     {
         private readonly IWebsiteService _websiteService;
         private readonly IPageService _pageService;
-        private readonly IEmailNotificationService _emailNotification;
+        private readonly IEmailService _emailService;
         private readonly IUserService _userService;
         private readonly IHtmlDifferenceService _differenceService;
         private readonly IConfiguration _config;
@@ -29,14 +30,14 @@ namespace PageCheckerAPI.Services.PageBackgroundService
         public PageBackgroundService(
             IWebsiteService websiteService, 
             IPageService pageService,  
-            IEmailNotificationService emailNotification,
+            IEmailService emailService,
             IUserService userService,
             IHtmlDifferenceService differenceService,
             IConfiguration config)
         {
             _websiteService = websiteService;
             _pageService = pageService;
-            _emailNotification = emailNotification;
+            _emailService = emailService;
             _userService = userService;
             _differenceService = differenceService;
             _config = config;
@@ -61,18 +62,16 @@ namespace PageCheckerAPI.Services.PageBackgroundService
                 {
                     pageDto.HasChanged = true;
                     pageDto.Stopped = true;
-
                     pageDto.BodyDifference =
                         _differenceService.GetDifference(pageDto.Body, webBody, pageDto.CheckingType);
 
                     await _pageService.EditPage(pageDto);
                   
-                    //notification
                     var user = await _userService.GetUser(pageDto.UserId);
-                    var message = new MailMessage(_config["Gmail:email"], user.Email, "PageChecker Notification",
-                        $"Page named:{pageDto.Name}, URL: {pageDto.Url} has changed.");
+                    //notification               
+                    var message = CreateNotificationMessage(user, pageDto);
+                    _emailService.SendEmail(message);
 
-                    _emailNotification.SendEmailNotification(message);
                     StopPageChangeChecking(pageId.ToString());
                 }
             }
@@ -86,6 +85,12 @@ namespace PageCheckerAPI.Services.PageBackgroundService
         public void StopPageChangeChecking(string pageId)
         {
             RecurringJob.RemoveIfExists(pageId);
+        }
+
+        private MailMessage CreateNotificationMessage(UserClaimsDto user, PageDto pageDto)
+        {
+            return new MailMessage(_config["Gmail:email"], user.Email, "PageChecker Notification",
+                $"Page named:{pageDto.Name}, URL: {pageDto.Url} has changed.");
         }
     }
 }

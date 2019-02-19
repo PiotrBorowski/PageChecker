@@ -7,7 +7,7 @@ using PageCheckerAPI.DTOs.User;
 using PageCheckerAPI.Helpers;
 using PageCheckerAPI.Models;
 using PageCheckerAPI.Repositories.Interfaces;
-using PageCheckerAPI.Services.EmailNotificationService;
+using PageCheckerAPI.Services.EmailService;
 using PageCheckerAPI.Services.TokenService;
 
 namespace PageCheckerAPI.Services.UserService
@@ -17,11 +17,11 @@ namespace PageCheckerAPI.Services.UserService
         private readonly IUserRepository _repository;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
-        private readonly IEmailNotificationService _emailService;
+        private readonly IEmailService _emailService;
         private readonly ITokenService _tokenService;
 
         public UserService(IUserRepository repository, IConfiguration configuration, IMapper mapper,
-            IEmailNotificationService emailService, ITokenService tokenService)
+            IEmailService emailService, ITokenService tokenService)
         {
             _repository = repository;
             _configuration = configuration;
@@ -62,10 +62,10 @@ namespace PageCheckerAPI.Services.UserService
         {
             var user = await _repository.GetUser(userId);
             string content = BuildVerificationEmailContent(user);
-            var message = new MailMessage(_configuration["Gmail:email"], user.Email, "PageChecker Verification", content);
-            message.IsBodyHtml = true;
+            var message = new MailMessage(_configuration["Gmail:email"], user.Email, "PageChecker Verification",
+                content) {IsBodyHtml = true};
 
-            _emailService.SendEmailNotification(message);
+            _emailService.SendEmail(message);
         }
 
         public async Task<bool> Verify(int userId)

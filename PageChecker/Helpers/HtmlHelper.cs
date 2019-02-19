@@ -71,7 +71,6 @@ namespace PageCheckerAPI.Helpers
             }
 
             return result.ToString();
-            //return string.Join(" ", GetBodyText(html2).Split(' ').Where(item => !GetBodyText(html1).Contains(item)));
         }
 
         public static bool Compare(string html1, string html2, CheckingTypeEnum type)

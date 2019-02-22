@@ -90,8 +90,14 @@ namespace PageCheckerAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseHsts();
+            }
 
             app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials());
+
+            app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();
         }

@@ -91,7 +91,7 @@ namespace PageCheckerAPI.Services.UserService
 
             var token = _tokenService.BuildToken(userClaims, DateTime.Now.AddDays(30));
 
-            return $"<a href=\"htt" + $"p://localhost:3000/verify/{token}\" > <H2>VERIFY</H2> </a> ";
+            return $"<a href=\"htt" + $"ps://pagecheckersite.azurewebsites.net/verify/{token}\" > <H2>VERIFY</H2> </a> ";
         }
     }
 }

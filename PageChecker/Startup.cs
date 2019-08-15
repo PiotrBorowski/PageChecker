@@ -41,11 +41,11 @@ namespace PageCheckerAPI
             services.AddMvc();
             services.AddCors();
             services.AddDbContext<ApplicationDbContext>(opt =>
-                opt.UseSqlServer(Configuration.GetConnectionString("AzurePageChecker")));
+                opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddAutoMapper();
             services.AddHangfire(conf =>
             {
-                conf.UseSqlServerStorage(Configuration.GetConnectionString("AzurePageChecker"));
+                conf.UseSqlServerStorage(Configuration.GetConnectionString("DefaultConnection"));
                 // conf.UseSqlServerStorage("Server=(localdb)\\MSSQLLocalDB;Integrated Security=True");
             });
 

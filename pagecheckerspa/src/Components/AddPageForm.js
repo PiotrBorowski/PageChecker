@@ -91,9 +91,9 @@ export default class AddPageForm extends Component{
         <form onSubmit={this.handleSubmit}>
             <h2 className="title">Add Page</h2>
             <div className="form-group col-md-10 offset-md-1">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
+                <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                        <span className="input-group-text" id="inputGroup-sizing-default">Name</span>
                     </div>
                     <input
                         className="form-control"
@@ -105,9 +105,9 @@ export default class AddPageForm extends Component{
                         required
                         />
                 </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroup-sizing-default">http://</span>
+                <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                        <span className="input-group-text" id="inputGroup-sizing-default">http://</span>
                     </div>
                     <input
                         className="form-control"
@@ -119,11 +119,11 @@ export default class AddPageForm extends Component{
                         required
                         />
                 </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <label class="input-group-text" for="inputGroupSelect01">Refresh Rate</label>
+                <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                        <label className="input-group-text" for="inputGroupSelect01">Refresh Rate</label>
                     </div>
-                    <Input type="select" class="custom-select" id="inputGroupSelect01" onChange={this.handleUserInputRefreshRate}>
+                    <Input type="select" className="custom-select" id="inputGroupSelect01" onChange={this.handleUserInputRefreshRate}>
                         <option selected value="00:15">15 min</option>
                         <option value="00:30">30 min</option>
                         <option value="01:00">1 hour</option>
@@ -131,11 +131,11 @@ export default class AddPageForm extends Component{
                         <option value="12:00">12 hours</option>
                     </Input>
                 </div>    
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <label class="input-group-text" for="inputGroupSelect02">Type</label>
+                <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                        <label className="input-group-text" for="inputGroupSelect02">Type</label>
                     </div>
-                    <Input type="select" class="custom-select" id="inputGroupSelect02" onChange={this.handleUserInputCheckingType}>
+                    <Input type="select" className="custom-select" id="inputGroupSelect02" onChange={this.handleUserInputCheckingType}>
                         <option selected value="0">Full (scripts included)</option>
                         <option value="1">Only text</option>
                     </Input>

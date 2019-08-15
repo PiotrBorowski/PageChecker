@@ -168,7 +168,8 @@ class LoginForm extends Component {
                     fields="name,email,picture"
                     callback={responseFacebook}
                     icon="fa-facebook"   
-                    cssClass="btn btn-primary"             
+                    cssClass="btn btn-primary"          
+                    redirectUri="https://pagecheckersite.azurewebsites.net/login"           
                     />
                 </div>       
             </div>

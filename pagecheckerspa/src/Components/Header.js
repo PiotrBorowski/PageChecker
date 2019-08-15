@@ -26,11 +26,11 @@ class Header extends Component {
         
         const AccountDropdown = (
             <React.Fragment>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <li className="nav-item dropdown">
+                    <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     {this.props.user.username}
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                         <button className="dropdown-item my-di" >Test</button>
                         <button className="dropdown-item my-di" onClick={this.handleLogout}>Logout</button>
                     </div>
@@ -58,7 +58,7 @@ class Header extends Component {
             <React.Fragment>
               <li className="nav-item">
                   <NavLink className="nav-link" to="/Pages">
-                  <i class="fa fa-list" aria-hidden="true"></i> Your Pages
+                  <i className="fa fa-list" aria-hidden="true"></i> Your Pages
                   </NavLink>
               </li>
             </React.Fragment>
@@ -68,7 +68,7 @@ class Header extends Component {
             <React.Fragment> 
               <li className="nav-item">
                   <NavLink className="nav-link" to="/AddPage">
-                  <i class="fas fa-plus"></i> Add Page
+                  <i className="fas fa-plus"></i> Add Page
                   </NavLink>
               </li>
             </React.Fragment>

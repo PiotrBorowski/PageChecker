@@ -80,12 +80,12 @@ export default class RegisterForm extends Component {
         <form onSubmit={this.handleLoginSubmit}>
             <h2 className="title">Register</h2>
             <div className="form-group col-md-10 offset-md-1">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
+                <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                        <span className="input-group-text" id="inputGroup-sizing-default">Email</span>
                     </div>
                                     <input 
-                                    class="form-control" 
+                                    className="form-control" 
                                     id="UsernameInput" 
                                     ref="UsernameInput"
                                     value={this.username}
@@ -95,13 +95,13 @@ export default class RegisterForm extends Component {
                                     </div>
             </div>
             <div className="form-group col-md-10 offset-md-1">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroup-sizing-default">Password</span>
+                <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                        <span className="input-group-text" id="inputGroup-sizing-default">Password</span>
                     </div>
                                         <input 
                                         type="password"
-                                        class="form-control"
+                                        className="form-control"
                                         id="PasswordInput"
                                         value={this.password}
                                         onChange={this.handleChangePassword}
@@ -110,13 +110,13 @@ export default class RegisterForm extends Component {
                                         </div>
                 </div>
                 <div className="form-group col-md-10 offset-md-1">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroup-sizing-default">Confirm password</span>
+                <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                        <span className="input-group-text" id="inputGroup-sizing-default">Confirm password</span>
                     </div>
                                         <input 
                                         type="password"
-                                        class="form-control"
+                                        className="form-control"
                                         id="ConfirmPasswordInput"
                                         ref="ConfirmPasswordInput"
                                         value={this.confirmPassword}

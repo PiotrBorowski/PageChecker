@@ -80,7 +80,7 @@ export default class Page extends Component{
         const StopButton = (
             <React.Fragment>
                 <button className="btn" onClick={this.handleStopChecking}>
-                    <i class="fa fa-pause" aria-hidden="true"></i>
+                    <i className="fa fa-pause" aria-hidden="true"></i>
                 </button>
             </React.Fragment>)
 
@@ -132,7 +132,7 @@ export default class Page extends Component{
                     </div>
                 </div>
                 <div className="btn btn-dark btn-block" id={"toggler" + this.props.pageId} >
-                    <i class="fas fa-angle-down"></i>
+                    <i className="fas fa-angle-down"></i>
                 </div>
                 <UncontrolledCollapse toggler={"#toggler"+this.props.pageId}>
                     <Card>

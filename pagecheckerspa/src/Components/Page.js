@@ -19,6 +19,7 @@ export default class Page extends Component{
     }
 
     handleStopChecking = () => {
+        console.log(this.state)
         axios.delete(BASE_URL + "/page/StopChecking?pageId=" + this.props.pageId)
         .then((response) => { 
             console.log(response);

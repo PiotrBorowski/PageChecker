@@ -49,7 +49,7 @@ namespace PageCheckerAPI.Services.PageBackgroundService
            , Cron.MinuteInterval(Convert.ToInt32(pageDto.RefreshRate.TotalMinutes)));
         }
 
-        public async Task CheckChange(int pageId)
+        public async Task CheckChange(Guid pageId)
         {
             var pageDto = await _pageService.GetPage(pageId);
 

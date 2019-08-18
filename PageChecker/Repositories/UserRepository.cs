@@ -48,14 +48,14 @@ namespace PageCheckerAPI.Repositories
             return await _context.Users.SingleOrDefaultAsync(x => x.Email == email);
         }
 
-        public async Task<User> GetUser(int userId)
+        public async Task<User> GetUser(Guid userId)
         {
-            return await _context.Users.SingleOrDefaultAsync(x => x.UserId == userId);
+            return await _context.Users.SingleOrDefaultAsync(x => x.UserId.Equals(userId));
         }
 
         public async Task<User> EditUser(EditUserDto user)
         {
-            var userToEdit = await _context.Users.SingleOrDefaultAsync(x => x.UserId == user.UserId);
+            var userToEdit = await _context.Users.SingleOrDefaultAsync(x => x.UserId.Equals(user.UserId));
 
             _mapper.Map(user, userToEdit);
 

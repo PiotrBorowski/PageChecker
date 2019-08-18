@@ -11,7 +11,7 @@ namespace PageCheckerAPI.Repositories.Interfaces
     {
         Task<User> Add(AddUserDto user);
         Task<User> GetUser(string email);
-        Task<User> GetUser(int userId);
+        Task<User> GetUser(Guid userId);
         Task<User> EditUser(EditUserDto user);
     }
 }

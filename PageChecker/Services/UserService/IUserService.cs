@@ -11,8 +11,8 @@ namespace PageCheckerAPI.Services.UserService
     {
         Task<UserClaimsDto> Register(AddUserDto userDto);
         Task<UserClaimsDto> Login(AddUserDto userDto);
-        Task<UserClaimsDto> GetUser(int userId);
-        Task SendVerificationLink(int userId);
-        Task<bool> Verify(int userId);
+        Task<UserClaimsDto> GetUser(Guid userId);
+        Task SendVerificationLink(Guid userId);
+        Task<bool> Verify(Guid userId);
     }
 }

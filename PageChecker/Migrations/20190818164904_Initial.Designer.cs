@@ -10,8 +10,8 @@ using PageCheckerAPI.DataAccess;
 namespace PageCheckerAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190212214519_PasswordNotRequired")]
-    partial class PasswordNotRequired
+    [Migration("20190818164904_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,9 +23,8 @@ namespace PageCheckerAPI.Migrations
 
             modelBuilder.Entity("PageCheckerAPI.Models.Page", b =>
                 {
-                    b.Property<int>("PageId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("PageId")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Body")
                         .HasColumnType("ntext");
@@ -46,7 +45,7 @@ namespace PageCheckerAPI.Migrations
                     b.Property<string>("Url")
                         .IsRequired();
 
-                    b.Property<int>("UserId");
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("PageId");
 
@@ -57,9 +56,8 @@ namespace PageCheckerAPI.Migrations
 
             modelBuilder.Entity("PageCheckerAPI.Models.User", b =>
                 {
-                    b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("UserId")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Email")
                         .IsRequired();

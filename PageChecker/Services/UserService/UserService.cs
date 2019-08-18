@@ -52,13 +52,13 @@ namespace PageCheckerAPI.Services.UserService
             return _mapper.Map<UserClaimsDto>(user);
         }
 
-        public async Task<UserClaimsDto> GetUser(int userId)
+        public async Task<UserClaimsDto> GetUser(Guid userId)
         {
            var user = await _repository.GetUser(userId);
             return _mapper.Map<UserClaimsDto>(user);
         }
 
-        public async Task SendVerificationLink(int userId)
+        public async Task SendVerificationLink(Guid userId)
         {
             var user = await _repository.GetUser(userId);
             string content = BuildVerificationEmailContent(user);
@@ -68,7 +68,7 @@ namespace PageCheckerAPI.Services.UserService
             _emailService.SendEmail(message);
         }
 
-        public async Task<bool> Verify(int userId)
+        public async Task<bool> Verify(Guid userId)
         {
             var user = await _repository.GetUser(userId);
 

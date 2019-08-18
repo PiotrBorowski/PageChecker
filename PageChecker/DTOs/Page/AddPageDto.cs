@@ -11,7 +11,7 @@ namespace PageCheckerAPI.DTOs.Page
     {
         [StringLength(100)]
         public string Name { get; set; }
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         [Required(ErrorMessage = "Refresh Rate is required")]
         public TimeSpan RefreshRate { get; set; }
         [Required(ErrorMessage = "Url is required")]

@@ -38,10 +38,10 @@ namespace PageCheckerAPI.Controllers
             _emailService = emailService;
         }
 
-        private int GetUserId()
+        private Guid GetUserId()
         {
             var userIdClaim = User.Claims.SingleOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
-            return Int32.Parse(userIdClaim.Value);
+            return Guid.Parse(userIdClaim.Value);
         }
 
         // GET api/page
@@ -55,10 +55,10 @@ namespace PageCheckerAPI.Controllers
         }
 
         [HttpGet("StartChecking")]
-        public async Task<IActionResult> StartChecking(int pageId)
+        public async Task<IActionResult> StartChecking(Guid pageId)
         {
             var pageDto = await _pageService.GetPage(pageId);
-            if (pageDto.UserId != GetUserId())
+            if (!pageDto.UserId.Equals(GetUserId()))
                 return BadRequest();
 
             _pageBackService.StartPageChangeChecking(pageDto);
@@ -69,10 +69,10 @@ namespace PageCheckerAPI.Controllers
         }
 
         [HttpDelete("StopChecking")]
-        public async Task<IActionResult> StopChecking(int pageId)
+        public async Task<IActionResult> StopChecking(Guid pageId)
         {
             var pageDto = await _pageService.GetPage(pageId);
-            if (pageDto.UserId != GetUserId())
+            if (!pageDto.UserId.Equals(GetUserId()))
                 return BadRequest();
 
             _pageBackService.StopPageChangeChecking(pageDto.PageId.ToString());
@@ -113,7 +113,7 @@ namespace PageCheckerAPI.Controllers
 
         //DELETE api/page
         [HttpDelete]
-        public async Task<IActionResult> Delete(int pageId)
+        public async Task<IActionResult> Delete(Guid pageId)
         {
             DeletePageDto deletePageDto = new DeletePageDto {PageId = pageId};
 

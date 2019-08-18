@@ -34,7 +34,7 @@ namespace PageCheckerAPI.Controllers
             if (userIdClaim == null)
                 return BadRequest();
 
-            int userId = int.Parse(userIdClaim.Value);
+            Guid userId = Guid.Parse(userIdClaim.Value);
 
             if (!await _service.Verify(userId))
                 return BadRequest();

@@ -23,8 +23,8 @@ namespace PageCheckerAPI.Models
         }
 
         [Key]
-        public int PageId { get; set; }
-
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid PageId { get; set; }
         public string Name { get; set; }
         public TimeSpan RefreshRate { get; set; }
         public bool HasChanged { get; set; }
@@ -38,7 +38,7 @@ namespace PageCheckerAPI.Models
         [Required]
         public string Url { get; set; }
         [Required]
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public User User { get; set; }
     }
 }

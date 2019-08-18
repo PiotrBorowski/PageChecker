@@ -1,11 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
 
 namespace PageCheckerAPI.Migrations
 {
-    public partial class Inital : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,9 +11,12 @@ namespace PageCheckerAPI.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UserName = table.Column<string>(nullable: false)
+                    UserId = table.Column<Guid>(nullable: false),
+                    Verified = table.Column<bool>(nullable: false),
+                    UserName = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(nullable: false),
+                    PasswordHash = table.Column<byte[]>(nullable: true),
+                    PasswordSalt = table.Column<byte[]>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -26,10 +27,16 @@ namespace PageCheckerAPI.Migrations
                 name: "Pages",
                 columns: table => new
                 {
-                    PageId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    PageId = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    RefreshRate = table.Column<TimeSpan>(nullable: false),
+                    HasChanged = table.Column<bool>(nullable: false),
+                    Stopped = table.Column<bool>(nullable: false),
+                    CheckingType = table.Column<int>(nullable: false),
+                    Body = table.Column<string>(type: "ntext", nullable: true),
+                    BodyDifference = table.Column<string>(type: "ntext", nullable: true),
                     Url = table.Column<string>(nullable: false),
-                    UserId = table.Column<int>(nullable: false)
+                    UserId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {

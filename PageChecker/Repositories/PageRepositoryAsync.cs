@@ -22,17 +22,17 @@ namespace PageCheckerAPI.Repositories
             _mapper = mapper;
         }
 
-        public async Task<List<PageDto>> GetPages(int userId)
+        public async Task<List<PageDto>> GetPages(Guid userId)
         {
-            List<Page> pages = await _context.Pages.Where(x => x.UserId == userId).ToListAsync();
+            List<Page> pages = await _context.Pages.Where(x => x.UserId.Equals(userId)).ToListAsync();
             List<PageDto> pageDtos = _mapper.Map<List<Page>, List<PageDto>>(pages);
 
             return pageDtos;
         }
 
-        public async Task<PageDto> GetPage(int pageId)
+        public async Task<PageDto> GetPage(Guid pageId)
         {
-            Page page = await _context.Pages.SingleOrDefaultAsync(x => x.PageId == pageId);
+            Page page = await _context.Pages.SingleOrDefaultAsync(x => x.PageId.Equals(pageId));
             PageDto pageDto = _mapper.Map<PageDto>(page);
 
             return pageDto;
@@ -42,7 +42,7 @@ namespace PageCheckerAPI.Repositories
         {
             var page = _mapper.Map<Page>(pageDto);
 
-            await _context.Pages.AddAsync(page);
+            var task = await _context.Pages.AddAsync(page);
 
             if (await _context.SaveChangesAsync() > 0)
                 return _mapper.Map<PageDto>(page);
@@ -50,11 +50,11 @@ namespace PageCheckerAPI.Repositories
             return null;
         }
 
-        public async Task DeletePage(DeletePageDto pageDto, int userId)
+        public async Task DeletePage(DeletePageDto pageDto, Guid userId)
         {
-            var pageToDelete = await _context.Pages.SingleAsync(p => p.PageId == pageDto.PageId);
+            var pageToDelete = await _context.Pages.SingleAsync(p => p.PageId.Equals(pageDto.PageId));
 
-            if (pageToDelete.UserId != userId)
+            if (!pageToDelete.UserId.Equals(userId))
                 return;
 
             _context.Pages.Remove(pageToDelete);
@@ -63,7 +63,7 @@ namespace PageCheckerAPI.Repositories
 
         public async Task<PageDto> EditPage(PageDto pageDto)
         {
-            var page = await _context.Pages.SingleOrDefaultAsync(x => x.PageId == pageDto.PageId);
+            var page = await _context.Pages.SingleOrDefaultAsync(x => x.PageId.Equals(pageDto.PageId));
 
             _mapper.Map<PageDto, Page>(pageDto, page);
 

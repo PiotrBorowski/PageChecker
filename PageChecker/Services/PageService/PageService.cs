@@ -21,17 +21,17 @@ namespace PageCheckerAPI.Services.PageService
            return await _repo.AddPage(pageDto);
         }
 
-        public async Task DeletePage(DeletePageDto pageDto, int userId)
+        public async Task DeletePage(DeletePageDto pageDto, Guid userId)
         {
             await _repo.DeletePage(pageDto, userId);
         }
 
-        public async Task<List<PageDto>> GetPages(int userId)
+        public async Task<List<PageDto>> GetPages(Guid userId)
         {
             return await _repo.GetPages(userId);
         }
 
-        public async Task<PageDto> GetPage(int pageId)
+        public async Task<PageDto> GetPage(Guid pageId)
         {
             return await _repo.GetPage(pageId);
         }

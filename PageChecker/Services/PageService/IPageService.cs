@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using PageCheckerAPI.DTOs.Page;
 
@@ -6,10 +7,10 @@ namespace PageCheckerAPI.Services.PageService
 {
     public interface IPageService
     {
-        Task<List<PageDto>> GetPages(int userId);
-        Task<PageDto> GetPage(int pageId);
+        Task<List<PageDto>> GetPages(Guid userId);
+        Task<PageDto> GetPage(Guid pageId);
         Task<PageDto> AddPage(AddPageDto pageDto);
-        Task DeletePage(DeletePageDto pageDto, int userId);
+        Task DeletePage(DeletePageDto pageDto, Guid userId);
         Task<PageDto> EditPage(PageDto pageDto);
     }
 }

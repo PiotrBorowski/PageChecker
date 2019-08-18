@@ -8,6 +8,6 @@ namespace PageCheckerAPI.DTOs.Page
 {
     public class DeletePageDto
     {
-        public int PageId { get; set; }
+        public Guid PageId { get; set; }
     }
 }

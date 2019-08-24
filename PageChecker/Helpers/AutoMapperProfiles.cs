@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using PageCheckerAPI.DTOs.Page;
 using PageCheckerAPI.DTOs.User;
+using PageCheckerAPI.DTOs.WebsiteText;
 using PageCheckerAPI.Models;
 using PageCheckerAPI.ViewModels.Page;
 
@@ -21,6 +22,8 @@ namespace PageCheckerAPI.Helpers
             CreateMap<User, UserClaimsDto>();
             CreateMap<EditUserDto, User>();
             CreateMap<User, EditUserDto>();
+            CreateMap<AddWebsiteTextDto, WebsiteText>();
+            CreateMap<WebsiteText, WebsiteTextDto>();
         }
     }
 }

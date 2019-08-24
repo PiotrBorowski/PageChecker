@@ -31,10 +31,14 @@ namespace PageCheckerAPI.Models
         public bool Stopped { get; set; }
         public CheckingTypeEnum CheckingType { get; set; }
 
-        [Column(TypeName = "ntext")]
-        public string Body { get; set; }
-        [Column(TypeName = "ntext")]
-        public string BodyDifference { get; set; }
+        [ForeignKey("WebsiteText")]
+        public Guid PrimaryTextId { get; set; }
+        public WebsiteText PrimaryText { get; set; }
+
+        [ForeignKey("WebsiteText")]
+        public Guid SecondaryTextId { get; set; }
+        public WebsiteText SecondaryText { get; set; }
+
         [Required]
         public string Url { get; set; }
         [Required]

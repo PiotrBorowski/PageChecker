@@ -14,5 +14,6 @@ namespace PageCheckerAPI.DataAccess
         //enable lazy loading
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Page> Pages { get; set; }
+        public virtual DbSet<WebsiteText> WebsiteTexts { get; set; }
     }
 }

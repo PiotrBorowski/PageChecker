@@ -2,6 +2,7 @@
 using System.Net.Mail;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using PageCheckerAPI.DTOs.User;
 using PageCheckerAPI.Helpers;
@@ -14,16 +15,21 @@ namespace PageCheckerAPI.Services.UserService
 {
     public class UserService : IUserService
     {
-        private readonly IUserRepository _repository;
+        //private readonly IUserRepository _repository;
+        private readonly IGenericRepository<User> _genericRepository;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
         private readonly IEmailService _emailService;
         private readonly ITokenService _tokenService;
 
-        public UserService(IUserRepository repository, IConfiguration configuration, IMapper mapper,
-            IEmailService emailService, ITokenService tokenService)
+        public UserService(
+            IGenericRepository<User> genericRepository,
+            IConfiguration configuration, 
+            IMapper mapper,
+            IEmailService emailService, 
+            ITokenService tokenService)
         {
-            _repository = repository;
+            _genericRepository = genericRepository;
             _configuration = configuration;
             _mapper = mapper;
             _emailService = emailService;
@@ -32,7 +38,7 @@ namespace PageCheckerAPI.Services.UserService
 
         public async Task<UserClaimsDto> Login(AddUserDto userDto)
         {
-            User user = await _repository.GetUser(userDto.Email);
+            User user = await _genericRepository.FindBy(x => x.Email == userDto.Email).SingleAsync();
 
             if (user == null)
                 return null;
@@ -45,22 +51,35 @@ namespace PageCheckerAPI.Services.UserService
 
         public async Task<UserClaimsDto> Register(AddUserDto userDto)
         {
-            if (await _repository.GetUser(userDto.Email) != null)
+            if(await _genericRepository.FindBy(x => x.Email == userDto.Email).AnyAsync())
                 return null;
 
-            var user = await _repository.Add(userDto);
-            return _mapper.Map<UserClaimsDto>(user);
+            User user = new User { UserName = userDto.Username, Email = userDto.Email };
+
+            if (!string.IsNullOrEmpty(userDto.Password))
+            {
+                byte[] passwordHash, passwordSalt;
+                HashSaltHelper.GeneratePasswordHashAndSalt(userDto.Password, out passwordHash, out passwordSalt);
+
+                user.PasswordHash = passwordHash;
+                user.PasswordSalt = passwordSalt;
+
+                await _genericRepository.Add(user);
+                return _mapper.Map<UserClaimsDto>(user);
+            }
+
+            return null;
         }
 
         public async Task<UserClaimsDto> GetUser(Guid userId)
         {
-           var user = await _repository.GetUser(userId);
+            var user = await _genericRepository.FindBy(x => x.UserId.Equals(userId)).SingleAsync();
             return _mapper.Map<UserClaimsDto>(user);
         }
 
         public async Task SendVerificationLink(Guid userId)
         {
-            var user = await _repository.GetUser(userId);
+            var user = await _genericRepository.FindBy(x => x.UserId.Equals(userId)).SingleAsync();
             string content = BuildVerificationEmailContent(user);
             var message = new MailMessage(_configuration["Gmail:email"], user.Email, "PageChecker Verification",
                 content) {IsBodyHtml = true};
@@ -70,18 +89,14 @@ namespace PageCheckerAPI.Services.UserService
 
         public async Task<bool> Verify(Guid userId)
         {
-            var user = await _repository.GetUser(userId);
+            var user = await _genericRepository.FindBy(x => x.UserId.Equals(userId)).SingleAsync();
 
             if (user.Verified)
                 return true;
 
             user.Verified = true;
 
-            EditUserDto userDto = new EditUserDto();
-            _mapper.Map(user, userDto);
-
-            user = await _repository.EditUser(userDto);
-
+            await _genericRepository.Edit(user);
             return user.Verified;
         }      
 

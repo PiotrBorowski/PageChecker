@@ -9,12 +9,14 @@ using Hangfire;
 using Microsoft.Extensions.Configuration;
 using PageCheckerAPI.DTOs.Page;
 using PageCheckerAPI.DTOs.User;
+using PageCheckerAPI.DTOs.WebsiteText;
 using PageCheckerAPI.Helpers;
 using PageCheckerAPI.Services.EmailService;
 using PageCheckerAPI.Services.HtmlDifferenceService;
 using PageCheckerAPI.Services.PageService;
 using PageCheckerAPI.Services.UserService;
 using PageCheckerAPI.Services.WebsiteService;
+using PageCheckerAPI.Services.WebsiteTextService;
 
 namespace PageCheckerAPI.Services.PageBackgroundService
 {
@@ -26,9 +28,11 @@ namespace PageCheckerAPI.Services.PageBackgroundService
         private readonly IUserService _userService;
         private readonly IHtmlDifferenceService _differenceService;
         private readonly IConfiguration _config;
+        private readonly IWebsiteTextService _websiteTextService;
 
         public PageBackgroundService(
             IWebsiteService websiteService, 
+            IWebsiteTextService websiteTextService,
             IPageService pageService,  
             IEmailService emailService,
             IUserService userService,
@@ -41,6 +45,7 @@ namespace PageCheckerAPI.Services.PageBackgroundService
             _userService = userService;
             _differenceService = differenceService;
             _config = config;
+            _websiteTextService = websiteTextService;
         }
 
         public void StartPageChangeChecking(PageDto pageDto)
@@ -56,14 +61,15 @@ namespace PageCheckerAPI.Services.PageBackgroundService
             try
             {
                 string webBody = await _websiteService.GetHtml(pageDto.Url);
-
+                var primaryText = await _websiteTextService.GetText(pageDto.PrimaryTextId);
                 //if page changed now
-                if (HtmlHelper.Compare(pageDto.Body, webBody, pageDto.CheckingType) == false)
+                if (HtmlHelper.Compare(primaryText.Text, webBody, pageDto.CheckingType) == false)
                 {
                     pageDto.HasChanged = true;
                     pageDto.Stopped = true;
-                    pageDto.BodyDifference =
-                        _differenceService.GetDifference(pageDto.Body, webBody, pageDto.CheckingType);
+                    var secondaryText = await _websiteTextService.AddText(new AddWebsiteTextDto() {Text = webBody});
+                    pageDto.SecondaryTextId = secondaryText.WebsiteTextId;
+                    pageDto.BodyDifference = _differenceService.GetDifference(primaryText.Text, webBody, pageDto.CheckingType);
 
                     await _pageService.EditPage(pageDto);
                   

@@ -10,11 +10,15 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PageCheckerAPI.DTOs.Page;
+using PageCheckerAPI.DTOs.WebsiteText;
 using PageCheckerAPI.Helpers;
+using PageCheckerAPI.Models;
+using PageCheckerAPI.Repositories.Interfaces;
 using PageCheckerAPI.Services.EmailService;
 using PageCheckerAPI.Services.PageBackgroundService;
 using PageCheckerAPI.Services.PageService;
 using PageCheckerAPI.Services.WebsiteService;
+using PageCheckerAPI.Services.WebsiteTextService;
 using PageCheckerAPI.ViewModels.Page;
 
 namespace PageCheckerAPI.Controllers
@@ -27,15 +31,20 @@ namespace PageCheckerAPI.Controllers
         private readonly IMapper _mapper;
         private readonly IPageBackgroundService _pageBackService;
         private readonly IWebsiteService _websiteService;
-        private readonly IEmailService _emailService;
+        private readonly IWebsiteTextService _websiteTextService;
 
-        public PageController(IPageService pageService, IPageBackgroundService pageBackService, IWebsiteService websiteService, IMapper mapper, IEmailService emailService)
+        public PageController(
+            IPageService pageService,
+            IPageBackgroundService pageBackService,
+            IWebsiteService websiteService,
+            IWebsiteTextService websiteTextService,
+            IMapper mapper)
         {
             _pageService = pageService;
             _pageBackService = pageBackService;
             _mapper = mapper;
             _websiteService = websiteService;
-            _emailService = emailService;
+            _websiteTextService = websiteTextService;
         }
 
         private Guid GetUserId()
@@ -92,7 +101,13 @@ namespace PageCheckerAPI.Controllers
             try
             {
                 addPageDto.UserId = GetUserId();
-                addPageDto.Body = await _websiteService.GetHtml(addPageDto.Url);
+                var text = await _websiteService.GetHtml(addPageDto.Url);
+                var primaryText = await _websiteTextService.AddText(new AddWebsiteTextDto()
+                {
+                    Text = text
+                });
+
+                addPageDto.PrimaryTextId = primaryText.WebsiteTextId;
             }
             catch (UriFormatException)
             {
@@ -103,12 +118,22 @@ namespace PageCheckerAPI.Controllers
                 return BadRequest();
             }
 
-            var addResult = await _pageService.AddPage(addPageDto);
 
-            if (addResult == null)
+            try
+            {
+                var addResult = await _pageService.AddPage(addPageDto);
+
+                if (addResult == null)
+                    return BadRequest();
+
+                return Ok(addResult);
+            }
+            catch
+            {
                 return BadRequest();
+            }
 
-            return Ok(addResult);
+
         }
 
         //DELETE api/page

@@ -42,7 +42,7 @@ namespace PageCheckerAPI.Repositories
         {
             var page = _mapper.Map<Page>(pageDto);
 
-            var task = await _context.Pages.AddAsync(page);
+            await _context.Pages.AddAsync(page);
 
             if (await _context.SaveChangesAsync() > 0)
                 return _mapper.Map<PageDto>(page);

@@ -9,6 +9,7 @@ using AutoMapper;
 using Hangfire;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using PageCheckerAPI.Models;
 using PageCheckerAPI.Repositories;
 using PageCheckerAPI.Repositories.Interfaces;
 using PageCheckerAPI.Services;
@@ -21,6 +22,7 @@ using PageCheckerAPI.Services.PageService;
 using PageCheckerAPI.Services.TokenService;
 using PageCheckerAPI.Services.UserService;
 using PageCheckerAPI.Services.WebsiteService;
+using PageCheckerAPI.Services.WebsiteTextService;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace PageCheckerAPI
@@ -48,6 +50,11 @@ namespace PageCheckerAPI
                 conf.UseSqlServerStorage(Configuration.GetConnectionString("DefaultConnection"));
                 // conf.UseSqlServerStorage("Server=(localdb)\\MSSQLLocalDB;Integrated Security=True");
             });
+
+            services.AddScoped<IGenericRepository<User>, GenericRepository<ApplicationDbContext, User>>();
+            services.AddScoped<IGenericRepository<Page>, GenericRepository<ApplicationDbContext, Page>>();
+            services.AddScoped<IGenericRepository<WebsiteText>, GenericRepository<ApplicationDbContext, WebsiteText>>();
+            services.AddScoped<IWebsiteTextService, WebsiteTextService>();
 
             services.AddScoped<IPageRepositoryAsync, PageRepositoryAsync>();
             services.AddScoped<IPageService, PageService>();

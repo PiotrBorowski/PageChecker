@@ -19,6 +19,6 @@ namespace PageCheckerAPI.DTOs.Page
         [Required(ErrorMessage = "Choose checking type")]
         public CheckingTypeEnum CheckingType { get; set; }
         public Guid PrimaryTextId { get; set; }
-        public Guid SecondaryTextId { get; set; }
+
     }
 }

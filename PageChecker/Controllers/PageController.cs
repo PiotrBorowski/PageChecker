@@ -63,6 +63,18 @@ namespace PageCheckerAPI.Controllers
             return Ok(pageViewModels);
         }
 
+        [HttpGet("Difference")]
+        public async Task<IActionResult> GetDifference(Guid websiteTextId)
+        {
+            var text = await _websiteTextService.GetText(websiteTextId);
+            if (text == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(text);
+        }
+
         [HttpGet("StartChecking")]
         public async Task<IActionResult> StartChecking(Guid pageId)
         {

@@ -14,8 +14,23 @@ export default class Page extends Component{
             pageId: this.props.pageId,
             url: this.props.url,
             stopped: this.props.stopped,
-            modal: false
+            modal: false,
+            bodyDifference: ""
         };
+    }
+
+    componentDidMount(){
+        axios.get(BASE_URL + "/page/Difference?websiteTextId=" + this.props.secondaryTextId)
+        .then((response) => { 
+            console.log(response);
+            this.setState({bodyDifference: response.data.text});
+        }, (error) => {
+            console.log(error);
+            if(error.response.status === 401){
+                this.props.history.push("/unauthorized");
+            }
+        }
+        )
     }
 
     handleStopChecking = () => {
@@ -95,7 +110,7 @@ export default class Page extends Component{
         const Difference = (
             <div className="col-lg-12"> 
                 <h5 style={{"fontWeight":"normal"}}>Difference:</h5>        
-                <HtmlDifference html = {this.props.bodyDifference} />
+                <HtmlDifference html = {this.state.bodyDifference} />
             </div>
         )
 

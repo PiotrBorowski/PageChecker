@@ -67,9 +67,11 @@ namespace PageCheckerAPI.Services.PageBackgroundService
                 {
                     pageDto.HasChanged = true;
                     pageDto.Stopped = true;
-                    var secondaryText = await _websiteTextService.AddText(new AddWebsiteTextDto() {Text = webBody});
+                    var secondaryText = await _websiteTextService.AddText(new AddWebsiteTextDto()
+                    {
+                        Text = _differenceService.GetDifference(primaryText.Text, webBody, pageDto.CheckingType)
+                    });
                     pageDto.SecondaryTextId = secondaryText.WebsiteTextId;
-                    pageDto.BodyDifference = _differenceService.GetDifference(primaryText.Text, webBody, pageDto.CheckingType);
 
                     await _pageService.EditPage(pageDto);
                   

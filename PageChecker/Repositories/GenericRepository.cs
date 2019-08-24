@@ -20,12 +20,12 @@ namespace PageCheckerAPI.Repositories
         public virtual async Task<IEnumerable<T>> GetAll()
         {
             IQueryable<T> query = _context.Set<T>();
-            return await query.ToArrayAsync();
+            return await query.AsNoTracking().ToArrayAsync();
         }
 
         public virtual IQueryable<T> FindBy(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
         {
-            IQueryable<T> query = _context.Set<T>().Where(predicate);
+            IQueryable<T> query = _context.Set<T>().AsNoTracking().Where(predicate);
             return query;
         }
 

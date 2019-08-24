@@ -14,7 +14,7 @@ namespace PageCheckerAPI.ViewModels.Page
         public bool HasChanged { get; set; }
         public bool Stopped { get; set; }
         public CheckingTypeEnum CheckingType { get; set; }
-        public string BodyDifference { get; set; }
+        public Guid SecondaryTextId { get; set; }
         public string Url { get; set; }
     }
 }

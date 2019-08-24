@@ -39,7 +39,7 @@ export default class Pages extends Component {
 
     renderPages = () => {
         return this.state.pages.map(page => 
-            <Page onDelete={this.deletePage} key={page.pageId} name={page.name} url={page.url} pageId={page.pageId} refreshRate={page.refreshRate} hasChanged={page.hasChanged} stopped={page.stopped} checkingType={page.checkingType} bodyDifference={page.bodyDifference}/>
+            <Page onDelete={this.deletePage} key={page.pageId} name={page.name} url={page.url} pageId={page.pageId} refreshRate={page.refreshRate} hasChanged={page.hasChanged} stopped={page.stopped} checkingType={page.checkingType} secondaryTextId={page.secondaryTextId}/>
         );
     }
 

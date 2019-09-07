@@ -3,14 +3,14 @@ import { NavLink, withRouter } from "react-router-dom";
 import "../Styles/Index.css";
 import TokenHelper from '../helpers/tokenHelper'
 import {connect} from 'react-redux'
-import { CheckUserToken } from "../Actions/userActions";
+import { checkUserToken } from "../Actions/userActions";
 
 class Header extends Component {
     constructor(props){
         super(props);
         console.log(this.props)
         window.onload = () => {
-            this.props.dispatch(CheckUserToken())          
+            this.props.dispatch(checkUserToken())          
         }
     }
 
@@ -19,7 +19,7 @@ class Header extends Component {
         TokenHelper.setTokenInLocalStorage(false);
         localStorage.removeItem('username');
         this.props.history.push('/');
-        this.props.dispatch(CheckUserToken());
+        this.props.dispatch(checkUserToken());
     };
 
     render(){

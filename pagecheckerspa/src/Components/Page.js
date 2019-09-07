@@ -6,8 +6,14 @@ import {ButtonGroup, UncontrolledCollapse, Button, CardBody, Card } from 'reacts
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {  Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import HtmlDifference from './HtmlDifference';
+import DeleteModal from "./DeleteModal";
+import {connect} from 'react-redux';
+import { withRouter, NavLink } from "react-router-dom";
+import { deletePageThunk } from "../Actions/pageActions";
 
-export default class Page extends Component{
+
+
+class Page extends Component{
     constructor(props){
         super(props);
         this.state = {
@@ -22,7 +28,6 @@ export default class Page extends Component{
     componentDidMount(){
         axios.get(BASE_URL + "/page/Difference?websiteTextId=" + this.props.secondaryTextId)
         .then((response) => { 
-            console.log(response);
             this.setState({bodyDifference: response.data.text});
         }, (error) => {
             console.log(error);
@@ -62,11 +67,15 @@ export default class Page extends Component{
         )
     }
 
-    toggleModal = () =>{
+    openModal = () =>{
         this.setState({
-          modal: !this.state.modal
+          modal: true
         });
       }
+
+    deletePage = id =>{
+        this.props.dispatch(deletePageThunk(id))
+    }
 
     render(){
 
@@ -116,16 +125,7 @@ export default class Page extends Component{
 
         return (
             <div className="page" >
-                <Modal isOpen={this.state.modal} toggle={this.toggle}>
-                <ModalHeader toggle={this.toggleModal}>Confirm</ModalHeader>
-                <ModalBody>
-                    Do you really want to delete this page?
-                </ModalBody>
-                <ModalFooter>
-                    <Button color="danger" onClick={() => this.props.onDelete(this.props.pageId)}>Delete</Button>
-                    <Button color="secondary" onClick={this.toggleModal}>Cancel</Button>
-                </ModalFooter>
-                </Modal>
+                <DeleteModal isOpen={this.state.modal} onDelete={this.deletePage} pageId={this.props.pageId}></DeleteModal>
            
                 <h5 className="text-center text-truncate">
                     {this.props.name}
@@ -141,7 +141,7 @@ export default class Page extends Component{
                     <div className="col-lg">
                     <ButtonGroup className="float-right">
                         {this.state.stopped ? StartButton : StopButton}
-                        <button className="btn" onClick={() => this.toggleModal()}>                                 
+                        <button className="btn" onClick={() => this.openModal()}>                                 
                             <FontAwesomeIcon icon="trash" color="black" aria-hidden="true"/>
                         </button>
                     </ButtonGroup>
@@ -161,8 +161,11 @@ export default class Page extends Component{
                         </CardBody>
                     </Card>
                 </UncontrolledCollapse>
+                <NavLink className="nav-link" to={`/Page/${this.props.pageId}`}>Details</NavLink>
             </div>
         )
     }
 
 }
+
+export default withRouter(connect(null)(Page));

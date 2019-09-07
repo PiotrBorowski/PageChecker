@@ -1,11 +1,15 @@
 import React, { Component } from "react";
-import axios from "axios"
-import {BASE_URL} from "../constants"
-import Page from "../Components/Page"
-import "../Styles/Page.css"
-import TokenHelper from '../helpers/tokenHelper'
+import axios from "axios";
+import {BASE_URL} from "../constants";
+import Page from "../Components/Page";
+import "../Styles/Page.css";
+import TokenHelper from '../helpers/tokenHelper';
+import {connect} from 'react-redux';
+import {  withRouter } from "react-router-dom";
+import { getPageThunk } from "../Actions/pageActions";
 
-export default class Pages extends Component {
+
+class Pages extends Component {
     constructor(props){
         super(props);
         this.state={
@@ -18,38 +22,18 @@ export default class Pages extends Component {
             this.props.history.push("/login");
         }
         else{
-            this.getPages(BASE_URL + "/page");
+            this.props.dispatch(getPageThunk());
         }      
     }   
 
-    getPages(url){
-        return axios.get(url).then(response => {
-            console.log(response);
-            this.setState({
-                pages: response.data
-            })
-        }).catch((error) => {
-            console.log(error);
-            
-            if(error.response.status === 401){
-                    this.props.history.push('/unauthorized');
-            }
-        });
-    }
-
     renderPages = () => {
-        return this.state.pages.map(page => 
-            <Page onDelete={this.deletePage} key={page.pageId} name={page.name} url={page.url} pageId={page.pageId} refreshRate={page.refreshRate} hasChanged={page.hasChanged} stopped={page.stopped} checkingType={page.checkingType} secondaryTextId={page.secondaryTextId}/>
-        );
-    }
+        if(this.props.pages.length !== 0){
+            console.log(this.props.pages)
+            return this.props.pages.map(page => 
+                <Page key={page.pageId} name={page.name} url={page.url} pageId={page.pageId} refreshRate={page.refreshRate} hasChanged={page.hasChanged} stopped={page.stopped} checkingType={page.checkingType} secondaryTextId={page.secondaryTextId}/>
+            );
+        }
 
-    deletePage = id =>{
-        return axios.delete(BASE_URL + "/page?pageId=" + id)
-        .then(this.setState({ pages: this.pagesExceptSpecified(id)}))
-        .then(() => this.props.history.push('/Pages'))
-        .catch(err => {
-            console.log(err);
-        })
     }
 
     pagesExceptSpecified = id =>{
@@ -69,3 +53,12 @@ export default class Pages extends Component {
         )
     }
 }
+
+function mapStateToProps(state){
+    console.log(state);
+    return {
+        pages: state.pages
+    };
+}
+
+export default withRouter(connect(mapStateToProps)(Pages));

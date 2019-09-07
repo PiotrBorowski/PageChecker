@@ -15,7 +15,7 @@ export const setUsername = (username) => {
     }
 }
 
-export const CheckUserToken = () => {
+export const checkUserToken = () => {
     return dispatch => {
         if(!TokenHelper.CheckToken()){
             console.log("brak usera")

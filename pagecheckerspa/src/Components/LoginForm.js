@@ -3,7 +3,7 @@ import "../Styles/Form.css"
 import axios from 'axios';
 import {BASE_URL} from "../constants"
 import TokenHelper from '../helpers/tokenHelper'
-import { CheckUserToken } from "../Actions/userActions";
+import { checkUserToken } from "../Actions/userActions";
 import {connect} from 'react-redux'
 import FacebookLogin from 'react-facebook-login'
 
@@ -44,7 +44,7 @@ class LoginForm extends Component {
         TokenHelper.setTokenInHeader(response.data.token);
         TokenHelper.setTokenInLocalStorage(response.data.token);
         localStorage.setItem('username', response.data.username)
-        this.props.dispatch(CheckUserToken());
+        this.props.dispatch(checkUserToken());
     }
 
     sendRequest = () => {

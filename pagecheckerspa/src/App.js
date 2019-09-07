@@ -17,6 +17,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faStroopwafel, faTrash, faPlay } from '@fortawesome/free-solid-svg-icons'
 import RegisterForm from './Components/RegisterForm';
 import Verify from './Components/Verify';
+import PageDetails from './Components/PageDetails';
 
 library.add(faStroopwafel)
 library.add(faTrash)
@@ -33,6 +34,7 @@ class App extends Component {
             <Route path="/login" component={LoginForm}/>
             <Route path="/register" component={RegisterForm}/>
             <Route path="/Pages" component={Pages}/>
+            <Route path="/Page/:pageId" component={PageDetails}/>
             <Route path="/unauthorized" component={Unauthorized}/>
             <Route path="/AddPage" component={AddPageForm}/>
             <Route path="/verify/:token" component={Verify}/>

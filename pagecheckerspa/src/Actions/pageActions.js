@@ -19,14 +19,14 @@ export const getPages = (pages) => {
 export const deletePageThunk = (pageId) => {
     return dispatch => {
         axios.delete(BASE_URL + "/page?pageId=" + pageId)
-        .then(dispatch(deletePage(pageId)))
+        .then(() => dispatch(deletePage(pageId)))
         .catch(err => {
             console.log(err);
         })
     }
 }
 
-export const getPageThunk = () => {
+export const getPagesThunk = () => {
     return dispatch => {
         axios.get(BASE_URL + "/page")
         .then(response =>  {

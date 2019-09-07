@@ -104,7 +104,7 @@ class LoginForm extends Component {
 
         return (
  <div className="form-center">
-        <form onSubmit={this.handleLoginSubmit}t>
+        <form onSubmit={this.handleLoginSubmit}>
             <h2 className="title">Login</h2>
             <div className="form-group col-md-10 offset-md-1">
                 <div className="input-group mb-3">

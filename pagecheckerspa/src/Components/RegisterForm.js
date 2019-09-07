@@ -40,7 +40,7 @@ export default class RegisterForm extends Component {
     }
 
     passwordConfirmed(){
-        return this.state.password == this.state.confirmPassword && this.state.confirmPassword != ""
+        return this.state.password === this.state.confirmPassword && this.state.confirmPassword !== ""
     }
 
     handleLoginSubmit = e => {

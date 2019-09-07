@@ -1,12 +1,10 @@
 import React, { Component } from "react";
-import axios from "axios";
-import {BASE_URL} from "../constants";
 import Page from "../Components/Page";
 import "../Styles/Page.css";
 import TokenHelper from '../helpers/tokenHelper';
 import {connect} from 'react-redux';
 import {  withRouter } from "react-router-dom";
-import { getPageThunk } from "../Actions/pageActions";
+import { getPagesThunk } from "../Actions/pageActions";
 
 
 class Pages extends Component {
@@ -22,7 +20,7 @@ class Pages extends Component {
             this.props.history.push("/login");
         }
         else{
-            this.props.dispatch(getPageThunk());
+            this.props.dispatch(getPagesThunk());
         }      
     }   
 

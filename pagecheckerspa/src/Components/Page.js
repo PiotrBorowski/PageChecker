@@ -2,9 +2,8 @@ import React, { Component } from "react";
 import "../Styles/Page.css"
 import axios from "axios"
 import {BASE_URL} from "../constants"
-import {ButtonGroup, UncontrolledCollapse, Button, CardBody, Card } from 'reactstrap';
+import {ButtonGroup, UncontrolledCollapse, CardBody, Card } from 'reactstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {  Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import HtmlDifference from './HtmlDifference';
 import DeleteModal from "./DeleteModal";
 import {connect} from 'react-redux';
@@ -74,24 +73,10 @@ class Page extends Component{
       }
 
     deletePage = id =>{
-        this.props.dispatch(deletePageThunk(id))
+        this.props.dispatch(deletePageThunk(id));
     }
 
     render(){
-
-        function CheckingType(props)
-        {
-            switch(props.checkingType)
-            {
-                case 0:
-                    return <span >Full</span>
-                case 1:
-                    return <span >Text Only</span>
-                default:
-                    return <span >Undefined</span>
-            }          
-        }
-    
         const Changed = (
             <React.Fragment>
                 <span className="changed-text">Changed</span>
@@ -147,20 +132,6 @@ class Page extends Component{
                     </ButtonGroup>
                     </div>
                 </div>
-                <div className="btn btn-dark btn-block" id={"toggler" + this.props.pageId} >
-                    <i className="fas fa-angle-down"></i>
-                </div>
-                <UncontrolledCollapse toggler={"#toggler"+this.props.pageId}>
-                    <Card>
-                        <CardBody>
-                         <div className="col-lg-4">
-                            <span style={{"fontWeight":"normal"}}>Refresh rate: </span><time>{this.props.refreshRate}</time><br/>
-                            <span style={{"fontWeight":"normal"}}>Checking Type: </span>{CheckingType(this.props)}<br/><br/>
-                        </div>
-                        {this.props.hasChanged ? Difference : null}
-                        </CardBody>
-                    </Card>
-                </UncontrolledCollapse>
                 <NavLink className="nav-link" to={`/Page/${this.props.pageId}`}>Details</NavLink>
             </div>
         )

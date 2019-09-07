@@ -6,13 +6,9 @@ import {connect} from 'react-redux'
 import { checkUserToken } from "../Actions/userActions";
 
 class Header extends Component {
-    constructor(props){
-        super(props);
-        console.log(this.props)
-        window.onload = () => {
-            this.props.dispatch(checkUserToken())          
-        }
-    }
+    componentWillMount(){
+        this.props.dispatch(checkUserToken())          
+    }    
 
     handleLogout = () => {
         TokenHelper.setTokenInHeader(false);

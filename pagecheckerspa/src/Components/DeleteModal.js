@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {  Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import {ButtonGroup, UncontrolledCollapse, Button, CardBody, Card } from 'reactstrap';
+import { Button } from 'reactstrap';
 
 
 export default class DeleteModal extends Component {

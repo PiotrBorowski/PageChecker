@@ -13,7 +13,6 @@ import "@fortawesome/fontawesome-svg-core"
 import "@fortawesome/free-solid-svg-icons"
 import 'font-awesome/css/font-awesome.min.css';
 import combinedReducer from './Reducers/combinedReducer'
-import { faWindowMinimize } from '@fortawesome/free-solid-svg-icons';
 
 const store = createStore(combinedReducer,
     composeWithDevTools(

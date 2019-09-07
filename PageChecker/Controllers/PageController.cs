@@ -67,6 +67,11 @@ namespace PageCheckerAPI.Controllers
         public async Task<IActionResult> GetPage(Guid pageId)
         {
             PageDto page = await _pageService.GetPage(pageId);
+            if (page == null)
+            {
+                return BadRequest();
+            }
+
             PageViewModel pageViewModel = _mapper.Map<PageViewModel>(page);
 
             return Ok(pageViewModel);

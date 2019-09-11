@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PageCheckerAPI.DataAccess;
 
 namespace PageCheckerAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190911202003_RefreshRate")]
+    partial class RefreshRate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,7 +34,9 @@ namespace PageCheckerAPI.Migrations
 
                     b.Property<Guid>("PrimaryTextId");
 
-                    b.Property<int>("RefreshRate");
+                    b.Property<TimeSpan>("RefreshRate");
+
+                    b.Property<int>("RefreshRate2");
 
                     b.Property<Guid>("SecondaryTextId");
 

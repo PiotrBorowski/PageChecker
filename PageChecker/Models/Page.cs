@@ -14,6 +14,16 @@ namespace PageCheckerAPI.Models
         Text
     }
 
+    public enum RefreshRateEnum
+    {
+        FifteenMinutes = 15,
+        HalfHour = 30,
+        Hour = 60,
+        ThreeHours = 180,
+        HalfDay = 720,
+        Day = 1440
+    }
+
     public class Page
     {
         public Page()
@@ -26,7 +36,7 @@ namespace PageCheckerAPI.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid PageId { get; set; }
         public string Name { get; set; }
-        public TimeSpan RefreshRate { get; set; }
+        public RefreshRateEnum RefreshRate { get; set; }
         public bool HasChanged { get; set; }
         public bool Stopped { get; set; }
         public CheckingTypeEnum CheckingType { get; set; }

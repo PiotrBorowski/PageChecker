@@ -13,7 +13,7 @@ export default class AddPageForm extends Component{
         {
             name: "",
             url: "",
-            refreshRate: "00:15",
+            refreshRate: 15,
             checkingType: 0
         };
     }
@@ -49,6 +49,7 @@ export default class AddPageForm extends Component{
     }
 
     sendRequest = () => {
+        console.log(this.state);
         axios.post(BASE_URL + "/page", {
             Name: this.state.name,
             Url: "http://" + this.state.url,
@@ -83,6 +84,21 @@ export default class AddPageForm extends Component{
             }
         }
         )
+    }
+
+    renderRefreshRates = () => {
+        const values = [
+            {name: "15 min", value: 15},
+            {name: "30 min", value: 30},
+            {name: "1 hour", value: 60},
+            {name: "3 hours", value: 180},
+            {name: "12 hours", value: 720},
+            {name: "1 day", value: 1440},
+        ]
+
+        return values.map(x => (
+            <option value={x.value}>{x.name}</option>
+        ))
     }
 
     render(){
@@ -124,11 +140,7 @@ export default class AddPageForm extends Component{
                         <label className="input-group-text" for="inputGroupSelect01">Refresh Rate</label>
                     </div>
                     <Input type="select" className="custom-select" id="inputGroupSelect01" onChange={this.handleUserInputRefreshRate}>
-                        <option selected value="00:15">15 min</option>
-                        <option value="00:30">30 min</option>
-                        <option value="01:00">1 hour</option>
-                        <option value="03:00">3 hours</option>
-                        <option value="12:00">12 hours</option>
+                        {this.renderRefreshRates()}
                     </Input>
                 </div>    
                 <div className="input-group mb-3">

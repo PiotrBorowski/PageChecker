@@ -13,7 +13,7 @@ namespace PageCheckerAPI.DTOs.Page
         public string Name { get; set; }
         public Guid UserId { get; set; }
         [Required(ErrorMessage = "Refresh Rate is required")]
-        public TimeSpan RefreshRate { get; set; }
+        public RefreshRateEnum RefreshRate { get; set; }
         [Required(ErrorMessage = "Url is required")]
         public string Url { get; set; }
         [Required(ErrorMessage = "Choose checking type")]

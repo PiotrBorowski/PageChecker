@@ -10,6 +10,7 @@ import axios from 'axios';
 import {BASE_URL} from '../constants';
 import "../Styles/Page.css"
 import Spinner from './Spinner';
+import * as moment from 'moment';
 
 class PageDetails extends Component {
     constructor(props){
@@ -96,7 +97,6 @@ class PageDetails extends Component {
 
     render(){
         
-    
         function CheckingType(props)
         {
             switch(props.checkingType)
@@ -109,6 +109,16 @@ class PageDetails extends Component {
                     return <span >Undefined</span>
             }   
         }       
+
+        function timespanString(span){
+            const time = moment.duration(span*1000*60);
+            console.log(time)
+            const days = time.days() !== 0 ? time.days()+" day" : "";
+            const hours = time.hours() !== 0 ? time.hours()+" hours" : "";
+            const minutes = time.minutes() !== 0 ? time.minutes()+" minutes" : "";
+
+            return `${days} ${hours} ${minutes}`;
+        }
     
         const Changed = (
             <React.Fragment>
@@ -162,7 +172,7 @@ class PageDetails extends Component {
                     <div className="col-lg-5 text-truncate">
                         <h6>Link: <a href={this.state.page.url} target="_blank">{this.state.page.url}</a></h6>
                         Status: {this.state.page.hasChanged ? Changed : NotChanged}<br/>
-                        <span style={{"fontWeight":"normal"}}>Refresh rate: </span><time>{this.state.page.refreshRate}</time><br/>
+                        <span style={{"fontWeight":"normal"}}>Refresh rate: </span><time>{timespanString(this.state.page.refreshRate)}</time><br/>
                         <span style={{"fontWeight":"normal"}}>Checking Type: </span>{CheckingType(this.state.page)}<br/><br/>
                     </div>
                 </div>

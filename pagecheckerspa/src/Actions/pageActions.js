@@ -26,7 +26,7 @@ export const deletePageThunk = (pageId) => {
     }
 }
 
-export const getPagesThunk = () => {
+export const getPagesThunk = (history) => {
     return dispatch => {
         axios.get(BASE_URL + "/page")
         .then(response =>  {
@@ -34,7 +34,7 @@ export const getPagesThunk = () => {
         })
         .catch(err => {
             if(err.response.status === 401){
-                this.props.history.push('/unauthorized');
+                history.push('/unauthorized');
         }
         })
     }

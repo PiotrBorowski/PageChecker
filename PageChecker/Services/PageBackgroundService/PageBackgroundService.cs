@@ -51,7 +51,7 @@ namespace PageCheckerAPI.Services.PageBackgroundService
         public void StartPageChangeChecking(PageDto pageDto)
         {
             RecurringJob.AddOrUpdate(pageDto.PageId.ToString() ,() => CheckChange(pageDto.PageId)
-           , Cron.MinuteInterval(Convert.ToInt32(pageDto.RefreshRate.TotalMinutes)));
+           , Cron.MinuteInterval(Convert.ToInt32(pageDto.RefreshRate)));
         }
 
         public async Task CheckChange(Guid pageId)

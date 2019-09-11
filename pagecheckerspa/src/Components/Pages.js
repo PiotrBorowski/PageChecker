@@ -20,7 +20,7 @@ class Pages extends Component {
             this.props.history.push("/login");
         }
         else{
-            this.props.dispatch(getPagesThunk());
+            this.props.dispatch(getPagesThunk(this.props.history));
         }      
     }   
 

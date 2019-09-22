@@ -134,6 +134,13 @@ namespace PageCheckerAPI.Controllers
                 });
 
                 addPageDto.PrimaryTextId = primaryText.WebsiteTextId;
+
+                var addResult = await _pageService.AddPage(addPageDto);
+
+                if (addResult == null)
+                    return BadRequest();
+
+                return Ok(addResult);
             }
             catch (UriFormatException)
             {
@@ -142,17 +149,6 @@ namespace PageCheckerAPI.Controllers
             catch (WebException)
             {
                 return BadRequest();
-            }
-
-
-            try
-            {
-                var addResult = await _pageService.AddPage(addPageDto);
-
-                if (addResult == null)
-                    return BadRequest();
-
-                return Ok(addResult);
             }
             catch
             {
@@ -181,5 +177,12 @@ namespace PageCheckerAPI.Controllers
             return Ok(deletePageDto);
         }
 
+        [HttpGet("Split")]
+        public async Task<IActionResult> SplitPage(string url)
+        {
+            var text = await _websiteService.GetHtml(url);
+
+            return Ok(HtmlHelper.SplitHtml(text));
+        }
     }
 }

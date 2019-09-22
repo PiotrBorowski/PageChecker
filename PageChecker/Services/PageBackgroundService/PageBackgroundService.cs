@@ -11,6 +11,7 @@ using PageCheckerAPI.DTOs.Page;
 using PageCheckerAPI.DTOs.User;
 using PageCheckerAPI.DTOs.WebsiteText;
 using PageCheckerAPI.Helpers;
+using PageCheckerAPI.Models;
 using PageCheckerAPI.Services.EmailService;
 using PageCheckerAPI.Services.HtmlDifferenceService;
 using PageCheckerAPI.Services.PageService;
@@ -50,8 +51,16 @@ namespace PageCheckerAPI.Services.PageBackgroundService
 
         public void StartPageChangeChecking(PageDto pageDto)
         {
-            RecurringJob.AddOrUpdate(pageDto.PageId.ToString() ,() => CheckChange(pageDto.PageId)
-           , Cron.MinuteInterval(Convert.ToInt32(pageDto.RefreshRate)));
+            if (pageDto.RefreshRate == RefreshRateEnum.Day)
+            {
+                RecurringJob.AddOrUpdate(pageDto.PageId.ToString(), () => CheckChange(pageDto.PageId)
+                    , Cron.DayInterval(1));
+            }
+            else
+            {
+                RecurringJob.AddOrUpdate(pageDto.PageId.ToString(), () => CheckChange(pageDto.PageId)
+                    , Cron.MinuteInterval(Convert.ToInt32(pageDto.RefreshRate)));
+            }
         }
 
         public async Task CheckChange(Guid pageId)

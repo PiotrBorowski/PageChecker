@@ -7,9 +7,15 @@ export default class HtmlDifference extends Component{
          
         var htmlToReactParser = new HtmlToReactParser();
         var reactElement = htmlToReactParser.parse(this.props.html);
+        console.log(reactElement);
 
-        return(<div className="differenceBorder">
-            {reactElement}
-        </div>);
+        return(
+            <div 
+                className="differenceBorder" 
+                // dangerouslySetInnerHTML={{__html: this.props.html}}
+                >
+                    {reactElement}
+            </div>
+        );
     }
 }

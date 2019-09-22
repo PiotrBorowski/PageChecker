@@ -25,7 +25,7 @@ namespace PageCheckerAPI.Helpers
                 if (node.InnerText.Trim() != string.Empty)
                 {
                     string toAppend;
-                    if (first == true)
+                    if (first)
                     {
                         toAppend = node.InnerText;
                         first = false;
@@ -99,6 +99,23 @@ namespace PageCheckerAPI.Helpers
             var body2 = GetBodyText(html2);
 
             return string.Equals(body1, body2);
+        }
+
+
+        public static List<string> SplitHtml(string html)
+        {
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(html);
+
+            var htmlNodes = htmlDoc.DocumentNode.SelectNodes("//div");
+
+            var result = new List<string>();
+            foreach (var node in htmlNodes)
+            {
+                result.Add(node.OuterHtml);
+            }
+
+            return result;
         }
     }
 }

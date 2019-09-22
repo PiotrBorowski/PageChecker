@@ -18,7 +18,8 @@ namespace PageCheckerAPI.Services.HtmlDifferenceService.DifferenceServices
         public string GetDifference(string html1, string html2)
         {
             var listOfDiffs = _differ.diff_main(html1, html2);
-
+            _differ.diff_cleanupSemantic(listOfDiffs);
+            
             return _differ.diff_prettyHtml(listOfDiffs);
         }
     }

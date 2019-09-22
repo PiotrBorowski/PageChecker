@@ -65,7 +65,7 @@ export default class RegisterForm extends Component {
             console.log(error);
             
             if(error.response.status === 401){
-                    this.props.history.push('/unauthorized');
+                this.props.history.push('/unauthorized');
             }
 
             if(error.response.status === 400){

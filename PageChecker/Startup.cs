@@ -61,7 +61,7 @@ namespace PageCheckerAPI
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPageBackgroundService, PageBackgroundService>();
-            services.AddScoped<IWebsiteService, WebsiteService>();
+            services.AddScoped<IWebsiteService, AgilityWebsiteService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IHtmlDifferenceService, HtmlDifferenceService>();
             services.AddScoped<IFacebookService, FacebookService>();

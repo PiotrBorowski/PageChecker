@@ -1,0 +1,10 @@
+.pageSplit {
+    margin: 20px;
+    height: 100px;
+}
+
+.pageSplitText {
+    text-overflow: ellipsis;
+    overflow: scroll;
+    height: 100px;
+}

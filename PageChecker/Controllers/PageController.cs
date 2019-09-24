@@ -177,10 +177,10 @@ namespace PageCheckerAPI.Controllers
             return Ok(deletePageDto);
         }
 
-        [HttpGet("Split")]
-        public async Task<IActionResult> SplitPage(string url)
+        [HttpPost("Split")]
+        public async Task<IActionResult> SplitPage([FromBody] SplitDto dto)
         {
-            var text = await _websiteService.GetHtml(url);
+            var text = await _websiteService.GetHtml(dto.Url);
 
             return Ok(HtmlHelper.SplitHtml(text));
         }

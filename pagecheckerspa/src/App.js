@@ -18,6 +18,7 @@ import { faStroopwafel, faTrash, faPlay } from '@fortawesome/free-solid-svg-icon
 import RegisterForm from './Components/RegisterForm';
 import Verify from './Components/Verify';
 import PageDetails from './Components/PageDetails';
+import PageSplitList from './Components/pageSplitter/PageSplitList';
 
 library.add(faStroopwafel)
 library.add(faTrash)
@@ -37,6 +38,7 @@ class App extends Component {
             <Route path="/Page/:pageId" component={PageDetails}/>
             <Route path="/unauthorized" component={Unauthorized}/>
             <Route path="/AddPage" component={AddPageForm}/>
+            <Route path="/Split/:url" component={PageSplitList}/>
             <Route path="/verify/:token" component={Verify}/>
             <Route path="*" component={NotFound} />
           </Switch>

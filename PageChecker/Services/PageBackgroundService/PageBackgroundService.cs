@@ -71,25 +71,21 @@ namespace PageCheckerAPI.Services.PageBackgroundService
             {
                 string webBody = await _websiteService.GetHtml(pageDto.Url);
                 var primaryText = await _websiteTextService.GetText(pageDto.PrimaryTextId);
+
+                if (pageDto.CheckingType == CheckingTypeEnum.Element)
+                {
+                    var webElement = HtmlHelper.GetNode(webBody, pageDto.ElementXPath);
+
+                    if (HtmlHelper.Compare(primaryText.Text, webElement, CheckingTypeEnum.Full) == false)
+                    {
+                        PageChanged(pageDto, primaryText.Text, webElement);
+                    }
+                }
+
                 //if page changed now
                 if (HtmlHelper.Compare(primaryText.Text, webBody, pageDto.CheckingType) == false)
                 {
-                    pageDto.HasChanged = true;
-                    pageDto.Stopped = true;
-                    var secondaryText = await _websiteTextService.AddText(new AddWebsiteTextDto()
-                    {
-                        Text = _differenceService.GetDifference(primaryText.Text, webBody, pageDto.CheckingType)
-                    });
-                    pageDto.SecondaryTextId = secondaryText.WebsiteTextId;
-
-                    await _pageService.EditPage(pageDto);
-                  
-                    var user = await _userService.GetUser(pageDto.UserId);
-                    //notification               
-                    var message = CreateNotificationMessage(user, pageDto);
-                    _emailService.SendEmail(message);
-
-                    StopPageChangeChecking(pageId.ToString());
+                   PageChanged(pageDto, primaryText.Text, webBody);
                 }
             }
             catch (WebException)
@@ -108,6 +104,26 @@ namespace PageCheckerAPI.Services.PageBackgroundService
         {
             return new MailMessage(_config["Gmail:email"], user.Email, "PageChecker Notification",
                 $"Page named:{pageDto.Name}, URL: {pageDto.Url} has changed.");
+        }
+
+        private async void PageChanged(PageDto pageDto, string primaryText, string webBody)
+        {
+            pageDto.HasChanged = true;
+            pageDto.Stopped = true;
+            var secondaryText = await _websiteTextService.AddText(new AddWebsiteTextDto()
+            {
+                Text = _differenceService.GetDifference(primaryText, webBody, pageDto.CheckingType)
+            });
+            pageDto.SecondaryTextId = secondaryText.WebsiteTextId;
+
+            await _pageService.EditPage(pageDto);
+
+            var user = await _userService.GetUser(pageDto.UserId);
+            //notification               
+            var message = CreateNotificationMessage(user, pageDto);
+            _emailService.SendEmail(message);
+
+            StopPageChangeChecking(pageDto.PageId.ToString());
         }
     }
 }

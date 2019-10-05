@@ -11,8 +11,9 @@ export default class PageSplit extends Component {
         return (
             <div className="pageSplit">
                 <div>SPLIT</div>
-                {/* <div className="pageSplitText">{this.props.html}</div> */}
-                <HtmlDifference html={this.props.html}/>
+                <div className="pageSplitText">{this.props.html}</div>
+                {/* <HtmlDifference html={this.props.html}/> */}
+                <button className="btn">Check this</button>
             </div>
         );
     }

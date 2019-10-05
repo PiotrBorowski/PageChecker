@@ -108,14 +108,28 @@ namespace PageCheckerAPI.Helpers
             htmlDoc.LoadHtml(html);
 
             var htmlNodes = htmlDoc.DocumentNode.SelectNodes("//div");
+            //var styleNodes = htmlDoc.DocumentNode.SelectNodes("//style");
 
             var result = new List<string>();
             foreach (var node in htmlNodes)
             {
+                //node.AppendChildren(styleNodes);
+                node.Attributes.Add("XPath", node.XPath);
+       
                 result.Add(node.OuterHtml);
             }
 
             return result;
+        }
+
+        public static string GetNode(string html, string xpath)
+        {
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(html);
+
+            var node = htmlDoc.DocumentNode.SelectSingleNode(xpath);
+
+            return node.OuterHtml;
         }
     }
 }

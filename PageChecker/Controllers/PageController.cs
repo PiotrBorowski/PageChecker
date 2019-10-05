@@ -128,7 +128,13 @@ namespace PageCheckerAPI.Controllers
             {
                 addPageDto.UserId = GetUserId();
                 var text = await _websiteService.GetHtml(addPageDto.Url);
-                var primaryText = await _websiteTextService.AddText(new AddWebsiteTextDto()
+
+                if (addPageDto.CheckingType == CheckingTypeEnum.Element)
+                {
+                    text = HtmlHelper.GetNode(text, addPageDto.ElementXPath);
+                }
+
+                WebsiteTextDto primaryText = await _websiteTextService.AddText(new AddWebsiteTextDto()
                 {
                     Text = text
                 });

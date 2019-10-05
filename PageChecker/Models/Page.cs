@@ -11,7 +11,8 @@ namespace PageCheckerAPI.Models
     public enum CheckingTypeEnum
     {
         Full,
-        Text
+        Text,
+        Element
     }
 
     public enum RefreshRateEnum
@@ -40,6 +41,7 @@ namespace PageCheckerAPI.Models
         public bool HasChanged { get; set; }
         public bool Stopped { get; set; }
         public CheckingTypeEnum CheckingType { get; set; }
+        public string ElementXPath { get; set; }
 
         [ForeignKey("WebsiteText")]
         public Guid PrimaryTextId { get; set; }

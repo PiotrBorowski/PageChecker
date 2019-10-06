@@ -18,7 +18,7 @@ export default class PageSplitList extends Component {
     }
 
     getSplits = (url) => {
-        axios.post(BASE_URL + "/page/Split", {Url: "http://onet.pl/"})
+        axios.post(BASE_URL + "/page/Split", {Url: "http://randomtextgenerator.com/"})
         .then((response) => {
             console.log(response);
             this.setState({splits: response.data});

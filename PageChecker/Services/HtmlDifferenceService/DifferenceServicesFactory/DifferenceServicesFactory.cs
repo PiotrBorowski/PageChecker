@@ -18,6 +18,7 @@ namespace PageCheckerAPI.Services.HtmlDifferenceService.DifferenceServicesFactor
                     return new TextDifferenceService();
 
                 case CheckingTypeEnum.Full:
+                case CheckingTypeEnum.Element:
                     return new FullDifferenceService();
                 
                 default:

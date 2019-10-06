@@ -14,7 +14,8 @@ export default class AddPageForm extends Component{
             name: "",
             url: "",
             refreshRate: 15,
-            checkingType: 0
+            checkingType: 0,
+            xpath: ""
         };
     }
 
@@ -32,6 +33,10 @@ export default class AddPageForm extends Component{
 
     handleUserInputCheckingType = e => {
         this.setState({ checkingType: e.target.value });
+    }
+
+    handleXPath = e => {
+        this.setState({xpath: e.target.value});
     }
 
     handleUserInputName = e =>{
@@ -54,7 +59,8 @@ export default class AddPageForm extends Component{
             Name: this.state.name,
             Url: "http://" + this.state.url,
             RefreshRate: this.state.refreshRate,
-            CheckingType: this.state.checkingType
+            CheckingType: this.state.checkingType,
+            ElementXPath: this.state.xpath
         }).then((response) => { 
             console.log(response);
             this.sendStartCheckingRequest(response.data.pageId);
@@ -150,8 +156,23 @@ export default class AddPageForm extends Component{
                     <Input type="select" className="custom-select" id="inputGroupSelect02" onChange={this.handleUserInputCheckingType}>
                         <option selected value="0">Full (scripts included)</option>
                         <option value="1">Only text</option>
+                        <option value="2">Element</option>
                     </Input>
-            </div>              
+                </div>        
+                <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                        <span className="input-group-text" id="inputGroup-sizing-default">ElelentXPath</span>
+                    </div>
+                    <input
+                        className="form-control"
+                        type="text"
+                        name="name"
+                        ref="name"
+                        value={this.state.xpath}
+                        onChange={this.handleXPath}
+                        required
+                        />
+                </div>         
             </div>
                     
             <div className="row">

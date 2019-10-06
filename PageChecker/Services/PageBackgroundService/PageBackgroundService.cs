@@ -78,14 +78,14 @@ namespace PageCheckerAPI.Services.PageBackgroundService
 
                     if (HtmlHelper.Compare(primaryText.Text, webElement, CheckingTypeEnum.Full) == false)
                     {
-                        PageChanged(pageDto, primaryText.Text, webElement);
+                       await PageChanged(pageDto, primaryText.Text, webElement);
                     }
                 }
 
                 //if page changed now
                 if (HtmlHelper.Compare(primaryText.Text, webBody, pageDto.CheckingType) == false)
                 {
-                   PageChanged(pageDto, primaryText.Text, webBody);
+                   await PageChanged(pageDto, primaryText.Text, webBody);
                 }
             }
             catch (WebException)
@@ -106,13 +106,14 @@ namespace PageCheckerAPI.Services.PageBackgroundService
                 $"Page named:{pageDto.Name}, URL: {pageDto.Url} has changed.");
         }
 
-        private async void PageChanged(PageDto pageDto, string primaryText, string webBody)
+        private async Task PageChanged(PageDto pageDto, string primaryText, string webBody)
         {
             pageDto.HasChanged = true;
             pageDto.Stopped = true;
+            var text = _differenceService.GetDifference(primaryText, webBody, pageDto.CheckingType);
             var secondaryText = await _websiteTextService.AddText(new AddWebsiteTextDto()
             {
-                Text = _differenceService.GetDifference(primaryText, webBody, pageDto.CheckingType)
+                Text = text
             });
             pageDto.SecondaryTextId = secondaryText.WebsiteTextId;
 

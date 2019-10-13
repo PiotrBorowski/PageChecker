@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using PageCheckerAPI.DataAccess;
 using PageCheckerAPI.DTOs.Page;
+using PageCheckerAPI.DTOs.Shared;
 using PageCheckerAPI.Models;
 using PageCheckerAPI.Repositories.Interfaces;
 
@@ -50,9 +51,9 @@ namespace PageCheckerAPI.Repositories
             return null;
         }
 
-        public async Task DeletePage(DeletePageDto pageDto, Guid userId)
+        public async Task DeletePage(DeleteDto pageDto, Guid userId)
         {
-            var pageToDelete = await _context.Pages.SingleAsync(p => p.PageId.Equals(pageDto.PageId));
+            var pageToDelete = await _context.Pages.SingleAsync(p => p.PageId.Equals(pageDto.Id));
 
             if (!pageToDelete.UserId.Equals(userId))
                 return;

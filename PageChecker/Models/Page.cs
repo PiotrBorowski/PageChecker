@@ -47,12 +47,9 @@ namespace PageCheckerAPI.Models
         public Guid PrimaryTextId { get; set; }
         public WebsiteText PrimaryText { get; set; }
 
-        [ForeignKey("WebsiteText")]
-        public Guid SecondaryTextId { get; set; }
-        public WebsiteText SecondaryText { get; set; }
-
         [Required]
         public string Url { get; set; }
+
         [Required]
         public Guid UserId { get; set; }
         public User User { get; set; }

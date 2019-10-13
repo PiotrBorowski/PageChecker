@@ -19,7 +19,6 @@ namespace PageCheckerAPI.DTOs.Page
         public string Url { get; set; }
         public string Name { get; set; }
         public Guid PrimaryTextId { get; set; }
-        public Guid SecondaryTextId { get; set; }
         public bool HasChanged { get; set; }
         public bool Stopped { get; set; }
         public CheckingTypeEnum CheckingType { get; set; }

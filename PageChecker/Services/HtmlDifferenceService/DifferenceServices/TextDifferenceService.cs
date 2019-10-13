@@ -20,6 +20,7 @@ namespace PageCheckerAPI.Services.HtmlDifferenceService.DifferenceServices
             var pageBodyText = HtmlHelper.GetBodyText(html1);
             var webBodyText = HtmlHelper.GetBodyText(html2);
             var listOfDiffs = _differ.diff_main(pageBodyText, webBodyText);
+            _differ.diff_cleanupSemantic(listOfDiffs);
 
             return _differ.diff_prettyHtml(listOfDiffs);
         }

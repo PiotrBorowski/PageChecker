@@ -12,6 +12,7 @@ using PageCheckerAPI.DTOs.User;
 using PageCheckerAPI.DTOs.WebsiteText;
 using PageCheckerAPI.Helpers;
 using PageCheckerAPI.Models;
+using PageCheckerAPI.Repositories.Interfaces;
 using PageCheckerAPI.Services.EmailService;
 using PageCheckerAPI.Services.HtmlDifferenceService;
 using PageCheckerAPI.Services.PageService;
@@ -30,6 +31,7 @@ namespace PageCheckerAPI.Services.PageBackgroundService
         private readonly IHtmlDifferenceService _differenceService;
         private readonly IConfiguration _config;
         private readonly IWebsiteTextService _websiteTextService;
+        private readonly IGenericRepository<Difference> _differenceRepository;
 
         public PageBackgroundService(
             IWebsiteService websiteService, 
@@ -38,7 +40,8 @@ namespace PageCheckerAPI.Services.PageBackgroundService
             IEmailService emailService,
             IUserService userService,
             IHtmlDifferenceService differenceService,
-            IConfiguration config)
+            IConfiguration config,
+            IGenericRepository<Difference> differenceRepository)
         {
             _websiteService = websiteService;
             _pageService = pageService;
@@ -47,6 +50,7 @@ namespace PageCheckerAPI.Services.PageBackgroundService
             _differenceService = differenceService;
             _config = config;
             _websiteTextService = websiteTextService;
+            _differenceRepository = differenceRepository;
         }
 
         public void StartPageChangeChecking(PageDto pageDto)
@@ -108,17 +112,19 @@ namespace PageCheckerAPI.Services.PageBackgroundService
 
         private async Task PageChanged(PageDto pageDto, string primaryText, string webBody)
         {
+            var text = _differenceService.GetDifference(primaryText, webBody, pageDto.CheckingType);
+
+            await _differenceRepository.Add(new Difference
+            {
+                Text = text,
+                Date = DateTime.Now,
+                PageId = pageDto.PageId
+            });
+
             pageDto.HasChanged = true;
             pageDto.Stopped = true;
-            var text = _differenceService.GetDifference(primaryText, webBody, pageDto.CheckingType);
-            var secondaryText = await _websiteTextService.AddText(new AddWebsiteTextDto()
-            {
-                Text = text
-            });
-            pageDto.SecondaryTextId = secondaryText.WebsiteTextId;
-
             await _pageService.EditPage(pageDto);
-
+       
             var user = await _userService.GetUser(pageDto.UserId);
             //notification               
             var message = CreateNotificationMessage(user, pageDto);

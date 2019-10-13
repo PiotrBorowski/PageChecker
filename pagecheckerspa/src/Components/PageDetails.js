@@ -102,11 +102,13 @@ class PageDetails extends Component {
             switch(props.checkingType)
             {
                 case 0:
-                    return <span >Full</span>
+                    return <span>Full</span>
                 case 1:
-                    return <span >Text Only</span>
+                    return <span>Text Only</span>
+                case 2:
+                    return <span>Element</span>
                 default:
-                    return <span >Undefined</span>
+                    return <span>Undefined</span>
             }   
         }       
 

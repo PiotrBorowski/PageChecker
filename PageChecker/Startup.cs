@@ -18,6 +18,7 @@ using PageCheckerAPI.Services.FacebookService;
 using PageCheckerAPI.Services.HtmlDifferenceService;
 using PageCheckerAPI.Services.HtmlDifferenceService.DifferenceServicesFactory;
 using PageCheckerAPI.Services.PageBackgroundService;
+using PageCheckerAPI.Services.PageDifferenceService;
 using PageCheckerAPI.Services.PageService;
 using PageCheckerAPI.Services.TokenService;
 using PageCheckerAPI.Services.UserService;
@@ -53,8 +54,10 @@ namespace PageCheckerAPI
 
             services.AddScoped<IGenericRepository<User>, GenericRepository<ApplicationDbContext, User>>();
             services.AddScoped<IGenericRepository<Page>, GenericRepository<ApplicationDbContext, Page>>();
+            services.AddScoped<IGenericRepository<Difference>, GenericRepository<ApplicationDbContext, Difference>>();
             services.AddScoped<IGenericRepository<WebsiteText>, GenericRepository<ApplicationDbContext, WebsiteText>>();
             services.AddScoped<IWebsiteTextService, WebsiteTextService>();
+            services.AddScoped<IPageDifferenceService, PageDifferenceService>();
 
             services.AddScoped<IPageRepositoryAsync, PageRepositoryAsync>();
             services.AddScoped<IPageService, PageService>();

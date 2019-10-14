@@ -7,6 +7,7 @@ using System.Net.Mail;
 using System.Threading.Tasks;
 using Hangfire;
 using Microsoft.Extensions.Configuration;
+using PageCheckerAPI.DTOs.Difference;
 using PageCheckerAPI.DTOs.Page;
 using PageCheckerAPI.DTOs.User;
 using PageCheckerAPI.DTOs.WebsiteText;
@@ -15,6 +16,7 @@ using PageCheckerAPI.Models;
 using PageCheckerAPI.Repositories.Interfaces;
 using PageCheckerAPI.Services.EmailService;
 using PageCheckerAPI.Services.HtmlDifferenceService;
+using PageCheckerAPI.Services.PageDifferenceService;
 using PageCheckerAPI.Services.PageService;
 using PageCheckerAPI.Services.UserService;
 using PageCheckerAPI.Services.WebsiteService;
@@ -31,7 +33,7 @@ namespace PageCheckerAPI.Services.PageBackgroundService
         private readonly IHtmlDifferenceService _differenceService;
         private readonly IConfiguration _config;
         private readonly IWebsiteTextService _websiteTextService;
-        private readonly IGenericRepository<Difference> _differenceRepository;
+        private readonly IPageDifferenceService _pageDifferenceService;
 
         public PageBackgroundService(
             IWebsiteService websiteService, 
@@ -41,7 +43,7 @@ namespace PageCheckerAPI.Services.PageBackgroundService
             IUserService userService,
             IHtmlDifferenceService differenceService,
             IConfiguration config,
-            IGenericRepository<Difference> differenceRepository)
+            IPageDifferenceService pageDifferenceService)
         {
             _websiteService = websiteService;
             _pageService = pageService;
@@ -50,7 +52,7 @@ namespace PageCheckerAPI.Services.PageBackgroundService
             _differenceService = differenceService;
             _config = config;
             _websiteTextService = websiteTextService;
-            _differenceRepository = differenceRepository;
+            _pageDifferenceService = pageDifferenceService;
         }
 
         public void StartPageChangeChecking(PageDto pageDto)
@@ -114,10 +116,9 @@ namespace PageCheckerAPI.Services.PageBackgroundService
         {
             var text = _differenceService.GetDifference(primaryText, webBody, pageDto.CheckingType);
 
-            await _differenceRepository.Add(new Difference
+            await _pageDifferenceService.AddDifference(new AddDifferenceDto
             {
                 Text = text,
-                Date = DateTime.Now,
                 PageId = pageDto.PageId
             });
 

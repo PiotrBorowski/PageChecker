@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PageCheckerAPI.DTOs.Page;
+using PageCheckerAPI.DTOs.Shared;
 using PageCheckerAPI.DTOs.WebsiteText;
 using PageCheckerAPI.Helpers;
 using PageCheckerAPI.Models;
@@ -168,11 +169,11 @@ namespace PageCheckerAPI.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete(Guid pageId)
         {
-            DeletePageDto deletePageDto = new DeletePageDto {PageId = pageId};
+            DeleteDto deletePageDto = new DeleteDto {Id = pageId};
 
             try
             {
-                _pageBackService.StopPageChangeChecking(deletePageDto.PageId.ToString());
+                _pageBackService.StopPageChangeChecking(deletePageDto.Id.ToString());
                 await _pageService.DeletePage(deletePageDto, GetUserId());
             }
             catch (InvalidOperationException)

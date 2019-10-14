@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using PageCheckerAPI.DTOs.Difference;
 using PageCheckerAPI.DTOs.Page;
+using PageCheckerAPI.DTOs.Shared;
 using PageCheckerAPI.DTOs.User;
 using PageCheckerAPI.DTOs.WebsiteText;
 using PageCheckerAPI.Models;
@@ -24,6 +26,8 @@ namespace PageCheckerAPI.Helpers
             CreateMap<User, EditUserDto>();
             CreateMap<AddWebsiteTextDto, WebsiteText>();
             CreateMap<WebsiteText, WebsiteTextDto>();
+            CreateMap<Difference, DifferenceDto>();
+            CreateMap<AddDifferenceDto, Difference>();
         }
     }
 }

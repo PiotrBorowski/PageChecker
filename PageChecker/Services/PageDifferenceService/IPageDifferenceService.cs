@@ -8,10 +8,10 @@ using PageCheckerAPI.DTOs.Shared;
 
 namespace PageCheckerAPI.Services.PageDifferenceService
 {
-    interface IPageDifferenceService
+    public interface IPageDifferenceService
     {
         Task<List<DifferenceDto>> GetDifferences(Guid pageId);
-        Task<DifferenceDto> DifferencePage(Guid differenceId);
+        Task<DifferenceDto> GetDifference(Guid differenceId);
         Task<DifferenceDto> AddDifference(AddDifferenceDto differenceDto);
         Task DeleteDifference(DeleteDto differenceDto);
     }

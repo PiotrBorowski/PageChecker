@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using PageCheckerAPI.DTOs.Difference;
 using PageCheckerAPI.DTOs.Shared;
 using PageCheckerAPI.Models;
@@ -21,24 +22,38 @@ namespace PageCheckerAPI.Services.PageDifferenceService
             _mapper = mapper;
         }
 
-        public Task<List<DifferenceDto>> GetDifferences(Guid pageId)
+        public async Task<List<DifferenceDto>> GetDifferences(Guid pageId)
         {
-            throw new NotImplementedException();
+            var diffs = await _repo.FindBy(x => x.PageId.Equals(pageId)).ToListAsync();
+            var diffsDtos = _mapper.Map<List<Difference>, List<DifferenceDto>>(diffs);
+            return diffsDtos;
         }
 
-        public Task<DifferenceDto> DifferencePage(Guid differenceId)
+        public async Task<DifferenceDto> GetDifference(Guid differenceId)
         {
-            throw new NotImplementedException();
+            var diff = await _repo.FindBy(x => x.DifferenceId.Equals(differenceId)).SingleAsync();
+            var diffDto = _mapper.Map<DifferenceDto>(diff);
+            return diffDto;
         }
 
-        public Task<DifferenceDto> AddDifference(AddDifferenceDto differenceDto)
+        public async Task<DifferenceDto> AddDifference(AddDifferenceDto differenceDto)
         {
-            throw new NotImplementedException();
+            var diff = _mapper.Map<Difference>(differenceDto);
+            diff.Date = DateTime.Now;
+
+            if (await _repo.Add(diff) != null)
+            {
+                return _mapper.Map<DifferenceDto>(diff);
+            }
+
+            return null;
         }
 
-        public Task DeleteDifference(DeleteDto differenceDto)
+        public async Task DeleteDifference(DeleteDto differenceDto)
         {
-            throw new NotImplementedException();
+            var diffToDelete = await _repo.FindBy(x => x.DifferenceId.Equals(differenceDto.Id)).SingleAsync();
+
+            await _repo.Delete(diffToDelete);
         }
     }
 }

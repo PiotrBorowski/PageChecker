@@ -14,7 +14,8 @@ namespace PageCheckerAPI.ViewModels.Page
         public bool HasChanged { get; set; }
         public bool Stopped { get; set; }
         public CheckingTypeEnum CheckingType { get; set; }
-        public Guid SecondaryTextId { get; set; }
+        public Guid PrimaryTextId { get; set; }
         public string Url { get; set; }
+        public string ElementXPath { get; set; }
     }
 }

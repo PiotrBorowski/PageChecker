@@ -122,6 +122,8 @@ namespace PageCheckerAPI.Services.PageBackgroundService
                 PageId = pageDto.PageId
             });
 
+            await _websiteTextService.EditText(pageDto.PrimaryTextId, webBody);
+
             pageDto.HasChanged = true;
             pageDto.Stopped = true;
             await _pageService.EditPage(pageDto);

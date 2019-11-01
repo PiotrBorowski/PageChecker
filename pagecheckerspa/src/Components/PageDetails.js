@@ -1,15 +1,13 @@
 import React, {Component} from 'react';
 import DeleteModal from './DeleteModal';
 import {connect} from 'react-redux';
-import { withRouter } from "react-router-dom";
+import { withRouter, NavLink } from "react-router-dom";
 import { deletePageThunk } from "../Actions/pageActions";
-import {ButtonGroup, UncontrolledCollapse, CardBody, Card } from 'reactstrap';
+import {ButtonGroup, ListGroup, ListGroupItem} from 'reactstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import HtmlDifference from './HtmlDifference';
 import axios from 'axios';
 import {BASE_URL} from '../constants';
 import "../Styles/Page.css"
-import Spinner from './Spinner';
 import * as moment from 'moment';
 
 class PageDetails extends Component {
@@ -18,7 +16,7 @@ class PageDetails extends Component {
         this.state = {
             modal: false,
             page: null,
-            bodyDifference: null
+            differences: []
         }
     }
 
@@ -35,17 +33,13 @@ class PageDetails extends Component {
             }
         }
         )
+        this.getDifferences(pageId);
     }
 
-    getDifference = () => {
-        if(this.state.bodyDifference) {
-            return;
-        }
-
-        axios.get(BASE_URL + "/page/Difference?websiteTextId=" + this.state.page.secondaryTextId)
+    getDifferences = (pageId) => {
+        axios.get(BASE_URL + "/difference/info?guid=" + pageId)
         .then((response) => { 
-            console.log(response);
-            this.setState({bodyDifference: response.data.text});
+            this.setState({differences: response.data});
         }, (error) => {
             console.log(error);
             if(error.response.status === 401){
@@ -89,11 +83,21 @@ class PageDetails extends Component {
         )
     }
 
-    openModal = () =>{
+    openModal = () => {
         this.setState({
           modal: true
         });
-      }
+    };
+
+    renderDifferences = () => {
+        return this.state.differences.map(x => (
+            <ListGroupItem tag="a" style={{cursor: 'pointer'}} action>
+                <NavLink className="nav-link" to={`/Difference/${x.differenceId}`}>
+                    {moment(x.date).format("DD.MM.YY hh:mm")}
+                </NavLink>
+            </ListGroupItem>
+        ));
+    }
 
     render(){
         
@@ -146,16 +150,6 @@ class PageDetails extends Component {
                 </button>
             </React.Fragment>)
 
-        const Difference = (
-            <div className="col-lg-12"> 
-                <h5 style={{"fontWeight":"normal"}}>Difference:</h5>   
-                {this.state.bodyDifference ? 
-                (<HtmlDifference html = {this.state.bodyDifference} />) :
-                (<Spinner/>) 
-            }     
-            </div>
-        )
-
         if(this.state.page)
         return(
             <div className="pages-group" >
@@ -179,22 +173,10 @@ class PageDetails extends Component {
                     </div>
                 </div>
 
-                {this.state.page.hasChanged && 
-                    <div>
-                        <div className="btn btn-dark btn-block" id="toggler" onClick={this.getDifference}>
-                            <i className="fas fa-angle-down" ></i>
-                        </div>
-                        <UncontrolledCollapse toggler={"#toggler"}>
-                            <Card>
-                                <CardBody>
-                                    {this.state.page.hasChanged ? Difference : null}
-                                </CardBody>
-                            </Card>
-                        </UncontrolledCollapse>
-                    </div>
-                }
-
-
+                <span>Changes list</span>
+                <ListGroup>
+                    {this.renderDifferences()}
+                </ListGroup>
             </div>
         );
 

@@ -28,6 +28,7 @@ namespace PageCheckerAPI.Helpers
             CreateMap<WebsiteText, WebsiteTextDto>();
             CreateMap<Difference, DifferenceDto>();
             CreateMap<AddDifferenceDto, Difference>();
+            CreateMap<DifferenceDto, DifferenceInfoDto>();
         }
     }
 }

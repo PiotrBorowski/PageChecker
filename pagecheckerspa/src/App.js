@@ -19,6 +19,7 @@ import RegisterForm from './Components/RegisterForm';
 import Verify from './Components/Verify';
 import PageDetails from './Components/PageDetails';
 import PageSplitList from './Components/pageSplitter/PageSplitList';
+import DifferenceDetails from './Components/DifferenceDetails';
 
 library.add(faStroopwafel)
 library.add(faTrash)
@@ -36,6 +37,7 @@ class App extends Component {
             <Route path="/register" component={RegisterForm}/>
             <Route path="/Pages" component={Pages}/>
             <Route path="/Page/:pageId" component={PageDetails}/>
+            <Route path="/Difference/:id" component={DifferenceDetails}/>
             <Route path="/unauthorized" component={Unauthorized}/>
             <Route path="/AddPage" component={AddPageForm}/>
             <Route path="/Split/:url" component={PageSplitList}/>

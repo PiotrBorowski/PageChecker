@@ -10,7 +10,7 @@ namespace PageCheckerAPI.Services.PageDifferenceService
 {
     public interface IPageDifferenceService
     {
-        Task<List<DifferenceDto>> GetDifferences(Guid pageId);
+        Task<List<DifferenceInfoDto>> GetDifferencesInfo(Guid pageId);
         Task<DifferenceDto> GetDifference(Guid differenceId);
         Task<DifferenceDto> AddDifference(AddDifferenceDto differenceDto);
         Task DeleteDifference(DeleteDto differenceDto);

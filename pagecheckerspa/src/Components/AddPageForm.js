@@ -159,21 +159,23 @@ export default class AddPageForm extends Component{
                         <option value="2">Element</option>
                     </Input>
                 </div>        
-                <div className="input-group mb-3">
-                    <div className="input-group-prepend">
-                        <span className="input-group-text" id="inputGroup-sizing-default">ElelentXPath</span>
-                    </div>
-                    <input
-                        className="form-control"
-                        type="text"
-                        name="name"
-                        ref="name"
-                        value={this.state.xpath}
-                        onChange={this.handleXPath}
-                        required
+                {this.state.checkingType == 2 && 
+                    <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <span className="input-group-text" id="inputGroup-sizing-default">ElelentXPath</span>
+                        </div>
+                        <input
+                            className="form-control"
+                            type="text"
+                            name="name"
+                            ref="name"
+                            value={this.state.xpath}
+                            onChange={this.handleXPath}
+                            required
                         />
-                </div>         
-            </div>
+                    </div>
+                }         
+                </div>
                     
             <div className="row">
                 <div className="col-sm-4 button-form">

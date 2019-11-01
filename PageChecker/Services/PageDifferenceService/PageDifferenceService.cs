@@ -22,10 +22,10 @@ namespace PageCheckerAPI.Services.PageDifferenceService
             _mapper = mapper;
         }
 
-        public async Task<List<DifferenceDto>> GetDifferences(Guid pageId)
+        public async Task<List<DifferenceInfoDto>> GetDifferencesInfo(Guid pageId)
         {
             var diffs = await _repo.FindBy(x => x.PageId.Equals(pageId)).ToListAsync();
-            var diffsDtos = _mapper.Map<List<Difference>, List<DifferenceDto>>(diffs);
+            var diffsDtos = _mapper.Map<List<Difference>, List<DifferenceInfoDto>>(diffs);
             return diffsDtos;
         }
 

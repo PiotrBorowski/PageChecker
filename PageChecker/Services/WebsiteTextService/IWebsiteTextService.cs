@@ -10,6 +10,6 @@ namespace PageCheckerAPI.Services.WebsiteTextService
     {
         Task<WebsiteTextDto> AddText(AddWebsiteTextDto textDto);
         Task<WebsiteTextDto> GetText(Guid textId);
-
+        Task EditText(Guid guid, string text);
     }
 }

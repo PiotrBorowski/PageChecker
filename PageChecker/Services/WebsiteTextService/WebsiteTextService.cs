@@ -34,5 +34,15 @@ namespace PageCheckerAPI.Services.WebsiteTextService
             var text = await _repo.FindBy(x => x.WebsiteTextId == textId).SingleAsync();
             return _mapper.Map<WebsiteTextDto>(text);
         }
+
+        public async Task EditText(Guid guid, string text)
+        {
+            await _repo.Edit(new WebsiteText
+                {
+                    WebsiteTextId = guid,
+                    Text = text
+                }
+            );
+        }
     }
 }

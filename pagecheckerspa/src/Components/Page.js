@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "../Styles/Page.css"
 import axios from "axios"
 import {BASE_URL} from "../constants"
-import {ButtonGroup, UncontrolledCollapse, CardBody, Card } from 'reactstrap';
+import {ButtonGroup } from 'reactstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import HtmlDifference from './HtmlDifference';
 import DeleteModal from "./DeleteModal";
@@ -22,19 +22,6 @@ class Page extends Component{
             modal: false,
             bodyDifference: ""
         };
-    }
-
-    componentDidMount(){
-        axios.get(BASE_URL + "/page/Difference?websiteTextId=" + this.props.secondaryTextId)
-        .then((response) => { 
-            this.setState({bodyDifference: response.data.text});
-        }, (error) => {
-            console.log(error);
-            if(error.response.status === 401){
-                this.props.history.push("/unauthorized");
-            }
-        }
-        )
     }
 
     handleStopChecking = () => {

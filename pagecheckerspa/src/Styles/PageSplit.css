@@ -1,10 +1,13 @@
 .pageSplit {
-    margin: 20px;
-    height: 100px;
+    margin-bottom: 50px;
+    /* height: 100px; */
+    background-color: lightgrey;
+    padding: 5px;
+    border-radius: 5pt;
 }
 
 .pageSplitText {
     text-overflow: ellipsis;
-    overflow: scroll;
-    height: 100px;
+    /* overflow: scroll; */
+    /* height: 100px; */
 }

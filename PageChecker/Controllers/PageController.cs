@@ -185,7 +185,7 @@ namespace PageCheckerAPI.Controllers
         }
 
         [HttpPost("Split")]
-        public async Task<IActionResult> SplitPage([FromBody] SplitDto dto)
+        public async Task<IActionResult> SplitPage([FromBody] NewSplitDto dto)
         {
             var text = await _websiteService.GetHtml(dto.Url);
 

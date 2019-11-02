@@ -10,10 +10,10 @@ export default class PageSplit extends Component {
     render() {
         return (
             <div className="pageSplit">
-                <div>SPLIT</div>
+                <span>XPath: {this.props.xpath}</span>
                 <div className="pageSplitText">{this.props.html}</div>
                 {/* <HtmlDifference html={this.props.html}/> */}
-                <button className="btn">Check this</button>
+                <button className="btn btn-dark">Select</button>
             </div>
         );
     }

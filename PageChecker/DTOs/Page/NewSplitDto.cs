@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace PageCheckerAPI.DTOs.Page
 {
-    public class SplitDto
+    public class NewSplitDto
     {
-        public string Html { get; set; }
-        public string XPath { get; set; }
+        public string Url { get; set; }
     }
 }

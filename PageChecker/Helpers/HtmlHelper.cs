@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
+using PageCheckerAPI.DTOs.Page;
 using PageCheckerAPI.Models;
 
 namespace PageCheckerAPI.Helpers
@@ -102,7 +103,7 @@ namespace PageCheckerAPI.Helpers
         }
 
 
-        public static List<string> SplitHtml(string html)
+        public static List<SplitDto> SplitHtml(string html)
         {
             var htmlDoc = new HtmlDocument();
             htmlDoc.LoadHtml(html);
@@ -110,13 +111,17 @@ namespace PageCheckerAPI.Helpers
             var htmlNodes = htmlDoc.DocumentNode.SelectNodes("//div");
             //var styleNodes = htmlDoc.DocumentNode.SelectNodes("//style");
 
-            var result = new List<string>();
+            var result = new List<SplitDto>();
             foreach (var node in htmlNodes)
             {
                 //node.AppendChildren(styleNodes);
-                node.Attributes.Add("XPath", node.XPath);
+                //node.Attributes.Add("XPath", node.XPath);
        
-                result.Add(node.OuterHtml);
+                result.Add(new SplitDto
+                {
+                    Html = node.OuterHtml,
+                    XPath = node.XPath
+                });
             }
 
             return result;

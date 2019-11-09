@@ -9,13 +9,16 @@ using AutoMapper;
 using Hangfire;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using PageCheckerAPI.Helpers;
 using PageCheckerAPI.Models;
 using PageCheckerAPI.Repositories;
 using PageCheckerAPI.Repositories.Interfaces;
 using PageCheckerAPI.Services;
+using PageCheckerAPI.Services.DateTimeService;
 using PageCheckerAPI.Services.EmailService;
 using PageCheckerAPI.Services.FacebookService;
 using PageCheckerAPI.Services.HtmlDifferenceService;
+using PageCheckerAPI.Services.HtmlDifferenceService.DifferenceServices;
 using PageCheckerAPI.Services.HtmlDifferenceService.DifferenceServicesFactory;
 using PageCheckerAPI.Services.PageBackgroundService;
 using PageCheckerAPI.Services.PageDifferenceService;
@@ -70,6 +73,8 @@ namespace PageCheckerAPI
             services.AddScoped<IFacebookService, FacebookService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IDifferenceServicesFactory, DifferenceServicesFactory>();
+            services.AddScoped<Idiff_match_patch, diff_match_patch>();
+            services.AddScoped<IDateTimeService, DateTimeService>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {

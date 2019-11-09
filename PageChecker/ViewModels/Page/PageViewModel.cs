@@ -17,5 +17,6 @@ namespace PageCheckerAPI.ViewModels.Page
         public Guid PrimaryTextId { get; set; }
         public string Url { get; set; }
         public string ElementXPath { get; set; }
+        public DateTime CreationDate { get; set; }
     }
 }

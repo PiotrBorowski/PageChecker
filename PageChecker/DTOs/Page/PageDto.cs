@@ -23,5 +23,7 @@ namespace PageCheckerAPI.DTOs.Page
         public bool Stopped { get; set; }
         public CheckingTypeEnum CheckingType { get; set; }
         public string ElementXPath { get; set; }
+        public DateTime CreationDate { get; set; }
+        public bool HighAccuracy { get; set; }
     }
 }

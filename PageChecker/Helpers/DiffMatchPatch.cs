@@ -206,7 +206,7 @@ namespace PageCheckerAPI.Helpers
      * Class containing the diff, match and patch methods.
      * Also Contains the behaviour settings.
      */
-    public class diff_match_patch
+    public class diff_match_patch : Idiff_match_patch
     {
         // Defaults.
         // Set these on your diff_match_patch instance to override the defaults.
@@ -216,7 +216,7 @@ namespace PageCheckerAPI.Helpers
         // Cost of an empty edit operation in terms of edit characters.
         public short Diff_EditCost = 4;
         // At what point is no match declared (0.0 = perfection, 1.0 = very loose).
-        public float Match_Threshold = 0.5f;
+        public float Match_Threshold = 0.6f;
         // How far to search for a match (0 = exact location, 1000+ = broad match).
         // A match this many characters away from the expected location will add
         // 1.0 to the score (0.0 is a perfect match).
@@ -225,7 +225,7 @@ namespace PageCheckerAPI.Helpers
         // do the contents have to be to match the expected contents. (0.0 =
         // perfection, 1.0 = very loose).  Note that Match_Threshold controls
         // how closely the end points of a delete need to match.
-        public float Patch_DeleteThreshold = 0.5f;
+        public float Patch_DeleteThreshold = 0.6f;
         // Chunk size for context length.
         public short Patch_Margin = 4;
 

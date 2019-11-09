@@ -9,8 +9,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PageCheckerAPI.DTOs.Difference;
 using PageCheckerAPI.DTOs.Shared;
+using PageCheckerAPI.Services.HtmlDifferenceService;
 using PageCheckerAPI.Services.HtmlDifferenceService.DifferenceServices;
 using PageCheckerAPI.Services.PageDifferenceService;
+using PageCheckerAPI.Services.PageService;
+using PageCheckerAPI.Services.WebsiteTextService;
 
 namespace PageCheckerAPI.Controllers
 {
@@ -18,26 +21,39 @@ namespace PageCheckerAPI.Controllers
     [Route("api/[controller]")]
     public class DifferenceController : Controller
     {
-        private readonly IPageDifferenceService _differenceService;
-        private readonly IMapper _mapper; 
+        private readonly IPageDifferenceService _pageDifferenceService;
+        private readonly IPageService _pageService;
+        private readonly IHtmlDifferenceService _htmlDifferenceService;
+        private readonly IWebsiteTextService _websiteTextService;
 
 
         public DifferenceController(
-            IPageDifferenceService differenceService,
+            IPageDifferenceService pageDifferenceService,
+            IPageService pageService,
+            IWebsiteTextService websiteTextService,
+            IHtmlDifferenceService htmlDifferenceService,
             IMapper mapper
             )
         {
-            _differenceService = differenceService;
-            _mapper = mapper;
+            _pageDifferenceService = pageDifferenceService;
+            _pageService = pageService;
+            _htmlDifferenceService = htmlDifferenceService;
+            _websiteTextService = websiteTextService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetDifference(Guid guid)
         {
-            var diff = await _differenceService.GetDifference(guid);
+            var diff = await _pageDifferenceService.GetDifference(guid);
             if (diff == null)
             {
                 return BadRequest();
+            }
+            var page = await _pageService.GetPage(diff.PageId);
+            if (!page.HighAccuracy)
+            {
+                var websiteText = await _websiteTextService.GetText(page.PrimaryTextId);
+                diff.Text = _htmlDifferenceService.Prettyfy(diff.Text, websiteText.Text, page.CheckingType);
             }
 
             return Ok(diff);
@@ -46,7 +62,7 @@ namespace PageCheckerAPI.Controllers
         [HttpGet("info")]
         public async Task<IActionResult> GetDifferencesInfo(Guid guid)
         {
-            var diff = await _differenceService.GetDifferencesInfo(guid);
+            var diff = await _pageDifferenceService.GetDifferencesInfo(guid);
             if (diff == null)
             {
                 return BadRequest();
@@ -61,7 +77,7 @@ namespace PageCheckerAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var diff = await _differenceService.AddDifference(differenceDto);
+            var diff = await _pageDifferenceService.AddDifference(differenceDto);
 
             if (diff == null)
                 return BadRequest();
@@ -74,7 +90,7 @@ namespace PageCheckerAPI.Controllers
         {
             try
             {
-                await _differenceService.DeleteDifference(new DeleteDto {Id = guid});
+                await _pageDifferenceService.DeleteDifference(new DeleteDto {Id = guid});
                 return Ok();
             }
             catch

@@ -22,7 +22,37 @@ namespace PageCheckerAPI.Services.HtmlDifferenceService
         {
             var differ = _differenceServicesFactory.Create(checkingType);
 
-            return differ.GetDifference(html1, html2);
+            var difference = differ.GetDifference(html1, html2);
+
+            return differ.Prettyfy(difference);
+        }
+
+        public string GetPatches(string html1, string html2, CheckingTypeEnum checkingType)
+        {
+            var differ = _differenceServicesFactory.Create(checkingType);
+
+            var difference = differ.GetDifference(html1, html2);
+
+            return differ.GetPatchText(html1, difference);
+        }
+
+        public string ApplyPatches(string patches, string text, CheckingTypeEnum checkingType)
+        {
+            var differ = _differenceServicesFactory.Create(checkingType);
+
+            var result = differ.CreatePatch(patches, text);
+
+            return result;
+        }
+
+        public string Prettyfy(string patches, string text, CheckingTypeEnum checkingType)
+        {
+            var differ = _differenceServicesFactory.Create(checkingType);
+
+            var secondText = differ.CreatePatch(patches, text);
+            var listOfDiffs = differ.GetDifference(text, secondText);
+
+            return differ.Prettyfy(listOfDiffs);
         }
     }
 }

@@ -114,7 +114,9 @@ namespace PageCheckerAPI.Services.PageBackgroundService
 
         private async Task PageChanged(PageDto pageDto, string primaryText, string webBody)
         {
-            var text = _differenceService.GetDifference(primaryText, webBody, pageDto.CheckingType);
+            string text = pageDto.HighAccuracy ? 
+                _differenceService.GetDifference(primaryText, webBody, pageDto.CheckingType) : 
+                _differenceService.GetPatches(primaryText, webBody, pageDto.CheckingType);
 
             await _pageDifferenceService.AddDifference(new AddDifferenceDto
             {

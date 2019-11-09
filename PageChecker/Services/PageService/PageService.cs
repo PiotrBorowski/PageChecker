@@ -9,6 +9,7 @@ using PageCheckerAPI.DTOs.Page;
 using PageCheckerAPI.DTOs.Shared;
 using PageCheckerAPI.Models;
 using PageCheckerAPI.Repositories.Interfaces;
+using PageCheckerAPI.Services.DateTimeService;
 
 namespace PageCheckerAPI.Services.PageService
 {
@@ -16,17 +17,19 @@ namespace PageCheckerAPI.Services.PageService
     {
         private readonly IGenericRepository<Page> _repo;
         private readonly IMapper _mapper;
+        private readonly IDateTimeService _dateTimeService;
 
-        public PageService(IGenericRepository<Page> repo, IMapper mapper)
+        public PageService(IGenericRepository<Page> repo, IDateTimeService dateTimeService ,IMapper mapper)
         {
             _repo = repo;
             _mapper = mapper;
+            _dateTimeService = dateTimeService;
         }
 
         public async Task<PageDto> AddPage(AddPageDto pageDto)
         {
             var page = _mapper.Map<Page>(pageDto);
-
+            page.CreationDate = _dateTimeService.GetCurrentDateTime();
             if (await _repo.Add(page) != null)
             {
                 return _mapper.Map<PageDto>(page);

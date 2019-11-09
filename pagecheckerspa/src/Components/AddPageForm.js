@@ -15,7 +15,8 @@ export default class AddPageForm extends Component{
             url: "",
             refreshRate: 15,
             checkingType: 0,
-            xpath: ""
+            xpath: "",
+            highAccuracy: false
         };
     }
 
@@ -43,6 +44,11 @@ export default class AddPageForm extends Component{
         this.setState({name: e.target.value});
     }
 
+    handleHighAccuracy = e =>{
+        this.setState({highAccuracy: e.target.checked});
+        console.log(this.state)
+    }
+
     handleSubmit = e => {
         e.preventDefault();
         if(!TokenHelper.CheckToken()){
@@ -60,7 +66,8 @@ export default class AddPageForm extends Component{
             Url: "http://" + this.state.url,
             RefreshRate: this.state.refreshRate,
             CheckingType: this.state.checkingType,
-            ElementXPath: this.state.xpath
+            ElementXPath: this.state.xpath,
+            HighAccuracy: this.state.highAccuracy
         }).then((response) => { 
             console.log(response);
             this.sendStartCheckingRequest(response.data.pageId);
@@ -167,14 +174,27 @@ export default class AddPageForm extends Component{
                         <input
                             className="form-control"
                             type="text"
-                            name="name"
-                            ref="name"
+                            name="xpath"
+                            ref="xpath"
                             value={this.state.xpath}
                             onChange={this.handleXPath}
                             required
                         />
                     </div>
                 }         
+                <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <span className="input-group-text" id="inputGroup-sizing-default">High Accuracy</span>
+                        </div>
+                        <Input
+                            className="form-control"
+                            type="checkbox"
+                            name="accuracy"
+                            ref="accuracy"
+                            value={this.state.highAccuracy}
+                            onChange={this.handleHighAccuracy}
+                        />
+                    </div>
                 </div>
                     
             <div className="row">

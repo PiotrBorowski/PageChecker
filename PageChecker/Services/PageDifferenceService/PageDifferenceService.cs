@@ -8,6 +8,7 @@ using PageCheckerAPI.DTOs.Difference;
 using PageCheckerAPI.DTOs.Shared;
 using PageCheckerAPI.Models;
 using PageCheckerAPI.Repositories.Interfaces;
+using PageCheckerAPI.Services.DateTimeService;
 
 namespace PageCheckerAPI.Services.PageDifferenceService
 {
@@ -15,11 +16,13 @@ namespace PageCheckerAPI.Services.PageDifferenceService
     {
         private readonly IGenericRepository<Difference> _repo;
         private readonly IMapper _mapper;
+        private IDateTimeService _dateTimeService;
 
-        public PageDifferenceService(IGenericRepository<Difference> repo, IMapper mapper)
+        public PageDifferenceService(IGenericRepository<Difference> repo, IDateTimeService dateTimeService ,IMapper mapper)
         {
             _repo = repo;
             _mapper = mapper;
+            _dateTimeService = dateTimeService;
         }
 
         public async Task<List<DifferenceInfoDto>> GetDifferencesInfo(Guid pageId)
@@ -39,7 +42,7 @@ namespace PageCheckerAPI.Services.PageDifferenceService
         public async Task<DifferenceDto> AddDifference(AddDifferenceDto differenceDto)
         {
             var diff = _mapper.Map<Difference>(differenceDto);
-            diff.Date = DateTime.Now;
+            diff.Date = _dateTimeService.GetCurrentDateTime();
 
             if (await _repo.Add(diff) != null)
             {

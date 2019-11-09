@@ -20,5 +20,6 @@ namespace PageCheckerAPI.DTOs.Page
         public CheckingTypeEnum CheckingType { get; set; }
         public Guid PrimaryTextId { get; set; }
         public string ElementXPath { get; set; }
+        public bool HighAccuracy { get; set; }
     }
 }

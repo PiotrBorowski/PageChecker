@@ -71,19 +71,19 @@ namespace PageCheckerAPI.Controllers
             return Ok(diff);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddDifference([FromBody] AddDifferenceDto differenceDto)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+        //[HttpPost]
+        //public async Task<IActionResult> AddDifference([FromBody] AddDifferenceDto differenceDto)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return BadRequest(ModelState);
 
-            var diff = await _pageDifferenceService.AddDifference(differenceDto);
+        //    var diff = await _pageDifferenceService.AddDifference(differenceDto);
 
-            if (diff == null)
-                return BadRequest();
+        //    if (diff == null)
+        //        return BadRequest();
 
-            return Ok(diff);
-        }
+        //    return Ok(diff);
+        //}
 
         [HttpDelete]
         public async Task<IActionResult> DeleteDifference(Guid guid)

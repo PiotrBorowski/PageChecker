@@ -5,6 +5,8 @@ using System.Linq.Expressions;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using CronEspresso.NETCore;
+using Cronos;
 using Hangfire;
 using Microsoft.Extensions.Configuration;
 using PageCheckerAPI.DTOs.Difference;
@@ -57,16 +59,24 @@ namespace PageCheckerAPI.Services.PageBackgroundService
 
         public void StartPageChangeChecking(PageDto pageDto)
         {
+            string cron;
             if (pageDto.RefreshRate == RefreshRateEnum.Day)
             {
-                RecurringJob.AddOrUpdate(pageDto.PageId.ToString(), () => CheckChange(pageDto.PageId)
-                    , Cron.DayInterval(1));
+                cron = Cron.Daily(DateTime.Now.TimeOfDay.Hours);
+            }
+            else if(pageDto.RefreshRate == RefreshRateEnum.FifteenMinutes || pageDto.RefreshRate == RefreshRateEnum.HalfHour)
+            {
+                cron = Cron.MinuteInterval((int)pageDto.RefreshRate);
             }
             else
             {
-                RecurringJob.AddOrUpdate(pageDto.PageId.ToString(), () => CheckChange(pageDto.PageId)
-                    , Cron.MinuteInterval(Convert.ToInt32(pageDto.RefreshRate)));
+                var hours = TimeSpan.FromMinutes((int) pageDto.RefreshRate)
+                    .Hours;
+                cron = Cron.HourInterval(hours);
             }
+            RecurringJob.AddOrUpdate(pageDto.PageId.ToString(), () => CheckChange(pageDto.PageId)
+                , cron );
+            
         }
 
         public async Task CheckChange(Guid pageId)

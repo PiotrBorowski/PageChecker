@@ -18,5 +18,6 @@ namespace PageCheckerAPI.ViewModels.Page
         public string Url { get; set; }
         public string ElementXPath { get; set; }
         public DateTime CreationDate { get; set; }
+        public bool HighAccuracy { get; set; }
     }
 }

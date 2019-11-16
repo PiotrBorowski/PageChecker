@@ -27,7 +27,6 @@ class Header extends Component {
                     {this.props.user.username}
                     </a>
                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <button className="dropdown-item my-di" >Test</button>
                         <button className="dropdown-item my-di" onClick={this.handleLogout}>Logout</button>
                     </div>
                 </li>

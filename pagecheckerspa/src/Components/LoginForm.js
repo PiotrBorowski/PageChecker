@@ -152,7 +152,7 @@ class LoginForm extends Component {
             </form>
         <br/>
 
-        <div className="container">
+        {/* <div className="container">
             <div className="row justify-content-center">
                 <div className="col-sm-">
                     <h2 className="center">Login with Facebook</h2>                
@@ -173,7 +173,7 @@ class LoginForm extends Component {
                     />
                 </div>       
             </div>
-        </div>
+        </div> */}
 
             
         </div>   

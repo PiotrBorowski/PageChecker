@@ -16,7 +16,6 @@ using PageCheckerAPI.Repositories.Interfaces;
 using PageCheckerAPI.Services;
 using PageCheckerAPI.Services.DateTimeService;
 using PageCheckerAPI.Services.EmailService;
-using PageCheckerAPI.Services.FacebookService;
 using PageCheckerAPI.Services.HtmlDifferenceService;
 using PageCheckerAPI.Services.HtmlDifferenceService.DifferenceServices;
 using PageCheckerAPI.Services.HtmlDifferenceService.DifferenceServicesFactory;
@@ -70,7 +69,6 @@ namespace PageCheckerAPI
             services.AddScoped<IWebsiteService, AgilityWebsiteService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IHtmlDifferenceService, HtmlDifferenceService>();
-            services.AddScoped<IFacebookService, FacebookService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IDifferenceServicesFactory, DifferenceServicesFactory>();
             services.AddScoped<Idiff_match_patch, diff_match_patch>();

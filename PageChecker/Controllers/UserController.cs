@@ -30,7 +30,7 @@ namespace PageCheckerAPI.Controllers
         public async Task<IActionResult> Verify()
         {
             var userIdClaim = User.Claims.SingleOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
-
+            
             if (userIdClaim == null)
                 return BadRequest();
 

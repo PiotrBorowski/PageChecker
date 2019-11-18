@@ -54,7 +54,7 @@ namespace PageCheckerAPI.Services.UserService
             if(await _genericRepository.FindBy(x => x.Email == userDto.Email).AnyAsync())
                 return null;
 
-            User user = new User { UserName = userDto.Username, Email = userDto.Email };
+            User user = new User { UserName = userDto.Username, Email = userDto.Email, Role = "User" };
 
             if (!string.IsNullOrEmpty(userDto.Password))
             {

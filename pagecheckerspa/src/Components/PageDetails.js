@@ -169,7 +169,8 @@ class PageDetails extends Component {
                         <h6>Link: <a href={this.state.page.url} target="_blank">{this.state.page.url}</a></h6>
                         Status: {this.state.page.hasChanged ? Changed : NotChanged}<br/>
                         <span style={{"fontWeight":"normal"}}>Refresh rate: </span><time>{timespanString(this.state.page.refreshRate)}</time><br/>
-                        <span style={{"fontWeight":"normal"}}>Checking Type: </span>{CheckingType(this.state.page)}<br/><br/>
+                        <span style={{"fontWeight":"normal"}}>Checking Type: </span>{CheckingType(this.state.page)}<br/>
+                        <span style={{"fontWeight":"normal"}}>High Accuracy: </span><span>{this.state.page.highAccuracy ? "Yes" : "No"}</span><br/><br/>
                     </div>
                 </div>
 

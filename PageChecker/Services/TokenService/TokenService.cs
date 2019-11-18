@@ -26,6 +26,7 @@ namespace PageCheckerAPI.Services.TokenService
             {
                 new Claim(ClaimTypes.NameIdentifier, userClaimsDto.UserId.ToString()),
                 new Claim(ClaimTypes.Name, userClaimsDto.UserName),
+                new Claim(ClaimTypes.Role, userClaimsDto.Role), 
             };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

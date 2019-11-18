@@ -23,6 +23,8 @@ namespace PageCheckerAPI.Models
         public string UserName { get; set; }
         [Required]
         public string Email { get; set; }
+        [Required]
+        public string Role { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
     }

@@ -8,10 +8,11 @@ export const setUserAuth = (isAuthenticated) => {
     };
 }
 
-export const setUsername = (username) => {
+export const setUsername = (username, role) => {
     return{
         type: "SET_USERNAME",
-        username
+        username,
+        role
     }
 }
 
@@ -24,7 +25,7 @@ export const checkUserToken = () => {
         else{
             console.log("jest user")
             dispatch(setUserAuth(true))
-            dispatch(setUsername(localStorage.getItem('username')))
+            dispatch(setUsername(localStorage.getItem('username'), localStorage.getItem('role')))
         }
     }
 }

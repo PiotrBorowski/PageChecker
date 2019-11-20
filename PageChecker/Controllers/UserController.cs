@@ -73,7 +73,8 @@ namespace PageCheckerAPI.Controllers
             var userViewModel = new UserViewModel
             {
                 Username = user.UserName,
-                Token = tokenString
+                Token = tokenString,
+                Role = user.Role
             };
 
             return Ok(userViewModel);

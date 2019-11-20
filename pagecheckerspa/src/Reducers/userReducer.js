@@ -1,5 +1,5 @@
 
-export default function userReducer (state={username: "unknown", isAuthenticated: false}, action){
+export default function userReducer (state={username: "unknown", isAuthenticated: false, role: "unknown"}, action){
     switch(action.type){
         case "SET_USER_AUTH": {
            return {
@@ -10,7 +10,8 @@ export default function userReducer (state={username: "unknown", isAuthenticated
         case "SET_USERNAME": {
             return {
                 ...state,
-                username: action.username
+                username: action.username,
+                role: action.role
             }
         }
         default:

@@ -44,6 +44,7 @@ class LoginForm extends Component {
         TokenHelper.setTokenInHeader(response.data.token);
         TokenHelper.setTokenInLocalStorage(response.data.token);
         localStorage.setItem('username', response.data.username)
+        localStorage.setItem('role', response.data.role)
         this.props.dispatch(checkUserToken());
     }
 

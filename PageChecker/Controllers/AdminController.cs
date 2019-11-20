@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PageCheckerAPI.Models;
+using PageCheckerAPI.Repositories.Interfaces;
 
 namespace PageCheckerAPI.Controllers
 {
@@ -12,12 +14,34 @@ namespace PageCheckerAPI.Controllers
     [Route("api/[controller]")]
     public class AdminController : Controller
     {
+        private readonly IGenericRepository<Page> _pageRepo;
+        private readonly IGenericRepository<User> _userRepo;
+
+
+        public AdminController(IGenericRepository<Page> pageRepo, IGenericRepository<User> userRepo)
+        {
+            _pageRepo = pageRepo;
+            _userRepo = userRepo;
+        }
 
         // GET api/Admin
-        [HttpGet]
-        public async Task<IActionResult> Test()
+        [HttpGet("GroupedPages")]
+        public async Task<IActionResult> GroupedPages()
         {
-            return Ok();
+            var sites = await _pageRepo.GetAll();
+            var grouped = sites.GroupBy(x => x.Url).Select(y => new {Url = y.Key, Count = y.Count()});
+
+            return Ok(grouped);
+        }
+
+        // GET api/Admin
+        [HttpGet("Users")]
+        public async Task<IActionResult> Users()
+        {
+            var users = await _userRepo.GetAll();
+            var selected = users.Select(x => new {x.Email, x.Verified, x.UserId, x.Role});
+
+            return Ok(selected);
         }
     }
 }

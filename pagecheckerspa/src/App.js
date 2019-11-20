@@ -20,6 +20,7 @@ import Verify from './Components/Verify';
 import PageDetails from './Components/PageDetails';
 import PageSplitList from './Components/pageSplitter/PageSplitList';
 import DifferenceDetails from './Components/DifferenceDetails';
+import AdminScreen from './Components/admin/AdminScreen';
 
 library.add(faStroopwafel)
 library.add(faTrash)
@@ -36,6 +37,7 @@ class App extends Component {
             <Route path="/login" component={LoginForm}/>
             <Route path="/register" component={RegisterForm}/>
             <Route path="/Pages" component={Pages}/>
+            <Route path="/Admin" component={AdminScreen}/>
             <Route path="/Page/:pageId" component={PageDetails}/>
             <Route path="/Difference/:id" component={DifferenceDetails}/>
             <Route path="/unauthorized" component={Unauthorized}/>

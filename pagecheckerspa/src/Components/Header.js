@@ -4,16 +4,21 @@ import "../Styles/Index.css";
 import TokenHelper from '../helpers/tokenHelper'
 import {connect} from 'react-redux'
 import { checkUserToken } from "../Actions/userActions";
+import { getPagesThunk } from "../Actions/pageActions";
+import {Badge} from "reactstrap";
 
 class Header extends Component {
     componentWillMount(){
-        this.props.dispatch(checkUserToken())          
+        this.props.dispatch(checkUserToken())
+        this.props.dispatch(getPagesThunk(this.props.history));
+
     }    
 
     handleLogout = () => {
         TokenHelper.setTokenInHeader(false);
         TokenHelper.setTokenInLocalStorage(false);
         localStorage.removeItem('username');
+        localStorage.removeItem('role');
         this.props.history.push('/');
         this.props.dispatch(checkUserToken());
     };
@@ -53,7 +58,8 @@ class Header extends Component {
             <React.Fragment>
               <li className="nav-item">
                   <NavLink className="nav-link" to="/Pages">
-                  <i className="fa fa-list" aria-hidden="true"></i> Your Pages
+                    <i className="fa fa-list" aria-hidden="true"></i> Your Pages 
+                    <Badge color="success" pill>{this.props.pages.filter(x => x.hasChanged === true).length}</Badge>
                   </NavLink>
               </li>
             </React.Fragment>
@@ -64,6 +70,16 @@ class Header extends Component {
               <li className="nav-item">
                   <NavLink className="nav-link" to="/AddPage">
                   <i className="fas fa-plus"></i> Add Page
+                  </NavLink>
+              </li>
+            </React.Fragment>
+        )
+
+        const AdminScreen = (
+            <React.Fragment> 
+              <li className="nav-item">
+                  <NavLink className="nav-link" to="/Admin">
+                  <i class="fas fa-users-cog"></i> Admin
                   </NavLink>
               </li>
             </React.Fragment>
@@ -82,6 +98,7 @@ class Header extends Component {
 
           <div className="collapse navbar-collapse" id="navbarResponsive">
             <ul className="navbar-nav ml-auto">
+              {this.props.user.isAuthenticated & this.props.user.role === "Admin" ? AdminScreen : null}
 
               { this.props.user.isAuthenticated ? YourPages : null}  
 
@@ -103,7 +120,8 @@ class Header extends Component {
 
 function mapStateToProps(state){
     return{
-        user: state.user
+        user: state.user,
+        pages: state.pages
     };
 }
 

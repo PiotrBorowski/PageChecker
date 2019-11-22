@@ -43,5 +43,20 @@ namespace PageCheckerAPI.Controllers
 
             return Ok(selected);
         }
+
+        [HttpGet("UserPages")]
+        public async Task<IActionResult> UserPages(string email)
+        {
+            try
+            {
+                var user = _userRepo.FindBy(x => x.Email.Equals(email)).Single();
+                var pages = _pageRepo.FindBy(x => x.UserId == user.UserId).ToList();
+                return Ok(pages);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
     }
 }

@@ -116,6 +116,11 @@ namespace PageCheckerAPI.Services.PageBackgroundService
             RecurringJob.RemoveIfExists(pageId);
         }
 
+        public void Trigger(string pageId)
+        {
+            RecurringJob.Trigger(pageId);
+        }
+
         private MailMessage CreateNotificationMessage(UserClaimsDto user, PageDto pageDto)
         {
             return new MailMessage(_config["Gmail:email"], user.Email, "PageChecker Notification",

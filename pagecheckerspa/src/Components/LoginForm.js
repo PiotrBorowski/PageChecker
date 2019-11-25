@@ -6,6 +6,7 @@ import TokenHelper from '../helpers/tokenHelper'
 import { checkUserToken } from "../Actions/userActions";
 import {connect} from 'react-redux'
 import FacebookLogin from 'react-facebook-login'
+import { withRouter, NavLink } from "react-router-dom";
 
 class LoginForm extends Component {
     
@@ -147,6 +148,8 @@ class LoginForm extends Component {
                     </button>
                 </div>
             </div>
+            <div className="row justify-content-center" style={{marginTop: '15px'}}><NavLink to="/register">Create new account</NavLink> </div>
+
 
             {this.state.notVerified ? AccountNotVerifiedAlert : null}
             {this.state.incorrectCredentials ? IncorrectCredentialsAlert : null}

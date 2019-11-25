@@ -3,6 +3,7 @@ import "../Styles/Form.css"
 import axios from 'axios';
 import {BASE_URL} from "../constants"
 import EmailHelper from "../helpers/emailHelper";
+import { withRouter, NavLink } from "react-router-dom";
 
 export default class RegisterForm extends Component {
     
@@ -138,6 +139,7 @@ export default class RegisterForm extends Component {
                     </button>
                 </div>
             </div>
+            <div className="row justify-content-center"  style={{marginTop: '15px'}}><NavLink to="/login">Login to PageChecker</NavLink> </div>
             </form>
         </div>   
         )

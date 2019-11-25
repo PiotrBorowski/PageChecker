@@ -104,7 +104,7 @@ class Page extends Component{
                 </h5>
                 <div className="row">
                     <div className="col-lg-5 text-truncate">
-                        <h6>Link: <a href={this.props.url} target="_blank">{this.props.url}</a></h6>
+                        <h6>Link: <a className="text-center text-truncate" href={this.props.url} target="_blank">{this.props.url}</a></h6>
                     </div>
          
                     <div className="col-lg-3 offset-lg-2">
@@ -116,10 +116,14 @@ class Page extends Component{
                         <button className="btn" onClick={() => this.openModal()}>                                 
                             <FontAwesomeIcon icon="trash" color="black" aria-hidden="true"/>
                         </button>
+                        <button className="btn">
+                            <NavLink to={`/Page/${this.props.pageId}`}>
+                                <i class="fas fa-info-circle"></i>
+                            </NavLink>
+                        </button>
                     </ButtonGroup>
                     </div>
                 </div>
-                <NavLink className="nav-link" to={`/Page/${this.props.pageId}`}>Details</NavLink>
             </div>
         )
     }

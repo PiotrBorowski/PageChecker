@@ -6,5 +6,6 @@ namespace PageCheckerAPI.Services.PageBackgroundService
     {
         void StartPageChangeChecking(PageDto pageDto);
         void StopPageChangeChecking(string pageId);
+        void Trigger(string pageId);
     }
 }

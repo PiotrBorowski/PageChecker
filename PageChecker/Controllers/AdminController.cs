@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PageCheckerAPI.Models;
 using PageCheckerAPI.Repositories.Interfaces;
+using PageCheckerAPI.Services.PageBackgroundService;
 
 namespace PageCheckerAPI.Controllers
 {
@@ -16,23 +18,25 @@ namespace PageCheckerAPI.Controllers
     {
         private readonly IGenericRepository<Page> _pageRepo;
         private readonly IGenericRepository<User> _userRepo;
+        private readonly IPageBackgroundService _backgroundService;
 
 
-        public AdminController(IGenericRepository<Page> pageRepo, IGenericRepository<User> userRepo)
+        public AdminController(IGenericRepository<Page> pageRepo, IGenericRepository<User> userRepo, IPageBackgroundService backgroundService)
         {
             _pageRepo = pageRepo;
             _userRepo = userRepo;
+            _backgroundService = backgroundService;
         }
 
         // GET api/Admin
-        [HttpGet("GroupedPages")]
-        public async Task<IActionResult> GroupedPages()
-        {
-            var sites = await _pageRepo.GetAll();
-            var grouped = sites.GroupBy(x => x.Url).Select(y => new {Url = y.Key, Count = y.Count()});
+        //[HttpGet("GroupedPages")]
+        //public async Task<IActionResult> GroupedPages()
+        //{
+        //    var sites = await _pageRepo.GetAll();
+        //    var grouped = sites.GroupBy(x => x.Url).Select(y => new {Url = y.Key, Count = y.Count()});
 
-            return Ok(grouped);
-        }
+        //    return Ok(grouped);
+        //}
 
         // GET api/Admin
         [HttpGet("Users")]
@@ -50,13 +54,21 @@ namespace PageCheckerAPI.Controllers
             try
             {
                 var user = _userRepo.FindBy(x => x.Email.Equals(email)).Single();
-                var pages = _pageRepo.FindBy(x => x.UserId == user.UserId).ToList();
+                var pages = await _pageRepo.FindBy(x => x.UserId == user.UserId).ToListAsync();
                 return Ok(pages);
             }
             catch
             {
                 return BadRequest();
             }
+        }
+
+        [HttpGet("Trigger")]
+        public OkResult Trigger(string pageId)
+        {
+            _backgroundService.Trigger(pageId);
+
+            return Ok();
         }
     }
 }

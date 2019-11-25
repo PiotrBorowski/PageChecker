@@ -12,12 +12,12 @@ export default class Home extends Component {
               <p>
                Check if change has occurred on the website
               </p>
-            </div>
+            </div>           
           </div>
         </div>
         <div className="container home-text">
           <p>
-          By Piotr Borowski
+            
           </p>
         </div>
       </div>

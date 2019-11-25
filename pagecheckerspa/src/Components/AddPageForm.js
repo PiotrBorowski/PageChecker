@@ -186,14 +186,18 @@ export default class AddPageForm extends Component{
                         <div className="input-group-prepend">
                             <span className="input-group-text" id="inputGroup-sizing-default">High Accuracy</span>
                         </div>
-                        <Input
+                        {/* <Input
                             className="form-control"
                             type="checkbox"
                             name="accuracy"
                             ref="accuracy"
                             value={this.state.highAccuracy}
-                            onChange={this.handleHighAccuracy}
-                        />
+                            onChange={this.handleHighAccuracy}                   
+                        /> */}
+                        <Input type="select" className="custom-select" id="inputGroupSelect03" onChange={this.handleHighAccuracy}>
+                            <option selected value={true}>Enable</option>
+                            <option value={false}>Disable</option>
+                        </Input>
                     </div>
                 </div>
                     

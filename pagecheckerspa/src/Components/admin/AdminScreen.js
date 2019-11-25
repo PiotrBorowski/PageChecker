@@ -5,13 +5,15 @@ import {connect} from 'react-redux';
 import {BASE_URL} from "../../constants"
 import axios from "axios"
 import {  withRouter } from "react-router-dom";
-import { Table } from 'reactstrap';
+import { Table, Button, ButtonGroup } from 'reactstrap';
+import * as moment from 'moment';
 
 
 class AdminScreen extends Component {
     constructor(props){
         super(props);
         this.state={
+            tab: 0,
             pages: [],
             users: [],
             email: "",
@@ -95,103 +97,153 @@ class AdminScreen extends Component {
             <tr key={page.userId}>
                 <th scope="row">{page.pageId}</th>
                 <th>{page.name}</th>
-                <th>{page.checkingType}</th>
-                <th>{page.creationDate}</th>
-                <th>{page.elementXPath}</th>
-                <th>{page.hasChanged}</th>
-                <th>{page.highAccuracy}</th>
-                <th>{page.primaryTextId}</th>
-                <th>{page.refreshRate}</th>
-                <th>{page.stopped}</th>
                 <th>{page.url}</th>
-                <th>{page.userId}</th>
+                <th>{this.CheckingType(page.checkingType)}</th>
+                <th>{page.creationDate}</th>
+                <th>{page.elementXPath ? page.elementXPath : "-"}</th>
+                <th>{page.hasChanged ? "Changed" : "Not Changed"}</th>
+                <th>{page.highAccuracy ? "Yes" : "No"}</th>
+                <th>{page.primaryTextId}</th>
+                <th>{this.timespanString(page.refreshRate)}</th>
+                <th>
+                    {page.stopped ? "Stopped" : "Running"} 
+                    <button className="btn btn-dark">Trigger</button>
+                </th>
 
             </tr>
         ))
+    }
+
+    CheckingType(checkingType)
+    {
+        switch(checkingType)
+        {
+            case 0:
+                return <span>Full</span>
+            case 1:
+                return <span>Text Only</span>
+            case 2:
+                return <span>Element</span>
+            default:
+                return <span>Undefined</span>
+        }   
+    }   
+
+    timespanString(span){
+        const time = moment.duration(span*1000*60);
+        console.log(time)
+        const days = time.days() !== 0 ? time.days()+" day" : "";
+        const hours = time.hours() !== 0 ? time.hours()+" hours" : "";
+        const minutes = time.minutes() !== 0 ? time.minutes()+" minutes" : "";
+
+        return `${days} ${hours} ${minutes}`;
     }
 
     handleChangeEmail = e => {
         this.setState({email: e.target.value});
     }
 
+    tabSwitch(){
+        switch(this.state.tab){
+            case 0:
+                return (               
+                <Table responsive>
+                    <thead>
+                        <th>#</th>
+                        <th>url</th>
+                        <th>count</th>
+                    </thead>
+                    <tbody>
+                        {this.renderPages()}                             
+                    </tbody>
+                </Table>);
+
+            case 1:
+                return (
+                    <Table responsive>
+                        <thead>
+                            <th>id</th>
+                            <th>email</th>
+                            <th>role</th>
+                            <th>verified</th>
+                        </thead>
+                        <tbody>
+                            {this.renderUsers()}                             
+                        </tbody>
+                    </Table>
+                    );
+
+            case 2:
+                return (
+                    <div>
+                        <div className="input-group mb-3">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text" id="inputGroup-sizing-default">Email</span>
+                            </div>
+                            <input 
+                                className="form-control" 
+                                id="EmailInput" 
+                                value={this.state.email}
+                                onChange={this.handleChangeEmail}
+                                required
+                            />
+                                     <div className="col-sm-4 button-form">
+                            <button
+                                type="submit"
+                                id="submitButton"
+                                className="btn btn-dark"
+                                onClick={this.fetchUserPages}
+                            >
+                                Search
+                            </button>
+                        </div>
+                        </div>
+               
+
+                        
+                        <Table responsive>
+                            <thead>
+                                <th>pageId</th>
+                                <th>name</th>
+                                <th>url</th>
+                                <th>checkingType</th>
+                                <th>creationDate</th>
+                                <th>elementXPath</th>
+                                <th>hasChanged</th>
+                                <th>highAccuracy</th>
+                                <th>primaryTextId</th>
+                                <th>refreshRate</th>
+                                <th>stopped</th>
+                            </thead>
+                            <tbody>
+                                {this.renderUserPages()}                 
+                            </tbody>
+                        </Table>
+
+                    </div>
+                )
+        }
+    }
+
     render(){
         return (
-            <div className="container">
-                <div className="pages-group">
-                    <h2 className="title">Statistics</h2>
+            // <div className="container">
+                <div className="admin">
+                    <h2 className="title">Admin Panel</h2>
                     <div>
-                        <Table responsive>
-                            <thead>
-                                <th>#</th>
-                                <th>url</th>
-                                <th>count</th>
-                            </thead>
-                            <tbody>
-                                {this.renderPages()}                             
-                            </tbody>
-                        </Table>
+                        <ButtonGroup className="button-group">
+                            {/* <Button onClick={() => {this.setState({tab: 0})}}  active={this.state.tab === 0}>Pages</Button> */}
+                            <Button onClick={() => {this.setState({tab: 1})}}  active={this.state.tab === 1}>Users</Button>
+                            <Button onClick={() => {this.setState({tab: 2})}}  active={this.state.tab === 2}>User Pages</Button>
+                        </ButtonGroup>
 
-                        <Table responsive>
-                            <thead>
-                                <th>id</th>
-                                <th>email</th>
-                                <th>role</th>
-                                <th>verified</th>
-                            </thead>
-                            <tbody>
-                                {this.renderUsers()}                             
-                            </tbody>
-                        </Table>
+         
+                        {this.tabSwitch()}
+    
 
-                        <div>
-                            <div className="input-group mb-3">
-                                <div className="input-group-prepend">
-                                    <span className="input-group-text" id="inputGroup-sizing-default">Email</span>
-                                </div>
-                                <input 
-                                    className="form-control" 
-                                    id="EmailInput" 
-                                    value={this.state.email}
-                                    onChange={this.handleChangeEmail}
-                                    required
-                                />
-                            </div>
-                            <div className="col-sm-4 button-form">
-                                <button
-                                    type="submit"
-                                    id="submitButton"
-                                    className="btn btn-dark"
-                                    onClick={this.fetchUserPages}
-                                >
-                                    Search
-                                </button>
-                            </div>
-
-                            
-                            <Table responsive>
-                                <thead>
-                                    <th>pageId</th>
-                                    <th>name</th>
-                                    <th>checkingType</th>
-                                    <th>creationDate</th>
-                                    <th>elementXPath</th>
-                                    <th>hasChanged</th>
-                                    <th>highAccuracy</th>
-                                    <th>primaryTextId</th>
-                                    <th>refreshRate</th>
-                                    <th>stopped</th>
-                                    <th>url</th>
-                                    <th>userId</th>
-                                </thead>
-                                <tbody>
-                                    {this.renderUserPages()}                 
-                                </tbody>
-                            </Table>
-
-                        </div>
                     </div>
                 </div>
-            </div>        
+            // </div>        
         )
     }
 }

@@ -33,6 +33,10 @@ input.active:valid {
     padding: 20px;
   }
   
+  .check{
+    justify-content: end;
+  }
+
   .info {
     padding-left: 0px !important;
   }

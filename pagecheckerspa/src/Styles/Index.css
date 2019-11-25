@@ -57,9 +57,10 @@ nav .navbar-nav li a:hover{
     height: 600px;
     background-color: black;
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: bottom;
     background-size:cover;
     background-attachment: fixed;
+    background-image: url('./computer-desk-hand-laptop-374631.jpg');
   }
   .bgimage h5 {
     color:white;
